@@ -52,13 +52,38 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form method="POST" action="{{ url('/api/login') }}">
-            @csrf
+        <form id="loginForm">
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#loginForm').submit(function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                var formData = $(this).serialize(); // Serialize form data
+                $.ajax({
+                    url: "{{ route('login') }}", // Login endpoint
+                    type: "POST", // HTTP method
+                    data: formData, // Form data
+                    dataType: "json", // Expected data type
+                    success: function(response) {
+                        // If login is successful, redirect or perform any other action
+                        localStorage.setItem('jwtToken', response.authorisation.token);
+                        window.location.href = "/dashboard"; // Redirect to dashboard page
+                    },
+                    error: function(xhr, status, error) {
+                        // If login fails, display error message
+                        alert("Invalid credentials");
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
