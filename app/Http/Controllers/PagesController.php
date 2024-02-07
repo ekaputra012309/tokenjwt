@@ -9,55 +9,71 @@ class PagesController extends Controller
     public function signin()
     {
         $pageTitle = 'Login - PT RIZQUNA MEKAH MADINAH';
-
-        return view('page.login', compact('pageTitle'));
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.login', compact('data'));
     }
 
     public function dash()
     {
 
         $pageTitle = 'Dashboard - PT RIZQUNA MEKAH MADINAH';
-
-        return view('page.dashboard', compact('pageTitle'));
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.dashboard', compact('data'));
     }
 
     public function hotel()
     {
 
         $pageTitle = 'Hotel - PT RIZQUNA MEKAH MADINAH';
-
-        return view('page.hotel.hotel', compact('pageTitle'));
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.hotel.hotel', compact('data'));
     }
 
     public function tambahHotel()
     {
 
         $pageTitle = 'Add Hotel - PT RIZQUNA MEKAH MADINAH';
-
-        return view('page.hotel.tambah', compact('pageTitle'));
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.hotel.tambah', compact('data'));
     }
 
     public function editHotel($id)
     {
 
         $pageTitle = 'Edit Hotel - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+        );
 
-        return view('page.hotel.edit', compact('pageTitle'));
+        return view('page.hotel.edit', compact('data'));
     }
 
     public function room()
     {
 
         $pageTitle = 'Room - PT RIZQUNA MEKAH MADINAH';
-
-        return view('page.room.room', compact('pageTitle'));
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.room.room', compact('data'));
     }
 
     public function tambahRoom()
     {
 
         $pageTitle = 'Add Room - PT RIZQUNA MEKAH MADINAH';
-
-        return view('page.room.tambah', compact('pageTitle'));
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.room.tambah', compact('data'));
     }
 }

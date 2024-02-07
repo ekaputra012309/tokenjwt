@@ -10,7 +10,7 @@
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ url('/dash') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('p.dash') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Tambah Hotel</li>
                         </ol>
                     </nav>
@@ -106,7 +106,7 @@
                         },
                         success: function(response) {
                             // Request was successful, handle response
-                            window.location.href = "/hotel";
+                            window.location.href = "{{ url('/pages/hotel') }}";
                             console.log(response);
                         },
                         error: function(xhr, status, error) {

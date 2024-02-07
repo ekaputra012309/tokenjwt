@@ -10,7 +10,7 @@
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('p.dash') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Data Hotel</li>
                         </ol>
                     </nav>
@@ -64,8 +64,10 @@
                 },
                 success: function(data) {
                     $.each(data, function(index, hotel) {
-                        var editUrl = "{{ route('p.hotel.edit') }}";
-                        var editHref = editUrl + '/' + hotel.id_hotel;
+                        var editHref = "{{ route('p.hotel.edit', ['id' => ':id']) }}";
+                        var hotelIdBase64 = btoa(hotel.id_hotel);
+                        editHref = editHref.replace(':id', hotelIdBase64);
+
                         var row = '<tr>' +
                             '<td><a href="' + editHref +
                             '" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a> ' +

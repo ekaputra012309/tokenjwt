@@ -10,7 +10,7 @@
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ url('/dash') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('p.dash') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Edit Hotel</li>
                         </ol>
                     </nav>
@@ -84,8 +84,8 @@
             // Retrieve JWT token from localStorage
             var jwtToken = localStorage.getItem('jwtToken');
             // Retrieve the hotel ID from the URL or any other source
-            var hotelId = 1; // Assuming the hotel ID is 1, replace it with the actual ID retrieval logic
-
+            var hotelIdBase64 = "{{ $data['idpage'] }}"; // Assuming the hotel ID is Base64 encoded
+            var hotelId = atob(hotelIdBase64);
             // Check if JWT token exists
             if (jwtToken) {
                 // Send GET request to fetch hotel data
@@ -131,7 +131,7 @@
                     },
                     success: function(response) {
                         // Request was successful, handle response
-                        window.location.href = "/hotel";
+                        window.location.href = "{{ url('/pages/hotel') }}";
                         console.log(response);
                     },
                     error: function(xhr, status, error) {

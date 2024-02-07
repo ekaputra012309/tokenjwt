@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TodoController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\Auth\AuthController;
@@ -22,14 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::controller(TodoController::class)->group(function () {
-    Route::get('todos', 'index');
-    Route::post('todo', 'store');
-    Route::get('todo/{id}', 'show');
-    Route::put('todo/{id}', 'update');
-    Route::delete('todo/{id}', 'destroy');
-});
-
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login')->name('login');
     Route::post('register', 'register')->name('register');
@@ -37,12 +28,13 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::controller(HotelController::class)->group(function () {
-    Route::get('hotel', 'index');
-    Route::post('hotel', 'store')->name('hotel');
+    Route::get('hotel', 'index')->name('hotel');
+    Route::post('hotel', 'store');
     Route::get('hotel/{id}', 'show');
     Route::post('hotel/{id}', 'update');
     Route::delete('hotel/{id}', 'destroy');
 });
+
 Route::controller(RoomController::class)->group(function () {
     Route::get('room', 'index');
     Route::post('room', 'store');

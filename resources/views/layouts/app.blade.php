@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ $pageTitle ?? 'Dashboard - KitaCodinginAja' }}</title>
+    <title>{{ $data['pageTitle'] ?? 'Dashboard - KitaCodinginAja' }}</title>
 
     <link rel="shortcut icon" href={{ asset('./assets/compiled/png/favicon.png') }} type="image/x-icon" />
     <link rel="shortcut icon"
@@ -46,7 +46,7 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="{{ url('/dash') }}"><img src={{ asset('./assets/compiled/png/logo3.png') }}
+                            <a href="{{ route('p.dash') }}"><img src={{ asset('./assets/compiled/png/logo3.png') }}
                                     alt="Logo" style="height: 50px" /> </a>
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
@@ -90,7 +90,7 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item active">
-                            <a href="{{ url('/dash') }}" class="sidebar-link">
+                            <a href="{{ route('p.dash') }}" class="sidebar-link">
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -264,7 +264,8 @@
                         success: function(response) {
                             // Handle successful logout
                             localStorage.removeItem('jwtToken');
-                            window.location.href = "/"; // Redirect to login page
+                            window.location.href =
+                                "{{ url('/') }}"; // Redirect to login page
                         },
                         error: function(xhr, status, error) {
                             // Handle error

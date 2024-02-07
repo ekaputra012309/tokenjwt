@@ -13,28 +13,28 @@ class AdminUserSeeder extends Seeder
      *
      * @return void
      */
-    public function run() : void
+    public function run(): void
     {
         $users = [
             [
-                'name'=>'Javed Ur Rehman',
-                'email'=>'javed@gmail.com',
-                'password'=> Hash::make('admin123')
+                'name' => 'Javed Ur Rehman',
+                'email' => 'javed@gmail.com',
+                'password' => Hash::make('admin123')
             ],
             [
-                'name'=>'Syed Ahsan Kamal',
-                'email'=>'ahsan@gmail.com',
-                'password'=> Hash::make('admin123')
+                'name' => 'Syed Ahsan Kamal',
+                'email' => 'ahsan@gmail.com',
+                'password' => Hash::make('admin123')
             ],
             [
-                'name'=>'Abdul Muqeet',
-                'email'=>'admin@gmail.com',
-                'password'=> Hash::make('admin123')
+                'name' => 'Abdul Muqeet',
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('admindemo')
             ]
         ];
 
         // Looping and Inserting Array's Users into User Table
-        foreach($users as $user){
+        foreach ($users as $user) {
             User::create($user);
         }
     }

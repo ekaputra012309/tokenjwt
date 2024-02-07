@@ -78,7 +78,7 @@
                     // Store the token in local storage
                     localStorage.setItem('jwtToken', jwtToken);
 
-                    window.location.href = "/dash"; // Redirect to dashboard page
+                    window.location.href = "{{ url('/pages/dash') }}"; // Redirect to dashboard page
                 },
                 error: function(xhr, status, error) {
                     // If login fails, display error message
