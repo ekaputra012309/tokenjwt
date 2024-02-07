@@ -5,13 +5,13 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Tambah Room</h3>
+                    <h3>Edit Room</h3>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('p.dash') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Tambah Room</li>
+                            <li class="breadcrumb-item active" aria-current="page">Edit Room</li>
                         </ol>
                     </nav>
                 </div>
@@ -22,9 +22,6 @@
             <div class="row match-height">
                 <div class="col-12">
                     <div class="card">
-                        {{-- <div class="card-header">
-                            <h4 class="card-title">Multiple Column</h4>
-                        </div> --}}
                         <div class="card-content">
                             <div class="card-body">
                                 <form id="roomForm" class="form" method="POST" action="#" data-parsley-validate>
@@ -69,40 +66,62 @@
 
     <script>
         $(document).ready(function() {
+            // Retrieve JWT token from localStorage
+            var jwtToken = localStorage.getItem('jwtToken');
+            // Retrieve the room ID from the URL or any other source
+            var roomIdBase64 = "{{ $data['idpage'] }}"; // Assuming the room ID is Base64 encoded
+            var roomId = atob(roomIdBase64);
+            // Check if JWT token exists
+            if (jwtToken) {
+                // Send GET request to fetch room data
+                $.ajax({
+                    url: "{{ route('room') }}/" + roomId,
+                    type: 'GET',
+                    beforeSend: function(xhr) {
+                        // Set the Authorization header with JWT token
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
+                    },
+                    success: function(response) {
+                        // Populate form fields with retrieved room data
+                        $('#kamar_id').val(response.kamar_id);
+                        $('#keterangan').val(response.keterangan);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.error(error);
+                    }
+                });
+            } else {
+                // Handle case where JWT token is not found in localStorage
+                console.error('JWT token not found in localStorage.');
+            }
+
+            // Submit form handler
             $('#roomForm').submit(function(event) {
                 event.preventDefault(); // Prevent default form submission
 
-                // Retrieve JWT token from localStorage
-                var jwtToken = localStorage.getItem('jwtToken');
+                // Get the form data
+                var formData = $(this).serialize();
 
-                // Check if JWT token exists
-                if (jwtToken) {
-                    // Get the form data
-                    var formData = $(this).serialize();
-
-                    // Send POST request with AJAX
-                    $.ajax({
-                        url: "{{ route('room') }}",
-                        type: 'POST',
-                        data: formData,
-                        beforeSend: function(xhr) {
-                            // Set the Authorization header with JWT token
-                            xhr.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
-                        },
-                        success: function(response) {
-                            // Request was successful, handle response
-                            window.location.href = "{{ url('/pages/room') }}";
-                            console.log(response);
-                        },
-                        error: function(xhr, status, error) {
-                            // Request failed, handle error
-                            console.error(error);
-                        }
-                    });
-                } else {
-                    // Handle case where JWT token is not found in localStorage
-                    console.error('JWT token not found in localStorage.');
-                }
+                // Send PUT request with AJAX
+                $.ajax({
+                    url: "{{ route('room') }}/" + roomId,
+                    type: 'POST',
+                    data: formData,
+                    beforeSend: function(xhr) {
+                        // Set the Authorization header with JWT token
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
+                    },
+                    success: function(response) {
+                        // Request was successful, handle response
+                        window.location.href = "{{ url('/pages/room') }}";
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        // Request failed, handle error
+                        console.error(error);
+                    }
+                });
             });
         });
     </script>

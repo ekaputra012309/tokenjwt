@@ -76,4 +76,48 @@ class PagesController extends Controller
         );
         return view('page.room.tambah', compact('data'));
     }
+
+    public function editRoom($id)
+    {
+
+        $pageTitle = 'Edit Room - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+        );
+
+        return view('page.room.edit', compact('data'));
+    }
+
+    public function agent()
+    {
+
+        $pageTitle = 'Agent - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.agent.agent', compact('data'));
+    }
+
+    public function tambahAgent()
+    {
+
+        $pageTitle = 'Add Agent - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.agent.tambah', compact('data'));
+    }
+
+    public function editAgent($id)
+    {
+
+        $pageTitle = 'Edit Agent - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+        );
+
+        return view('page.agent.edit', compact('data'));
+    }
 }

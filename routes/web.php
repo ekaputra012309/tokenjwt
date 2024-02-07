@@ -25,4 +25,9 @@ Route::prefix('pages')->name('p.')->group(function () {
     Route::get('hotel/tambah', [PagesController::class, 'tambahHotel'])->name('hotel.tambah');
     Route::get('hotel/edit/{id}', [PagesController::class, 'editHotel'])->name('hotel.edit');
     Route::get('room', [PagesController::class, 'room'])->name('room');
+    Route::get('room/tambah', [PagesController::class, 'tambahRoom'])->name('room.tambah');
+    Route::get('room/edit/{id}', [PagesController::class, 'editRoom'])->name('room.edit');
+    Route::get('agent', [PagesController::class, 'agent'])->name('agent');
+    Route::get('agent/tambah', [PagesController::class, 'tambahAgent'])->name('agent.tambah');
+    Route::get('agent/edit/{id}', [PagesController::class, 'editAgent'])->name('agent.edit');
 });

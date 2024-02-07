@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\AgentController;
 use App\Http\Controllers\Auth\AuthController;
 
 /*
@@ -36,9 +37,17 @@ Route::controller(HotelController::class)->group(function () {
 });
 
 Route::controller(RoomController::class)->group(function () {
-    Route::get('room', 'index');
+    Route::get('room', 'index')->name('room');
     Route::post('room', 'store');
     Route::get('room/{id}', 'show');
     Route::post('room/{id}', 'update');
     Route::delete('room/{id}', 'destroy');
+});
+
+Route::controller(AgentController::class)->group(function () {
+    Route::get('agent', 'index')->name('agent');
+    Route::post('agent', 'store');
+    Route::get('agent/{id}', 'show');
+    Route::post('agent/{id}', 'update');
+    Route::delete('agent/{id}', 'destroy');
 });

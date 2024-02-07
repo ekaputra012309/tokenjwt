@@ -5,13 +5,13 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Data Room</h3>
+                    <h3>Data Agent</h3>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('p.dash') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Data Room</li>
+                            <li class="breadcrumb-item active" aria-current="page">Data Agent</li>
                         </ol>
                     </nav>
                 </div>
@@ -23,8 +23,8 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="m-0"> </h5>
                         <div>
-                            <a href="{{ route('p.room.tambah') }}" class="btn btn-primary btn-sm"><i
-                                    class="bi bi-plus-square"></i> Add Room</a>
+                            <a href="{{ route('p.agent.tambah') }}" class="btn btn-primary btn-sm"><i
+                                    class="bi bi-plus-square"></i> Add Agent</a>
                         </div>
                     </div>
                 </div>
@@ -34,8 +34,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Kamar ID</th>
-                                    <th>Keterangan</th>
+                                    <th>Nama Agent</th>
+                                    <th>Kontak Person</th>
+                                    <th>Telepon</th>
+                                    <th>Alamat</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,24 +57,26 @@
             var token = localStorage.getItem('jwtToken');
 
             $.ajax({
-                url: "{{ route('room') }}",
+                url: "{{ route('agent') }}",
                 type: "GET",
                 headers: {
                     'Authorization': 'Bearer ' + token
                 },
                 success: function(data) {
-                    $.each(data, function(index, room) {
-                        var editHref = "{{ route('p.room.edit', ['id' => ':id']) }}";
-                        var roomIdBase64 = btoa(room.id_kamar);
-                        editHref = editHref.replace(':id', roomIdBase64);
+                    $.each(data, function(index, agent) {
+                        var editHref = "{{ route('p.agent.edit', ['id' => ':id']) }}";
+                        var agentIdBase64 = btoa(agent.id_agent);
+                        editHref = editHref.replace(':id', agentIdBase64);
 
                         var row = '<tr>' +
                             '<td><a href="' + editHref +
                             '" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a> ' +
-                            '<button class="btn btn-danger btn-sm delete-btn" data-id="' + room
-                            .id_kamar + '"><i class="bi bi-trash"></i> Hapus</button>' +
-                            '<td>' + room.kamar_id + '</td>' +
-                            '<td>' + room.keterangan + '</td>' +
+                            '<button class="btn btn-danger btn-sm delete-btn" data-id="' + agent
+                            .id_agent + '"><i class="bi bi-trash"></i> Hapus</button>' +
+                            '<td>' + agent.nama_agent + '</td>' +
+                            '<td>' + agent.contact_person + '</td>' +
+                            '<td>' + agent.telepon + '</td>' +
+                            '<td>' + agent.alamat + '</td>' +
                             '</tr>';
                         $('#table1 tbody').append(row);
                     });
@@ -86,24 +90,24 @@
 
                     // Add click event listener to delete buttons
                     $('.delete-btn').click(function() {
-                        var roomId = $(this).data('id');
-                        if (confirm('Are you sure you want to delete this room?')) {
+                        var agentId = $(this).data('id');
+                        if (confirm('Are you sure you want to delete this agent?')) {
                             // Perform deletion using AJAX
                             $.ajax({
-                                url: "{{ route('room') }}/" + roomId,
+                                url: "{{ route('agent') }}/" + agentId,
                                 type: "DELETE",
                                 headers: {
                                     'Authorization': 'Bearer ' + token
                                 },
                                 success: function(response) {
                                     // Reload the page or update the table as needed
-                                    alert('room deleted successfully!');
+                                    alert('agent deleted successfully!');
                                     location
                                         .reload(); // Reload the page after deletion
                                 },
                                 error: function(xhr, status, error) {
                                     alert(
-                                        'An error occurred while deleting the room.'
+                                        'An error occurred while deleting the agent.'
                                     );
                                     console.error(xhr.responseText);
                                 }

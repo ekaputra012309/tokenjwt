@@ -104,7 +104,7 @@
 
                             <ul class="submenu">
                                 <li class="submenu-item">
-                                    <a href="#" class="submenu-link">Agent</a>
+                                    <a href="{{ route('p.agent') }}" class="submenu-link">Agent</a>
                                 </li>
                                 <li class="submenu-item">
                                     <a href="{{ route('p.hotel') }}" class="submenu-link">Hotel</a>

@@ -5,13 +5,13 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Tambah Room</h3>
+                    <h3>Tambah Agent</h3>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('p.dash') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Tambah Room</li>
+                            <li class="breadcrumb-item active" aria-current="page">Tambah Agent</li>
                         </ol>
                     </nav>
                 </div>
@@ -27,21 +27,36 @@
                         </div> --}}
                         <div class="card-content">
                             <div class="card-body">
-                                <form id="roomForm" class="form" method="POST" action="#" data-parsley-validate>
+                                <form id="agentForm" class="form" method="POST" action="#" data-parsley-validate>
                                     <div class="row">
                                         <div class="col-md-6 col-12">
                                             <div class="form-group mandatory">
-                                                <label for="kamar-id-column" class="form-label">Kamar ID</label>
-                                                <input type="text" id="kamar_id" class="form-control"
-                                                    placeholder="Kamar ID" name="kamar_id" data-parsley-required="true" />
+                                                <label for="nama-agent-column" class="form-label">Nama Agent</label>
+                                                <input type="text" id="nama_agent" class="form-control"
+                                                    placeholder="Nama Agent" name="nama_agent"
+                                                    data-parsley-required="true" />
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-12">
                                             <div class="form-group mandatory">
-                                                <label for="keterangan-column" class="form-label">Keterangan</label>
-                                                <input type="text" id="keterangan" class="form-control"
-                                                    placeholder="Keterangan" name="keterangan"
+                                                <label for="alamat-column" class="form-label">Alamat</label>
+                                                <input type="text" id="alamat" class="form-control"
+                                                    placeholder="Alamat" name="alamat" data-parsley-required="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="contact-person-column" class="form-label">Contact Person</label>
+                                                <input type="text" id="contact_person" class="form-control"
+                                                    name="contact_person" placeholder="Contact Person"
                                                     data-parsley-required="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="telepon-column" class="form-label">Telepon</label>
+                                                <input type="number" id="telepon" class="form-control" name="telepon"
+                                                    placeholder="Telepon" data-parsley-required="true" />
                                             </div>
                                         </div>
                                     </div>
@@ -53,7 +68,7 @@
                                             <button type="reset" class="btn btn-light-secondary me-1 mb-1">
                                                 Reset
                                             </button>
-                                            <a href="{{ route('p.room') }}" class="btn btn-secondary me-1 mb-1">
+                                            <a href="{{ route('p.agent') }}" class="btn btn-secondary me-1 mb-1">
                                                 Back
                                             </a>
                                         </div>
@@ -69,7 +84,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#roomForm').submit(function(event) {
+            $('#agentForm').submit(function(event) {
                 event.preventDefault(); // Prevent default form submission
 
                 // Retrieve JWT token from localStorage
@@ -82,7 +97,7 @@
 
                     // Send POST request with AJAX
                     $.ajax({
-                        url: "{{ route('room') }}",
+                        url: "{{ route('agent') }}",
                         type: 'POST',
                         data: formData,
                         beforeSend: function(xhr) {
@@ -91,7 +106,7 @@
                         },
                         success: function(response) {
                             // Request was successful, handle response
-                            window.location.href = "{{ url('/pages/room') }}";
+                            window.location.href = "{{ url('/pages/agent') }}";
                             console.log(response);
                         },
                         error: function(xhr, status, error) {
