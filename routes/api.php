@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\Auth\AuthController;
 
 /*
@@ -21,13 +22,13 @@ use App\Http\Controllers\Auth\AuthController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+// auth
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login')->name('login');
     Route::post('register', 'register')->name('register');
     Route::post('logout', 'logout')->name('logout');
 });
-
+// hotel
 Route::controller(HotelController::class)->group(function () {
     Route::get('hotel', 'index')->name('hotel');
     Route::post('hotel', 'store');
@@ -35,7 +36,7 @@ Route::controller(HotelController::class)->group(function () {
     Route::post('hotel/{id}', 'update');
     Route::delete('hotel/{id}', 'destroy');
 });
-
+// room
 Route::controller(RoomController::class)->group(function () {
     Route::get('room', 'index')->name('room');
     Route::post('room', 'store');
@@ -43,11 +44,19 @@ Route::controller(RoomController::class)->group(function () {
     Route::post('room/{id}', 'update');
     Route::delete('room/{id}', 'destroy');
 });
-
+// agent
 Route::controller(AgentController::class)->group(function () {
     Route::get('agent', 'index')->name('agent');
     Route::post('agent', 'store');
     Route::get('agent/{id}', 'show');
     Route::post('agent/{id}', 'update');
     Route::delete('agent/{id}', 'destroy');
+});
+// rekening
+Route::controller(RekeningController::class)->group(function () {
+    Route::get('rekening', 'index')->name('rekening');
+    Route::post('rekening', 'store');
+    Route::get('rekening/{id}', 'show');
+    Route::post('rekening/{id}', 'update');
+    Route::delete('rekening/{id}', 'destroy');
 });

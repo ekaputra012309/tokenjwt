@@ -120,4 +120,36 @@ class PagesController extends Controller
 
         return view('page.agent.edit', compact('data'));
     }
+
+    public function rekening()
+    {
+
+        $pageTitle = 'Rekening - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.rekening.rekening', compact('data'));
+    }
+
+    public function tambahRekening()
+    {
+
+        $pageTitle = 'Add Rekening - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.rekening.tambah', compact('data'));
+    }
+
+    public function editRekening($id)
+    {
+
+        $pageTitle = 'Edit Rekening - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+        );
+
+        return view('page.rekening.edit', compact('data'));
+    }
 }

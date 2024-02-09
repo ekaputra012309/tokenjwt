@@ -30,4 +30,7 @@ Route::prefix('pages')->name('p.')->group(function () {
     Route::get('agent', [PagesController::class, 'agent'])->name('agent');
     Route::get('agent/tambah', [PagesController::class, 'tambahAgent'])->name('agent.tambah');
     Route::get('agent/edit/{id}', [PagesController::class, 'editAgent'])->name('agent.edit');
+    Route::get('rekening', [PagesController::class, 'rekening'])->name('rekening');
+    Route::get('rekening/tambah', [PagesController::class, 'tambahRekening'])->name('rekening.tambah');
+    Route::get('rekening/edit/{id}', [PagesController::class, 'editRekening'])->name('rekening.edit');
 });

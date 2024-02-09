@@ -113,7 +113,7 @@
                                     <a href="{{ route('p.room') }}" class="submenu-link">Room</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="#" class="submenu-link">Rekening</a>
+                                    <a href="{{ route('p.rekening') }}" class="submenu-link">Rekening</a>
                                 </li>
                             </ul>
                         </li>
