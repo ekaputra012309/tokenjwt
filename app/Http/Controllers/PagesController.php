@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Booking;
 
 class PagesController extends Controller
 {
@@ -151,5 +151,41 @@ class PagesController extends Controller
         );
 
         return view('page.rekening.edit', compact('data'));
+    }
+
+    public function booking()
+    {
+        $pageTitle = 'Booking - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.booking.booking', compact('data'));
+    }
+
+    public function tambahBooking()
+    {
+        $currentYear = date('Y');
+        $lastBooking = Booking::orderBy('id_booking', 'desc')->first();
+        $lastId = $lastBooking ? (int) substr($lastBooking->id, 0, 3) + 1 : 1;
+        $paddedId = str_pad($lastId, 3, '0', STR_PAD_LEFT);
+        $autoId = $paddedId . '/INV-HTL/II/' . $currentYear;
+        $pageTitle = 'Add Booking - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'autoId' => $autoId,
+        );
+        return view('page.booking.tambah', compact('data'));
+    }
+
+    public function editBooking($id)
+    {
+
+        $pageTitle = 'Edit Booking - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+        );
+
+        return view('page.booking.edit', compact('data'));
     }
 }

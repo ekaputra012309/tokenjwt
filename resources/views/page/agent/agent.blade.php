@@ -70,9 +70,10 @@
 
                         var row = '<tr>' +
                             '<td><a href="' + editHref +
-                            '" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a> ' +
+                            '" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi bi-pencil-square"></i></a> ' +
                             '<button class="btn btn-danger btn-sm delete-btn" data-id="' + agent
-                            .id_agent + '"><i class="bi bi-trash"></i> Hapus</button>' +
+                            .id_agent +
+                            '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>' +
                             '<td>' + agent.nama_agent + '</td>' +
                             '<td>' + agent.contact_person + '</td>' +
                             '<td>' + agent.telepon + '</td>' +

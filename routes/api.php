@@ -6,7 +6,10 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\RekeningController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookingDetailController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Models\Booking;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,4 +62,20 @@ Route::controller(RekeningController::class)->group(function () {
     Route::get('rekening/{id}', 'show');
     Route::post('rekening/{id}', 'update');
     Route::delete('rekening/{id}', 'destroy');
+});
+// booking
+Route::controller(BookingController::class)->group(function () {
+    Route::get('booking', 'index')->name('booking');
+    Route::post('booking', 'store');
+    Route::get('booking/{id}', 'show');
+    Route::post('booking/{id}', 'update');
+    Route::delete('booking/{id}', 'destroy');
+});
+// booking detail
+Route::controller(BookingDetailController::class)->group(function () {
+    Route::get('booking_d', 'index')->name('booking_d');
+    Route::post('booking_d', 'store');
+    Route::get('booking_d/{id}', 'show');
+    Route::post('booking_d/{id}', 'update');
+    Route::delete('booking_d/{id}', 'destroy');
 });

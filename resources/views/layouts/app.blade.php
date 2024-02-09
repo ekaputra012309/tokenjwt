@@ -120,24 +120,21 @@
 
                         <li class="sidebar-title">Transaction</li>
 
-                        <li class="sidebar-item has-sub">
-                            <a href="#" class="sidebar-link">
-                                <i class="bi bi-hexagon-fill"></i>
-                                <span>Form Elements</span>
+                        <li class="sidebar-item">
+                            <a href="{{ route('p.booking') }}" class="sidebar-link">
+                                <i class="bi bi-building-fill-check"></i>
+                                <span>Booking Hotels</span>
                             </a>
-
-                            <ul class="submenu">
-                                <li class="submenu-item">
-                                    <a href="form-element-input.html" class="submenu-link">Input</a>
-                                </li>
-
-                                <li class="submenu-item">
-                                    <a href="form-element-input-group.html" class="submenu-link">Input Group</a>
-                                </li>
-                            </ul>
                         </li>
 
-                        <li class="sidebar-title">Extra UI</li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <i class="bi bi-credit-card-fill"></i>
+                                <span>Payment Hotels</span>
+                            </a>
+                        </li>
+
+                        {{-- <li class="sidebar-title">Extra UI</li>
 
                         <li class="sidebar-item has-sub">
                             <a href="#" class="sidebar-link">
@@ -187,7 +184,7 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
 
                     </ul>
                 </div>
