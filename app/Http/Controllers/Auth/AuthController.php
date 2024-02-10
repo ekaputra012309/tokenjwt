@@ -14,7 +14,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     public function login(Request $request)
@@ -49,6 +49,16 @@ class AuthController extends Controller
         $token = Auth::login($user);
 
         return $this->respondWithToken($token);
+    }
+
+    public function refresh()
+    {
+        return $this->createNewToken(auth()->refresh());
+    }
+
+    public function userProfile()
+    {
+        return response()->json(auth()->user());
     }
 
     protected function respondWithToken($token)

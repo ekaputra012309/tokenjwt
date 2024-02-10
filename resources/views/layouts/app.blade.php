@@ -134,58 +134,6 @@
                             </a>
                         </li>
 
-                        {{-- <li class="sidebar-title">Extra UI</li>
-
-                        <li class="sidebar-item has-sub">
-                            <a href="#" class="sidebar-link">
-                                <i class="bi bi-pentagon-fill"></i>
-                                <span>Widgets</span>
-                            </a>
-
-                            <ul class="submenu">
-                                <li class="submenu-item">
-                                    <a href="ui-widgets-chatbox.html" class="submenu-link">Chatbox</a>
-                                </li>
-
-                                <li class="submenu-item">
-                                    <a href="ui-widgets-pricing.html" class="submenu-link">Pricing</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-item has-sub">
-                            <a href="#" class="sidebar-link">
-                                <i class="bi bi-three-dots"></i>
-                                <span>Multi-level Menu</span>
-                            </a>
-
-                            <ul class="submenu">
-                                <li class="submenu-item has-sub">
-                                    <a href="#" class="submenu-link">First Level</a>
-
-                                    <ul class="submenu submenu-level-2">
-                                        <li class="submenu-item">
-                                            <a href="ui-multi-level-menu.html" class="submenu-link">Second Level</a>
-                                        </li>
-
-                                        <li class="submenu-item">
-                                            <a href="#" class="submenu-link">Second Level Menu</a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="submenu-item has-sub">
-                                    <a href="#" class="submenu-link">Another Menu</a>
-
-                                    <ul class="submenu submenu-level-2">
-                                        <li class="submenu-item">
-                                            <a href="#" class="submenu-link">Second Level Menu</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li> --}}
-
                     </ul>
                 </div>
             </div>
@@ -195,8 +143,8 @@
                 <div class="dropdown">
                     <a href="#" role="button" id="profileDropdownTrigger" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        PT Rizquna <img src={{ asset('./assets/compiled/png/logo.png') }} alt="Profile Picture"
-                            class="profile-picture">
+                        <span id="emailUser">PT Rizquna</span> <img src={{ asset('./assets/compiled/png/logo.png') }}
+                            alt="Profile Picture" class="profile-picture">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="profileDropdownTrigger">
                         <li><a class="dropdown-item" href="#"><i class="bi bi-shield-lock"></i> Change
@@ -245,6 +193,26 @@
 
     <script>
         $(document).ready(function() {
+            getUser();
+
+            function getUser() {
+                var jwtToken = localStorage.getItem('jwtToken');
+                $.ajax({
+                    url: "{{ route('userProfile') }}",
+                    type: "GET",
+                    headers: {
+                        // Include authorization header with JWT token
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                    success: function(response) {
+                        $('#emailUser').html(response.name)
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.error(error);
+                    }
+                });
+            }
             $('#logoutButton').click(function() {
                 // Retrieve JWT token from localStorage
                 var jwtToken = localStorage.getItem('jwtToken');

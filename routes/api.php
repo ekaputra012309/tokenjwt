@@ -9,7 +9,7 @@ use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BookingDetailController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Models\Booking;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +26,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 // auth
+// Route::group([
+//     'middleware' => 'api',
+// ], function ($router) {
+//     Route::post('/login', [AuthController::class, 'login']);
+//     Route::post('/register', [AuthController::class, 'register']);
+//     Route::post('/logout', [AuthController::class, 'logout']);
+//     Route::post('/refresh', [AuthController::class, 'refresh']);
+//     Route::get('/user-profile', [AuthController::class, 'userProfile']);
+// });
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login')->name('login');
     Route::post('register', 'register')->name('register');
     Route::post('logout', 'logout')->name('logout');
+    Route::post('refresh', 'refresh')->name('refresh');
+    Route::get('user-profile', 'userProfile')->name('userProfile');
 });
 // hotel
 Route::controller(HotelController::class)->group(function () {
