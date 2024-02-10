@@ -182,6 +182,7 @@
     <script src={{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}></script>
 
     <script src={{ asset('assets/compiled/js/app.js') }}></script>
+    <script src={{ asset('assets/compiled/js/tokenExpired.js') }}></script>
 
     <!-- Need: Apexcharts -->
     {{-- <script src={{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}></script> --}}
@@ -196,6 +197,7 @@
             getUser();
 
             function getUser() {
+                checkTokenExpiration();
                 var jwtToken = localStorage.getItem('jwtToken');
                 $.ajax({
                     url: "{{ route('userProfile') }}",
@@ -213,8 +215,10 @@
                     }
                 });
             }
+            // logout button
             $('#logoutButton').click(function() {
                 // Retrieve JWT token from localStorage
+                checkTokenExpiration();
                 var jwtToken = localStorage.getItem('jwtToken');
 
                 // Check if JWT token exists

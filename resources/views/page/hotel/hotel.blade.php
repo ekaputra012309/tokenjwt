@@ -54,6 +54,7 @@
 
     <script>
         $(document).ready(function() {
+            checkTokenExpiration();
             var token = localStorage.getItem('jwtToken');
 
             $.ajax({

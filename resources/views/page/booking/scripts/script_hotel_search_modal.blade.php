@@ -1,5 +1,6 @@
 <script>
     $(document).ready(function() {
+        checkTokenExpiration();
         var jwtToken = localStorage.getItem('jwtToken');
         $('#searchButtonHotel').on('click', function() {
             // AJAX call to retrieve data from hotel API route

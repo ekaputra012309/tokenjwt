@@ -84,6 +84,7 @@
 
     <script>
         $(document).ready(function() {
+            checkTokenExpiration();
             $('#hotelForm').submit(function(event) {
                 event.preventDefault(); // Prevent default form submission
 

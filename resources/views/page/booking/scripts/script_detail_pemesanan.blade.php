@@ -1,5 +1,6 @@
 <script>
     $(document).ready(function() {
+        checkTokenExpiration();
         var jwtToken = localStorage.getItem('jwtToken');
 
         // Show the detail pemesanan modal and reset the form

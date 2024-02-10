@@ -1,5 +1,6 @@
 <script>
     $(document).ready(function() {
+        checkTokenExpiration();
         // Agent modal script
         $('#searchButton').on('click', function() {
             // AJAX call to retrieve data from agent API route

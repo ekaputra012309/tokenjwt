@@ -81,6 +81,7 @@
 
     <script>
         $(document).ready(function() {
+            checkTokenExpiration();
             // Retrieve JWT token from localStorage
             var jwtToken = localStorage.getItem('jwtToken');
             // Retrieve the agent ID from the URL or any other source

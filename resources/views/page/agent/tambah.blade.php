@@ -84,6 +84,7 @@
 
     <script>
         $(document).ready(function() {
+            checkTokenExpiration();
             $('#agentForm').submit(function(event) {
                 event.preventDefault(); // Prevent default form submission
 

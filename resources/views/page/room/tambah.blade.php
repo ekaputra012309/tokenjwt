@@ -69,6 +69,7 @@
 
     <script>
         $(document).ready(function() {
+            checkTokenExpiration();
             $('#roomForm').submit(function(event) {
                 event.preventDefault(); // Prevent default form submission
 

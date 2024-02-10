@@ -70,6 +70,7 @@
 
     <script>
         $(document).ready(function() {
+            checkTokenExpiration();
             $('#rekeningForm').submit(function(event) {
                 event.preventDefault(); // Prevent default form submission
 
