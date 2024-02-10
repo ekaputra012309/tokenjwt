@@ -37,11 +37,8 @@
                                     <th>Kode Pemesanan</th>
                                     <th>Tanggal Pemesanan</th>
                                     <th>Agen</th>
-                                    <th>Hotel</th>
-                                    <th>Tipe Kamar</th>
-                                    <th>Periode</th>
-                                    <th>Sub Total</th>
-                                    <th>Total</th>
+                                    <th>Total Diskon</th>
+                                    <th>Total Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,14 +64,20 @@
                     'Authorization': 'Bearer ' + token
                 },
                 success: function(data) {
+                    function formatDate(dateTimeString) {
+                        var dateTime = new Date(dateTimeString);
+                        var day = ('0' + dateTime.getDate()).slice(-
+                            2); // Get day and pad with leading zero if needed
+                        var month = ('0' + (dateTime.getMonth() + 1)).slice(-
+                            2); // Get month and pad with leading zero if needed
+                        var year = dateTime.getFullYear(); // Get full year
+                        return day + '/' + month + '/' + year;
+                    }
                     $.each(data, function(index, booking) {
                         var editHref = "{{ route('p.booking.edit', ['id' => ':id']) }}";
                         var bookingIdBase64 = btoa(booking.id_booking);
                         editHref = editHref.replace(':id', bookingIdBase64);
-                        var periode = booking.details.check_in + ' - ' + booking.details
-                            .check_out;
-                        var subTotal = booking.total_subtotal;
-                        var total = subTotal - (subTotal * booking.total_discount / 100);
+                        var formattedBookingDate = formatDate(booking.tgl_booking);
 
                         var row = '<tr>' +
                             '<td><a href="' + editHref +
@@ -84,13 +87,10 @@
                             .id_booking +
                             '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>' +
                             '<td>' + booking.booking_id + '</td>' +
-                            '<td>' + booking.tgl_booking + '</td>' +
+                            '<td>' + formattedBookingDate + '</td>' +
                             '<td>' + booking.agent.nama_agent + '</td>' +
-                            '<td>' + booking.details.hotel.nama_hotel + '</td>' +
-                            '<td>' + booking.details.room.nama_kamar + '</td>' +
-                            '<td>' + periode + '</td>' +
-                            '<td>' + subTotal + '</td>' +
-                            '<td>' + total + '</td>' +
+                            '<td>' + booking.total_discount + '</td>' +
+                            '<td>' + booking.total_subtotal + '</td>' +
                             '</tr>';
                         $('#table1 tbody').append(row);
                     });

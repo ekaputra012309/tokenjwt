@@ -165,25 +165,35 @@ class PagesController extends Controller
     public function tambahBooking()
     {
         $currentYear = date('Y');
-        $lastBooking = Booking::orderBy('id_booking', 'desc')->first();
-        $lastId = $lastBooking ? (int) substr($lastBooking->id, 0, 3) + 1 : 1;
-        $paddedId = str_pad($lastId, 3, '0', STR_PAD_LEFT);
-        $autoId = $paddedId . '/INV-HTL/II/' . $currentYear;
+
+        // Find the maximum ID from existing bookings
+        $maxId = Booking::max('booking_id');
+
+        // Extract the numeric part and increment by 1
+        $numericPart = (int)explode('/', $maxId)[0]; // Extract "002" from "002/INV-HTL/II/2024"
+        $newNumericPart = $numericPart + 1;
+
+        // Format the new ID to a 3-digit string
+        $newId = str_pad($newNumericPart, 3, '0', STR_PAD_LEFT);
+
+        $autoId = $newId . '/INV-HTL/II/' . $currentYear;
         $pageTitle = 'Add Booking - PT RIZQUNA MEKAH MADINAH';
         $data = array(
             'pageTitle' => $pageTitle,
             'autoId' => $autoId,
         );
+
         return view('page.booking.tambah', compact('data'));
     }
 
     public function editBooking($id)
     {
-
+        $autoId = Booking::where('id_booking', base64_decode($id))->value('booking_id');
         $pageTitle = 'Edit Booking - PT RIZQUNA MEKAH MADINAH';
         $data = array(
             'pageTitle' => $pageTitle,
             'idpage' => $id,
+            'autoId' => $autoId,
         );
 
         return view('page.booking.edit', compact('data'));

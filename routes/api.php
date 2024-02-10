@@ -76,6 +76,7 @@ Route::controller(BookingDetailController::class)->group(function () {
     Route::get('booking_d', 'index')->name('booking_d');
     Route::post('booking_d', 'store');
     Route::get('booking_d/{id}', 'show');
+    Route::get('booking_d_inv/{id}', 'showInv')->name('booking_d_inv');
     Route::post('booking_d/{id}', 'update');
     Route::delete('booking_d/{id}', 'destroy');
 });

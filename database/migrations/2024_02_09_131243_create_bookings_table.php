@@ -19,8 +19,8 @@ class CreateBookingsTable extends Migration
             $table->dateTime('tgl_booking');
             $table->integer('agent_id');
             $table->text('keterangan');
-            $table->integer('total_discount');
-            $table->integer('total_subtotal');
+            $table->decimal('total_discount', 10, 2);
+            $table->decimal('total_subtotal', 10, 2);
             $table->timestamps();
         });
     }

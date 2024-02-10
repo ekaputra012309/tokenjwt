@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BookingDetail extends Model
 {
     use HasFactory;
-    protected $table = 'bookings';
+    protected $table = 'booking_details';
     protected $primaryKey = 'id_booking_detail';
     protected $fillable = [
         'booking_id',
@@ -37,6 +37,6 @@ class BookingDetail extends Model
     // Define the relationship with Room
     public function room()
     {
-        return $this->belongsTo(Room::class, 'kamar_id');
+        return $this->belongsTo(Room::class, 'room_id');
     }
 }

@@ -22,9 +22,6 @@
             <div class="row match-height">
                 <div class="col-12">
                     <div class="card">
-                        {{-- <div class="card-header">
-                            <h4 class="card-title">Multiple Column</h4>
-                        </div> --}}
                         <div class="card-content">
                             <div class="card-body">
                                 <form id="bookingForm" class="form" method="POST" action="#" data-parsley-validate>
@@ -47,11 +44,13 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="form-group mandatory">
-                                                <label for="agent_id" class="form-label">Customer/Agen</label>
+                                                <label for="agent_nama" class="form-label">Customer/Agen</label>
                                                 <div class="input-group">
-                                                    <input type="text" id="agent_id" class="form-control"
+                                                    <input type="hidden" id="agent_id" class="form-control"
                                                         placeholder="Customer/Agen" name="agent_id"
                                                         data-parsley-required="true" readonly />
+                                                    <input type="text" id="agent_nama" class="form-control"
+                                                        placeholder="Customer/Agen" readonly />
                                                     <div class="input-group-append">
                                                         <button class="btn btn-outline-secondary" type="button"
                                                             id="searchButton">
@@ -61,22 +60,24 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-12">
+                                        <div class="col-md-6 col-12">
                                             <div class="form-group">
-                                                <button type="button" id="tgl_booking" class="btn btn-primary">Add Detail
+                                                <button type="button" id="addDetailButton" class="btn btn-primary">Add
+                                                    Detail
                                                     Pemesanan</button>
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-12">
                                             <div class="table-responsive">
-                                                <table class="table">
+                                                <table class="table" id="detailPesananTable">
                                                     <thead>
                                                         <tr>
+                                                            <th style="width: 100px">#</th>
                                                             <th>Hotel</th>
                                                             <th>Tipe Kamar</th>
                                                             <th>Qty</th>
-                                                            <th>Check In</th>
-                                                            <th>Check Out</th>
+                                                            <th style="width: 110px">Check In</th>
+                                                            <th style="width: 110px">Check Out</th>
                                                             <th>Malam</th>
                                                             <th>Mata Uang</th>
                                                             <th>Tarif</th>
@@ -89,11 +90,15 @@
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <th colspan="8" style="text-align: right">Total</th>
-                                                            <th><input type="text" placeholder="0.00"
-                                                                    class="form-control"></th>
-                                                            <th><input type="text" placeholder="0.00"
-                                                                    class="form-control"></th>
+                                                            <th colspan="9" style="text-align: right">Total</th>
+                                                            <th><input id="total_discount" name="total_discount"
+                                                                    type="text" placeholder="0.00" class="form-control"
+                                                                    value="0">
+                                                            </th>
+                                                            <th><input id="total_subtotal" name="total_subtotal"
+                                                                    type="text" placeholder="0.00" class="form-control"
+                                                                    value="0">
+                                                            </th>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -115,7 +120,7 @@
                                             <button type="reset" class="btn btn-light-secondary me-1 mb-1">
                                                 Reset
                                             </button>
-                                            <a href="{{ route('p.agent') }}" class="btn btn-secondary me-1 mb-1">
+                                            <a href="{{ route('p.booking') }}" class="btn btn-secondary me-1 mb-1">
                                                 Back
                                             </a>
                                         </div>
@@ -126,46 +131,17 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modals -->
+            @include('page.booking.modals.modal_agent')
+            @include('page.booking.modals.modal_detail_pemesanan')
+            @include('page.booking.modals.modal_hotel_search')
         </section>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            $('#bookingForm').submit(function(event) {
-                event.preventDefault(); // Prevent default form submission
-
-                // Retrieve JWT token from localStorage
-                var jwtToken = localStorage.getItem('jwtToken');
-
-                // Check if JWT token exists
-                if (jwtToken) {
-                    // Get the form data
-                    var formData = $(this).serialize();
-
-                    // Send POST request with AJAX
-                    $.ajax({
-                        url: "{{ route('booking') }}",
-                        type: 'POST',
-                        data: formData,
-                        beforeSend: function(xhr) {
-                            // Set the Authorization header with JWT token
-                            xhr.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
-                        },
-                        success: function(response) {
-                            // Request was successful, handle response
-                            window.location.href = "{{ url('/pages/booking') }}";
-                            console.log(response);
-                        },
-                        error: function(xhr, status, error) {
-                            // Request failed, handle error
-                            console.error(error);
-                        }
-                    });
-                } else {
-                    // Handle case where JWT token is not found in localStorage
-                    console.error('JWT token not found in localStorage.');
-                }
-            });
-        });
-    </script>
+    <!-- Scripts -->
+    @include('page.booking.scripts.script_booking')
+    @include('page.booking.scripts.script_agent_modal')
+    @include('page.booking.scripts.script_detail_pemesanan')
+    @include('page.booking.scripts.script_hotel_search_modal')
 @endsection

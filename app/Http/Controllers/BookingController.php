@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\BookingDetail;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BookingController extends Controller
@@ -16,14 +17,14 @@ class BookingController extends Controller
 
     public function index()
     {
-        $bookings = Booking::all();
+        $bookings = Booking::with('agent', 'details')->get();
         return response()->json($bookings);
     }
 
     public function show($id)
     {
         try {
-            $booking = Booking::find($id);
+            $booking = Booking::with('agent', 'details')->find($id);
             return response()->json($booking);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Booking not found'], 404);
@@ -51,8 +52,12 @@ class BookingController extends Controller
     public function destroy($id)
     {
         try {
-            $booking = Booking::findOrFail($id);
-            $booking->delete();
+            // Retrieve the booking_id before deleting
+            $bookingId = Booking::where('id_booking', $id)->value('booking_id');
+            // Delete booking details associated with the retrieved booking_id
+            BookingDetail::where('booking_id', $bookingId)->delete();
+            // Delete the booking
+            Booking::where('id_booking', $id)->delete();
             return response()->json(null, 204);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Booking Not Found'], 404);
