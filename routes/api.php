@@ -8,6 +8,7 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BookingDetailController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Auth\AuthController;
 
 
@@ -26,15 +27,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 // auth
-// Route::group([
-//     'middleware' => 'api',
-// ], function ($router) {
-//     Route::post('/login', [AuthController::class, 'login']);
-//     Route::post('/register', [AuthController::class, 'register']);
-//     Route::post('/logout', [AuthController::class, 'logout']);
-//     Route::post('/refresh', [AuthController::class, 'refresh']);
-//     Route::get('/user-profile', [AuthController::class, 'userProfile']);
-// });
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login')->name('login');
     Route::post('register', 'register')->name('register');
@@ -90,4 +82,13 @@ Route::controller(BookingDetailController::class)->group(function () {
     Route::get('booking_d_inv/{id}', 'showInv')->name('booking_d_inv');
     Route::post('booking_d/{id}', 'update');
     Route::delete('booking_d/{id}', 'destroy');
+});
+// payment
+Route::controller(PaymentController::class)->group(function () {
+    Route::get('payment', 'index')->name('payment');
+    Route::post('payment', 'store');
+    Route::get('payment/{id}', 'show');
+    Route::get('payment_inv/{id}', 'showInv')->name('payment_inv');
+    Route::post('payment/{id}', 'update');
+    Route::delete('payment/{id}', 'destroy');
 });

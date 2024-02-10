@@ -36,4 +36,6 @@ Route::prefix('pages')->name('p.')->group(function () {
     Route::get('booking', [PagesController::class, 'booking'])->name('booking');
     Route::get('booking/tambah', [PagesController::class, 'tambahBooking'])->name('booking.tambah');
     Route::get('booking/edit/{id}', [PagesController::class, 'editBooking'])->name('booking.edit');
+    Route::get('payment', [PagesController::class, 'payment'])->name('payment');
+    Route::get('payment/lihat/{id}', [PagesController::class, 'lihatPayment'])->name('payment.lihat');
 });

@@ -128,7 +128,7 @@
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="{{ route('p.payment') }}" class="sidebar-link">
                                 <i class="bi bi-credit-card-fill"></i>
                                 <span>Payment Hotels</span>
                             </a>

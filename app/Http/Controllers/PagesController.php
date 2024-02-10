@@ -198,4 +198,26 @@ class PagesController extends Controller
 
         return view('page.booking.edit', compact('data'));
     }
+
+    public function payment()
+    {
+        $pageTitle = 'Payment - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.payment.payment', compact('data'));
+    }
+
+    public function lihatPayment($id)
+    {
+        $autoId = Booking::where('id_booking', base64_decode($id))->value('booking_id');
+        $pageTitle = 'Detail Payment - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+            'autoId' => $autoId,
+        );
+
+        return view('page.payment.lihat', compact('data'));
+    }
 }
