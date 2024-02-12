@@ -15,6 +15,8 @@ class Payment extends Model
         'tgl_payment',
         'sar_idr',
         'usd_idr',
+        'mu_tagihan',
+        'mu_deposit',
         'deposit',
         'metode_bayar',
     ];

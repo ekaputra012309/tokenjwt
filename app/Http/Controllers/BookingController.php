@@ -17,9 +17,12 @@ class BookingController extends Controller
 
     public function index()
     {
-        $bookings = Booking::with('agent', 'details')->get();
+        $bookings = Booking::with('agent', 'details')
+            ->orderBy('created_at', 'desc')
+            ->get();
         return response()->json($bookings);
     }
+
 
     public function show($id)
     {

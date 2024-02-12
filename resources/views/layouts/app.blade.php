@@ -194,10 +194,10 @@
 
     <script>
         $(document).ready(function() {
+            checkTokenExpiration();
             getUser();
 
             function getUser() {
-                checkTokenExpiration();
                 var jwtToken = localStorage.getItem('jwtToken');
                 $.ajax({
                     url: "{{ route('userProfile') }}",
@@ -218,7 +218,6 @@
             // logout button
             $('#logoutButton').click(function() {
                 // Retrieve JWT token from localStorage
-                checkTokenExpiration();
                 var jwtToken = localStorage.getItem('jwtToken');
 
                 // Check if JWT token exists
