@@ -42,6 +42,8 @@
 </head>
 
 <body>
+    <embed id="pdfViewer" src="{{ route('p.payment.pdf', ['id' => $data['idpage']]) }}"
+        style="width: 100%; height: 800px; border: 1px solid #ccc;"></embed>
     <div>
         <table>
             <thead>
