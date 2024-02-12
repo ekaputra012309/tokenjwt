@@ -220,4 +220,17 @@ class PagesController extends Controller
 
         return view('page.payment.lihat', compact('data'));
     }
+
+    public function cetakPayment($id)
+    {
+        $autoId = Booking::where('id_booking', base64_decode($id))->value('booking_id');
+        $pageTitle = 'Invoice ';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+            'autoId' => $autoId,
+        );
+
+        return view('page.payment.cetak', compact('data'));
+    }
 }

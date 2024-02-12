@@ -38,4 +38,5 @@ Route::prefix('pages')->name('p.')->group(function () {
     Route::get('booking/edit/{id}', [PagesController::class, 'editBooking'])->name('booking.edit');
     Route::get('payment', [PagesController::class, 'payment'])->name('payment');
     Route::get('payment/lihat/{id}', [PagesController::class, 'lihatPayment'])->name('payment.lihat');
+    Route::get('payment/cetak/{id}', [PagesController::class, 'cetakPayment'])->name('payment.cetak');
 });

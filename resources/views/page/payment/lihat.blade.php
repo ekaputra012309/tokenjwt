@@ -26,7 +26,8 @@
                             <div class="card-body">
                                 <div class=" d-flex justify-content-between align-items-center">
                                     <div>
-                                        <button type="button" class="btn btn-danger"><i class="bi bi-filetype-pdf"></i>
+                                        <button type="button" class="btn btn-danger" id="cetakPembayaran"><i
+                                                class="bi bi-filetype-pdf"></i>
                                             Cetak</button>
                                     </div>
                                     <div>

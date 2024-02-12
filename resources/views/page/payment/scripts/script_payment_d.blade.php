@@ -2,6 +2,15 @@
     $(document).ready(function() {
         checkTokenExpiration();
 
+        $('#cetakPembayaran').on('click', function() {
+            var id = '{{ $data['idpage'] }}';
+            var url = "{{ route('p.payment.cetak', ['id' => ':id']) }}".replace(':id', id);
+
+            // Open the URL in a new tab
+            window.open(url, '_blank');
+        });
+
+
         $('#addDetailPembayaran').on('click', function() {
             $('#detailPembayaranModal').modal('show');
             $('#detailPembayaranForm')[0].reset();
@@ -116,14 +125,14 @@
                     '<td>' + detail.malam + '</td>' +
                     '<td>' + detail.mata_uang + '</td>' +
                     '<td>' + detail.tarif + '</td>' +
-                    '<td>' + detail.discount + '</td>' +
-                    '<td>' + detail.subtotal + '</td>' +
+                    '<td>' + formatCurrencyID(detail.discount) + '</td>' +
+                    '<td>' + formatCurrencyID(detail.subtotal) + '</td>' +
                     '</tr>';
                 tableBody.append(row);
             });
 
             $('#total_discount').val(totalDiscount.toFixed(2));
-            $('#total_subtotal').val(totalSubtotal.toFixed(2));
+            $('#total_subtotal').val(formatCurrencyID(totalSubtotal));
 
             $('.delete-btn').click(function() {
                 var bookingId = $(this).data('id');
@@ -209,6 +218,15 @@
             calculateResult();
         });
 
+        function formatCurrencyID(value) {
+            var numericValue = parseFloat(value);
+            if (isNaN(numericValue)) {
+                // If it's not a valid number, return empty string or whatever you prefer
+                return '';
+            }
+            return numericValue.toLocaleString('id-ID');
+        }
+
         refreshTable();
 
         function refreshTable() {
@@ -224,12 +242,15 @@
                     $('#listPembayaran tbody').empty();
                     $.each(response, function(index, pembayaran) {
                         var formattedPaymentDate = formatDate(pembayaran.tgl_payment);
+                        var formattedDeposit = formatCurrencyID(pembayaran.deposit);
+                        var formattedSaridr = formatCurrencyID(pembayaran.sar_idr);
+                        var formattedUsdidr = formatCurrencyID(pembayaran.usd_idr);
                         var row =
                             '<tr>' +
                             '<td>' + formattedPaymentDate + '</td>' +
-                            '<td>' + pembayaran.sar_idr + '</td>' +
-                            '<td>' + pembayaran.usd_idr + '</td>' +
-                            '<td>' + pembayaran.deposit + '</td>' +
+                            '<td>' + formattedSaridr + '</td>' +
+                            '<td>' + formattedUsdidr + '</td>' +
+                            '<td>' + formattedDeposit + '</td>' +
                             '<td>' + pembayaran.metode_bayar + '</td>' +
                             '</tr>';
                         $('#listPembayaran tbody').append(row);
