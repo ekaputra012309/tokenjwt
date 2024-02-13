@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\BookingDetail;
+use App\Models\Payment;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BookingController extends Controller
@@ -21,6 +22,18 @@ class BookingController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         return response()->json($bookings);
+    }
+
+    public function notInPayment()
+    {
+        $bookingIdsWithPayments = Payment::pluck('id_booking')->toArray();
+
+        $bookingsWithoutPayments = Booking::with('agent', 'details')
+            ->whereNotIn('id_booking', $bookingIdsWithPayments)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return response()->json($bookingsWithoutPayments);
     }
 
 

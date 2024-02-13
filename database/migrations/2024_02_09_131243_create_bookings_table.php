@@ -24,6 +24,7 @@ class CreateBookingsTable extends Migration
             $table->text('keterangan');
             $table->decimal('total_discount', 10, 2);
             $table->decimal('total_subtotal', 10, 2);
+            $table->enum('status', ['Piutang', 'Lunas'])->default('Piutang');
             $table->timestamps();
         });
     }

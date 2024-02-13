@@ -19,8 +19,82 @@
         </div>
         <section class="section">
             <div class="card">
-
                 <div class="card-body">
+                    <form id="paymentForm" class="form" method="POST" action="#" data-parsley-validate>
+                        <div class="row">
+                            <div class="col-md-4 col-12">
+                                <div class="form-group mandatory">
+                                    <label for="inv_number" class="form-label">Invoice Number</label>
+                                    <div class="input-group">
+                                        <input type="hidden" id="id_booking" class="form-control" name="id_booking"
+                                            data-parsley-required="true" readonly />
+                                        <input type="text" id="inv_number" class="form-control"
+                                            placeholder="Invoice Number" readonly />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button" id="searchInv">
+                                                <i class="bi bi-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-12">
+                                <div class="form-group">
+                                    <label for="mata_uang" class="form-label">From</label>
+                                    <select id="mata_uang" class="form-select" disabled>
+                                        <option value="">Pilih</option>
+                                        <option value="SAR">SAR</option>
+                                        <option value="USD">USD</option>
+                                        <option value="IDR">IDR</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-12">
+                                <div class="form-group mandatory">
+                                    <label for="pilih_konversi" class="form-label">To</label>
+                                    <select id="pilih_konversi" name="pilih_konversi" class="form-select"
+                                        data-parsley-required="true">
+                                        <option value="">Pilih</option>
+                                        <option value="SAR">SAR</option>
+                                        <option value="USD">USD</option>
+                                        <option value="IDR">IDR</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group mandatory">
+                                    <label for="konversi" class="form-label">Conversion</label>
+                                    <input type="number" id="konversi" name="konversi" class="form-control" step="0.01"
+                                        data-parsley-required="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                    <label for="subtotal" class="form-label">Sub Total <span id="dari"></span></label>
+                                    <input type="text" id="subtotal" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                    <label for="hasil_konversi" class="form-label">Sub Total <span
+                                            id="hasil"></span></label>
+                                    <input type="text" id="hasil_konversi" name="hasil_konversi" class="form-control"
+                                        readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-1 mb-1">
+                                    Add Payment
+                                </button>
+                                <button type="reset" class="btn btn-light-secondary me-1 mb-1">
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
                     <div class="table-responsive">
                         <table class="table" id="table1">
                             <thead>
@@ -39,83 +113,12 @@
                     </div>
                 </div>
             </div>
-
+            <!-- Modals -->
+            @include('page.payment.modals.modal_invoice')
         </section>
 
     </div>
-
-    <script>
-        $(document).ready(function() {
-            var token = localStorage.getItem('jwtToken');
-
-            $.ajax({
-                url: "{{ route('booking') }}",
-                type: "GET",
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                },
-                success: function(data) {
-                    function formatDate(dateTimeString) {
-                        var dateTime = new Date(dateTimeString);
-                        var day = ('0' + dateTime.getDate()).slice(-
-                            2); // Get day and pad with leading zero if needed
-                        var month = ('0' + (dateTime.getMonth() + 1)).slice(-
-                            2); // Get month and pad with leading zero if needed
-                        var year = dateTime.getFullYear(); // Get full year
-                        return day + '/' + month + '/' + year;
-                    }
-                    $.each(data, function(index, booking) {
-                        var editHref = "{{ route('p.payment.lihat', ['id' => ':id']) }}";
-                        var bookingIdBase64 = btoa(booking.id_booking);
-                        editHref = editHref.replace(':id', bookingIdBase64);
-                        var formattedBookingDate = formatDate(booking.tgl_booking);
-
-                        var row = '<tr>' +
-                            '<td><a href="' + editHref +
-                            '" class="btn btn-light btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"><i class="bi bi-search"></i></a> ' +
-                            '<td>' + booking.booking_id + '</td>' +
-                            '<td>' + formattedBookingDate + '</td>' +
-                            '<td>' + booking.agent.nama_agent + '</td>' +
-                            '<td>' + booking.total_subtotal + '</td>' +
-                            '</tr>';
-                        $('#table1 tbody').append(row);
-                    });
-
-                    // Initialize DataTable after populating the table
-                    $('#table1').DataTable({
-                        "searching": true,
-                        "ordering": true,
-                        "paging": true
-                    });
-
-                    // Add click event listener to delete buttons
-                    $('.delete-btn').click(function() {
-                        var bookingId = $(this).data('id');
-                        if (confirm('Are you sure you want to delete this booking?')) {
-                            // Perform deletion using AJAX
-                            $.ajax({
-                                url: "{{ route('booking') }}/" + bookingId,
-                                type: "DELETE",
-                                headers: {
-                                    'Authorization': 'Bearer ' + token
-                                },
-                                success: function(response) {
-                                    // Reload the page or update the table as needed
-                                    alert('Booking deleted successfully!');
-                                    location
-                                        .reload(); // Reload the page after deletion
-                                },
-                                error: function(xhr, status, error) {
-                                    alert(
-                                        'An error occurred while deleting the pemesanan.'
-                                    );
-                                    console.error(xhr.responseText);
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-        });
-    </script>
+    <!-- Scripts -->
+    @include('page.payment.scripts.script_payment')
+    @include('page.payment.scripts.script_invoice_modal')
 @endsection

@@ -9,6 +9,7 @@ use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BookingDetailController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentDetailController;
 use App\Http\Controllers\Auth\AuthController;
 
 
@@ -69,6 +70,7 @@ Route::controller(RekeningController::class)->group(function () {
 // booking
 Route::controller(BookingController::class)->group(function () {
     Route::get('booking', 'index')->name('booking');
+    Route::get('booking_notin', 'notInPayment')->name('booking_notin');
     Route::post('booking', 'store');
     Route::get('booking/{id}', 'show');
     Route::post('booking/{id}', 'update');
@@ -88,7 +90,14 @@ Route::controller(PaymentController::class)->group(function () {
     Route::get('payment', 'index')->name('payment');
     Route::post('payment', 'store');
     Route::get('payment/{id}', 'show');
-    Route::get('payment_inv/{id}', 'showInv')->name('payment_inv');
     Route::post('payment/{id}', 'update');
     Route::delete('payment/{id}', 'destroy');
+});
+// payment detail
+Route::controller(PaymentDetailController::class)->group(function () {
+    Route::get('payment_d', 'index')->name('payment_d');
+    Route::post('payment_d', 'store');
+    Route::get('payment_d/{id}', 'show');
+    Route::post('payment_d/{id}', 'update');
+    Route::delete('payment_d/{id}', 'destroy');
 });

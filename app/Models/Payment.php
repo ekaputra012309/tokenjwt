@@ -12,17 +12,13 @@ class Payment extends Model
     protected $primaryKey = 'id_payment';
     protected $fillable = [
         'id_booking',
-        'tgl_payment',
-        'sar_idr',
-        'usd_idr',
-        'mu_tagihan',
-        'mu_deposit',
-        'deposit',
-        'metode_bayar',
+        'pilih_konversi',
+        'konversi',
+        'hasil_konversi',
     ];
     // Define the relationship with booking
     public function booking()
     {
-        return $this->belongsTo(Booking::class, 'id_booking');
+        return $this->belongsTo(Booking::class, 'id_booking', 'booking_id');
     }
 }

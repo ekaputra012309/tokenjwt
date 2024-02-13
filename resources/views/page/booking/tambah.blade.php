@@ -79,7 +79,6 @@
                                                 <label for="mata_uang" class="form-label">Mata Uang</label>
                                                 <select id="mata_uang" name="mata_uang" class="form-select"
                                                     data-parsley-required="true">
-                                                    <option value="">Pilih</option>
                                                     <option value="SAR">SAR</option>
                                                     <option value="USD">USD</option>
                                                     <option value="IDR">IDR</option>

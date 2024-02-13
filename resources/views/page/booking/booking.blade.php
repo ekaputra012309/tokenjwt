@@ -39,6 +39,7 @@
                                     <th>Agen</th>
                                     <th>Total Diskon</th>
                                     <th>Total Subtotal</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,22 +78,44 @@
                         var editHref = "{{ route('p.booking.edit', ['id' => ':id']) }}";
                         var bookingIdBase64 = btoa(booking.id_booking);
                         editHref = editHref.replace(':id', bookingIdBase64);
+                        var editHref2 = booking.status === 'Lunas' ? '#' : editHref;
                         var formattedBookingDate = formatDate(booking.tgl_booking);
 
+                        var statusLabel;
+                        var buttonColor;
+
+                        // Determine button color and status label based on booking status
+                        if (booking.status === 'Piutang') {
+                            statusLabel = 'Piutang';
+                            buttonColor = 'danger';
+                        } else {
+                            statusLabel = 'Lunas';
+                            buttonColor = 'success';
+                        }
+
                         var row = '<tr>' +
-                            '<td><a href="' + editHref +
-                            '" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi bi-pencil-square"></i></a> ' +
+                            '<td>' +
+                            '<a href="' + editHref2 +
+                            '" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"' +
+                            (booking.status === 'Lunas' ? ' disabled' : '') +
+                            '><i class="bi bi-pencil-square"></i></a> ' +
                             '<button class="btn btn-danger btn-sm delete-btn" data-id="' +
-                            booking
-                            .id_booking +
-                            '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>' +
+                            booking.id_booking +
+                            '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"' +
+                            (booking.status === 'Lunas' ? ' disabled' : '') +
+                            '><i class="bi bi-trash"></i></button>' +
+                            '</td>' +
                             '<td>' + booking.booking_id + '</td>' +
                             '<td>' + formattedBookingDate + '</td>' +
                             '<td>' + booking.agent.nama_agent + '</td>' +
                             '<td>' + booking.total_discount + '</td>' +
                             '<td>' + booking.total_subtotal + '</td>' +
+                            '<td><button class="btn btn-' + buttonColor + ' btn-sm">' +
+                            statusLabel + '</button></td>' +
                             '</tr>';
+
                         $('#table1 tbody').append(row);
+
                     });
 
                     // Initialize DataTable after populating the table
