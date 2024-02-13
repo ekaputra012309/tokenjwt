@@ -30,7 +30,13 @@
                         '<td>' + payment.id_booking + '</td>' +
                         '<td>' + formatDate(payment.booking.tgl_booking) + '</td>' +
                         '<td>' + payment.booking.agent.nama_agent + '</td>' +
-                        '<td>' + payment.hasil_konversi + '</td>' +
+                        '<td>' +
+                        '<span style="float: left;">' + payment.hasil_konversi + '</span>' +
+                        // Align hasil_konversi to the left
+                        '<span style="float: right;">' + payment.pilih_konversi +
+                        '</span>' + // Align pilih_konversi to the right
+                        '</td>' +
+                        '</td>' +
                         '</tr>';
                     $('#table1 tbody').append(row);
                 });
