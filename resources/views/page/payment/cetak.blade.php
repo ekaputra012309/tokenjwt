@@ -49,7 +49,9 @@
             <thead>
                 <tr style="border-bottom: 2px solid red">
                     <th>
-                        <img src="{{ asset('assets/compiled/png/logo.png') }}" alt="logo" width="150px">
+                        {{-- <img src="{{ asset('assets/compiled/png/logo.png') }}" alt="logo" width="150px"> --}}
+                        <img src="{{ URL::asset('assets/compiled/png/logo.png') }}" alt="logo" width="150px">
+
                     </th>
                     <th>
                         <p>
@@ -217,8 +219,11 @@
                                     <td style="width: 10%"></td>
                                     <td style="width: 50%">
                                         Approve By <br>
-                                        <img src="{{ asset('assets/compiled/png/logo.png') }}" alt="logo"
-                                            width="100px"> <br>
+                                        {{-- <img src="{{ asset('assets/compiled/png/logo.png') }}" alt="logo"
+                                            width="100px"> <br> --}}
+                                        <img src="{{ URL::asset('assets/compiled/png/logo.png') }}" alt="logo"
+                                            width="150px"> <br>
+
                                         <b><u>Fatimah Az zahra</u></b> <br>
                                         Finance
 

@@ -17,20 +17,23 @@
                     xhr.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
                 },
                 success: function(response) {
-                    // Parse the date string
-                    var dateParts = response.tgl_booking.split(' ')[0].split('-');
-                    var year = dateParts[0];
-                    var month = dateParts[1];
-                    var day = dateParts[2];
-                    var formattedDate = year + '-' + month + '-' + day;
+                    function formatDate(dateString) {
+                        var dateParts = dateString.split(' ')[0].split('-');
+                        var year = dateParts[0];
+                        var month = dateParts[1];
+                        var day = dateParts[2];
+                        return year + '-' + month + '-' + day;
+                    }
 
                     var namaAgen = response.agent.nama_agent + ' - ' + response.agent
                         .contact_person;
-                    console.log(formattedDate);
                     // Populate form fields with retrieved agent data
-                    $('#tgl_booking').val(formattedDate);
+                    $('#tgl_booking').val(formatDate(response.tgl_booking));
                     $('#agent_id').val(response.agent_id);
                     $('#agent_nama').val(namaAgen);
+                    $('#check_in').val(formatDate(response.check_in));
+                    $('#check_out').val(formatDate(response.check_out));
+                    $('#mata_uang').val(response.mata_uang);
                     $('#keterangan').val(response.keterangan);
                 },
 
@@ -134,7 +137,7 @@
         // Function to display "No data" message
         function showNoDataMessage() {
             $('#detailPesananTable tbody').html(
-                '<tr><td colspan="10" style="text-align:center">No data record</td></tr>'
+                '<tr><td colspan="11" style="text-align:center">No data record</td></tr>'
             );
         }
 
@@ -142,7 +145,7 @@
         function handleAjaxError() {
             // Handle errors here, e.g., display an error message
             $('#detailPesananTable tbody').html(
-                '<tr><td colspan="10" style="text-align:center">An error occurred while retrieving data</td></tr>'
+                '<tr><td colspan="11" style="text-align:center">An error occurred while retrieving data</td></tr>'
             );
         }
 

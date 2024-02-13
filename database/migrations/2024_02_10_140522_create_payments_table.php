@@ -22,7 +22,7 @@ class CreatePaymentsTable extends Migration
             $table->decimal('usd_idr', 10, 2);
             $table->string('mu_tagihan');
             $table->string('mu_deposit');
-            $table->integer('deposit');
+            $table->decimal('deposit', 10, 2);
             $table->string('metode_bayar');
             $table->timestamps();
         });

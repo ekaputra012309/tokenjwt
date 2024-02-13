@@ -51,15 +51,15 @@
                         <div class="col-md-5 col-12">
                             <div class="form-group mandatory">
                                 <label for="check_in" class="form-label">Check In</label>
-                                <input type="date" id="check_in" class="form-control" placeholder="Check In"
-                                    name="check_in" data-parsley-required="true" />
+                                <input type="date" id="check_in_m" class="form-control" placeholder="Check In"
+                                    name="check_in" data-parsley-required="true" readonly />
                             </div>
                         </div>
                         <div class="col-md-5 col-12">
                             <div class="form-group mandatory">
                                 <label for="check_out" class="form-label">Check Out</label>
-                                <input type="date" id="check_out" class="form-control" placeholder="Check Out"
-                                    name="check_out" data-parsley-required="true" />
+                                <input type="date" id="check_out_m" class="form-control" placeholder="Check Out"
+                                    name="check_out" data-parsley-required="true" readonly />
                             </div>
                         </div>
                         <div class="col-md-2 col-12">
@@ -74,10 +74,11 @@
                         <div class="col-md-2 col-12">
                             <div class="form-group mandatory">
                                 <label for="mata_uang" class="form-label">Mata Uang</label>
-                                <select id="mata_uang" name="mata_uang" class="form-select"
+                                <select id="mata_uang_m" name="mata_uang" class="form-select"
                                     data-parsley-required="true">
+                                    <option value="">Pilih</option>
                                     <option value="SAR">SAR</option>
-                                    <option value="$US">$US</option>
+                                    <option value="USD">USD</option>
                                     <option value="IDR">IDR</option>
                                 </select>
                             </div>
@@ -99,8 +100,9 @@
                         <div class="col-md-4 col-12">
                             <div class="form-group mandatory">
                                 <label for="subtotal" class="form-label">Sub Total</label>
-                                <input type="number" id="subtotal" class="form-control" placeholder="Sub Total"
-                                    name="subtotal" data-parsley-required="true" value="0" readonly />
+                                <input type="number" id="subtotal" step="0.01" class="form-control"
+                                    placeholder="Sub Total" name="subtotal" data-parsley-required="true"
+                                    value="0" readonly />
                             </div>
                         </div>
                     </div>

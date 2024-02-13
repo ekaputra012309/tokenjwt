@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
-use Dompdf\Dompdf;
-use Illuminate\Support\Facades\View;
 
 class PagesController extends Controller
 {
@@ -234,36 +232,6 @@ class PagesController extends Controller
         );
 
         return view('page.payment.cetak', compact('data'));
-    }
-
-    public function generatePdf($id)
-    {
-        // Get data from your database or wherever you need
-        $autoId = Booking::where('id_booking', base64_decode($id))->value('booking_id');
-        $pageTitle = 'Invoice';
-
-        // Pass data to the Blade view
-        $data = array(
-            'pageTitle' => $pageTitle,
-            'idpage' => $id,
-            'autoId' => $autoId,
-        );
-
-        // Load the Blade view file
-        $html = view('page.payment.cetak', compact('data'))->render();
-
-        // Create new Dompdf instance
-        $dompdf = new Dompdf();
-
-        // Load HTML content
-        $dompdf->loadHtml($html);
-
-        // Render PDF (optional: set paper size and orientation)
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-
-        // Output PDF content
-        return $dompdf->stream();
     }
 
 }

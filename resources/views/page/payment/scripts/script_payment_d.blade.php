@@ -134,10 +134,6 @@
             $('#total_discount').val(totalDiscount.toFixed(2));
             $('#total_subtotal').val(formatCurrencyID(totalSubtotal));
 
-            $('.delete-btn').click(function() {
-                var bookingId = $(this).data('id');
-                deleteBooking(bookingId);
-            });
         }
 
         // Function to display "No data" message
@@ -243,17 +239,41 @@
                     $.each(response, function(index, pembayaran) {
                         var formattedPaymentDate = formatDate(pembayaran.tgl_payment);
                         var formattedDeposit = formatCurrencyID(pembayaran.deposit);
-                        var formattedSaridr = formatCurrencyID(pembayaran.sar_idr);
-                        var formattedUsdidr = formatCurrencyID(pembayaran.usd_idr);
                         var row =
                             '<tr>' +
+                            '<td><button class="btn btn-danger btn-sm delete-btn" data-id="' +
+                            pembayaran
+                            .id_payment +
+                            '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button></td>' +
                             '<td>' + formattedPaymentDate + '</td>' +
-                            '<td>' + formattedSaridr + '</td>' +
-                            '<td>' + formattedUsdidr + '</td>' +
                             '<td>' + formattedDeposit + '</td>' +
                             '<td>' + pembayaran.metode_bayar + '</td>' +
                             '</tr>';
                         $('#listPembayaran tbody').append(row);
+                    });
+
+                    $('.delete-btn').click(function() {
+                        var paymentId = $(this).data('id');
+                        // alert(paymentId);
+                        if (confirm('Are you sure you want to delete this payment?')) {
+                            // Perform deletion using AJAX
+                            $.ajax({
+                                url: "{{ route('payment') }}/" + paymentId,
+                                type: "DELETE",
+                                headers: {
+                                    'Authorization': 'Bearer ' + jwtToken
+                                },
+                                success: function(response) {
+                                    location.reload();
+                                },
+                                error: function(xhr, status, error) {
+                                    alert(
+                                        'An error occurred while deleting the pemesanan.'
+                                    );
+                                    console.error(xhr.responseText);
+                                }
+                            });
+                        }
                     });
                 },
                 error: function(xhr, status, error) {
@@ -261,5 +281,7 @@
                 }
             });
         }
+
+
     });
 </script>

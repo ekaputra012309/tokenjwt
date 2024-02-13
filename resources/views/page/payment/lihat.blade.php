@@ -110,9 +110,8 @@
                                             <table class="table" id="listPembayaran">
                                                 <thead>
                                                     <tr>
+                                                        <th>#</th>
                                                         <th>Tgl Pembayaran</th>
-                                                        <th>Kurs SAR 1 = IDR</th>
-                                                        <th>Kurs USD 1 = IDR</th>
                                                         <th>Jumlah Deposit</th>
                                                         <th>Metode Pembayaran</th>
                                                     </tr>

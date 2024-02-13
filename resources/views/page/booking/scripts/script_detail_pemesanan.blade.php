@@ -5,8 +5,11 @@
 
         // Show the detail pemesanan modal and reset the form
         $('#addDetailButton').on('click', function() {
+            $('#check_in_m').val($('#check_in').val());
+            $('#check_out_m').val($('#check_out').val());
+            $('#mata_uang_m').val($('#mata_uang').val());
+            calculateNights();
             $('#detailPemesananModal').modal('show');
-            $('#detailPemesananForm')[0].reset();
         });
 
         // Form submission for detail pemesanan
@@ -23,6 +26,7 @@
                         xhr.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
                     },
                     success: function(response) {
+                        $('#detailPemesananForm')[0].reset();
                         $('#detailPemesananModal').modal('hide');
                         refreshTable();
                     },
@@ -183,9 +187,11 @@
         }
 
         $('#closeModalBtnBooking').click(function() {
+            $('#detailPemesananForm')[0].reset();
             $('#detailPemesananModal').modal('hide');
         });
         $('#closeModalBtnBooking1').click(function() {
+            $('#detailPemesananForm')[0].reset();
             $('#detailPemesananModal').modal('hide');
         });
     });

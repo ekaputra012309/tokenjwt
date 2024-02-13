@@ -60,6 +60,32 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="check_in" class="form-label">Check In</label>
+                                                <input type="date" id="check_in" class="form-control"
+                                                    placeholder="Check In" name="check_in" data-parsley-required="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="check_out" class="form-label">Check Out</label>
+                                                <input type="date" id="check_out" class="form-control"
+                                                    placeholder="Check Out" name="check_out" data-parsley-required="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="mata_uang" class="form-label">Mata Uang</label>
+                                                <select id="mata_uang" name="mata_uang" class="form-select"
+                                                    data-parsley-required="true">
+                                                    <option value="">Pilih</option>
+                                                    <option value="SAR">SAR</option>
+                                                    <option value="USD">USD</option>
+                                                    <option value="IDR">IDR</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-md-6 col-12">
                                             <div class="form-group">
                                                 <button type="button" id="addDetailButton" class="btn btn-primary">Add
@@ -72,7 +98,7 @@
                                                 <table class="table" id="detailPesananTable">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 100px">#</th>
+                                                            <th style="width: 50px">#</th>
                                                             <th>Hotel</th>
                                                             <th>Tipe Kamar</th>
                                                             <th>Qty</th>
@@ -92,12 +118,12 @@
                                                         <tr>
                                                             <th colspan="9" style="text-align: right">Total</th>
                                                             <th><input id="total_discount" name="total_discount"
-                                                                    type="text" placeholder="0.00" class="form-control"
-                                                                    value="0">
+                                                                    type="text" placeholder="0.00"
+                                                                    class="form-control" value="0">
                                                             </th>
                                                             <th><input id="total_subtotal" name="total_subtotal"
-                                                                    type="text" placeholder="0.00" class="form-control"
-                                                                    value="0">
+                                                                    type="text" placeholder="0.00"
+                                                                    class="form-control" value="0">
                                                             </th>
                                                         </tr>
                                                     </tfoot>
