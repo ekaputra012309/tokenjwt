@@ -30,6 +30,22 @@ class PaymentDetailController extends Controller
         }
     }
 
+    public function showInv($id_inv)
+    {
+        try {
+            $payment_d = PaymentDetail::with('payment')
+                ->where('id_payment', $id_inv)
+                ->get();
+            if ($payment_d->isNotEmpty()) {
+                return response()->json($payment_d);
+            } else {
+                // return response()->json(['error' => 'Detail Payment not found for ID: ' . $id_inv], 404);
+            }
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Detail Payment not found'], 404);
+        }
+    }
+
     public function store(Request $request)
     {
         $payment = PaymentDetail::create($request->all());

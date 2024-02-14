@@ -14,11 +14,6 @@
             width: 100%;
         }
 
-        /* .invoice table {
-            width: 100%;
-            border-collapse: collapse;
-        } */
-
         span.header {
             font-size: 24pt;
         }
@@ -27,31 +22,33 @@
             font-size: 16pt;
         }
 
-        .custom-hr {
-            border: none;
-            height: 5px;
-            background-color: #f7d611;
+        .horizontal-rule {
+            background-color: transparent;
+            /* Set a transparent background initially */
+            margin: 10px 0;
+            /* Add margin to separate the rules */
         }
 
-        .custom-hr-2 {
-            border: none;
-            height: 5px;
-            background-color: black;
+        .horizontal-rule.black {
+            border-top: 4px solid black;
+            /* Apply black border to the black horizontal rule */
+        }
+
+        .horizontal-rule.red {
+            border-top: 4px solid #f7d611;
+            /* Apply red border to the red horizontal rule */
         }
     </style>
 </head>
 
 <body>
-    <embed id="pdfViewer" src="{{ route('p.payment.pdf', ['id' => $data['idpage']]) }}"
-        style="width: 100%; height: 800px; border: 1px solid #ccc;"></embed>
     <div>
         <table>
             <thead>
-                <tr style="border-bottom: 2px solid red">
+                <tr>
                     <th>
-                        {{-- <img src="{{ asset('assets/compiled/png/logo.png') }}" alt="logo" width="150px"> --}}
-                        <img src="{{ URL::asset('assets/compiled/png/logo.png') }}" alt="logo" width="150px">
-
+                        <img src="{{ asset('assets/compiled/png/logo.png') }}" alt="logo" width="150px"
+                            style="border-radius: 50%;">
                     </th>
                     <th>
                         <p>
@@ -66,8 +63,9 @@
                 </tr>
             </thead>
         </table>
-        <hr class="custom-hr">
-        <hr class="custom-hr-2">
+        <div class="horizontal-rule black"></div>
+        <div class="horizontal-rule red"></div>
+
         <table style="border-collapse: collapse" border="0">
             <thead>
                 <tr>
@@ -217,15 +215,12 @@
                             <tbody>
                                 <tr>
                                     <td style="width: 10%"></td>
-                                    <td style="width: 50%">
-                                        Approve By <br>
-                                        {{-- <img src="{{ asset('assets/compiled/png/logo.png') }}" alt="logo"
-                                            width="100px"> <br> --}}
-                                        <img src="{{ URL::asset('assets/compiled/png/logo.png') }}" alt="logo"
-                                            width="150px"> <br>
-
-                                        <b><u>Fatimah Az zahra</u></b> <br>
-                                        Finance
+                                    <td style="width: 50%; text-align: center;">
+                                        <span>Approve By</span> <br>
+                                        <img src="{{ asset('assets/compiled/png/logo.png') }}" alt="logo"
+                                            width="150px" style="border-radius: 50%;"> <br>
+                                        <span><b><u>Fatimah Az zahra</u></b></span> <br>
+                                        <span>Finance</span>
 
                                     </td>
                                 </tr>

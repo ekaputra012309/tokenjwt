@@ -40,7 +40,7 @@ class BookingDetailController extends Controller
             if ($booking_d->isNotEmpty()) {
                 return response()->json($booking_d);
             } else {
-                return response()->json(['error' => 'Detail Booking not found for INV: ' . $id_inv], 404);
+                // return response()->json(['error' => 'Detail Booking not found for INV: ' . $id_inv], 404);
             }
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Detail Booking not found'], 404);

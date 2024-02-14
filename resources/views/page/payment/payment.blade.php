@@ -104,6 +104,7 @@
                                     <th>Tanggal Pemesanan</th>
                                     <th>Agen</th>
                                     <th>Total Subtotal</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>

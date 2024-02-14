@@ -75,6 +75,7 @@ Route::controller(BookingController::class)->group(function () {
     Route::get('booking/{id}', 'show');
     Route::post('booking/{id}', 'update');
     Route::delete('booking/{id}', 'destroy');
+    Route::post('booking_up/{id}', 'updateStatusToLunas')->name('booking_up');;
 });
 // booking detail
 Route::controller(BookingDetailController::class)->group(function () {
@@ -98,6 +99,7 @@ Route::controller(PaymentDetailController::class)->group(function () {
     Route::get('payment_d', 'index')->name('payment_d');
     Route::post('payment_d', 'store');
     Route::get('payment_d/{id}', 'show');
+    Route::get('payment_d_inv/{id}', 'showInv')->name('payment_d_inv');
     Route::post('payment_d/{id}', 'update');
     Route::delete('payment_d/{id}', 'destroy');
 });

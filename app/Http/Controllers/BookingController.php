@@ -8,6 +8,7 @@ use App\Models\Booking;
 use App\Models\BookingDetail;
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -77,6 +78,45 @@ class BookingController extends Controller
             return response()->json(null, 204);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Booking Not Found'], 404);
+        }
+    }
+
+    public function updateStatusToLunas(Request $request, $id)
+    {
+        $idWithSlashes = preg_replace('/-(?!HTL)/', '/', $id);
+        try {
+            $booking = Booking::where('id_booking', $idWithSlashes)->firstOrFail();
+
+            // Update only the status field
+            $booking->status = $request->status;
+            $booking->save();
+
+            return response()->json($booking, 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Booking not found'], 404);
+        }
+    }
+
+
+    public function updateStatusToLunas1($id)
+    {
+        $idWithSlashes = preg_replace('/-(?!HTL)/', '/', $id);
+        try {
+            // Find the booking by ID
+            $booking = Booking::where('id_booking', $idWithSlashes)->firstOrFail();
+
+            // Update the status to "Lunas"
+            DB::transaction(function () use ($booking) {
+                $booking->status = 'Lunas';
+                $booking->save();
+            });
+
+            return response()->json($booking, 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Booking not found'], 404);
+        } catch (\Exception $e) {
+            // Handle other potential exceptions here
+            return response()->json(['error' => 'Failed to update status'], 500);
         }
     }
 }
