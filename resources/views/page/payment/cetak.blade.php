@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $data['pageTitle'] }} - {{ $data['autoId'] }}</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,19 +25,15 @@
 
         .horizontal-rule {
             background-color: transparent;
-            /* Set a transparent background initially */
             margin: 10px 0;
-            /* Add margin to separate the rules */
         }
 
         .horizontal-rule.black {
             border-top: 4px solid black;
-            /* Apply black border to the black horizontal rule */
         }
 
         .horizontal-rule.red {
-            border-top: 4px solid #f7d611;
-            /* Apply red border to the red horizontal rule */
+            border-top: 4px solid #fdd911;
         }
     </style>
 </head>
@@ -63,8 +60,8 @@
                 </tr>
             </thead>
         </table>
-        <div class="horizontal-rule black"></div>
         <div class="horizontal-rule red"></div>
+        <div class="horizontal-rule black"></div>
 
         <table style="border-collapse: collapse" border="0">
             <thead>
@@ -73,40 +70,40 @@
                 </tr>
                 <tr>
                     <td>Name</td>
-                    <td>: <b>Em Abror</b></td>
+                    <td>: <b><span id="namaagen">Em Abror</span></b></td>
                     <td colspan="3" width="30%"></td>
                     <td colspan="2">Number</td>
-                    <td>: 003/INV</td>
+                    <td>: <span id="noinvoice">003/INV</span></td>
                 </tr>
                 <tr>
                     <td colspan="5"></td>
                     <td colspan="2">Invoice Date</td>
-                    <td>: 2 Feb</td>
+                    <td>: <span id="tglinvoice">2 Feb</span></td>
                 </tr>
                 <tr>
                     <td colspan="5"></td>
                     <td colspan="2">Payment Term</td>
-                    <td>: Cash / Transfer</td>
+                    <td>: <span id="metodebayar">Cash</span> / Transfer</td>
                 </tr>
                 <tr>
                     <td>Nama Hotel</td>
-                    <td>: <b>Rayyana</b></td>
+                    <td>: <b><span id="namahotel">Rayyana</span></b></td>
                     <td colspan="6"></td>
                 </tr>
                 <tr>
                     <td>Check In</td>
-                    <td>: 3 Feb</td>
+                    <td>: <span id="checkin">3 Feb</span></td>
                     <td colspan="6"></td>
                 </tr>
                 <tr>
                     <td>Check Out</td>
-                    <td>: 3 Feb</td>
+                    <td>: <span id="checkout">3 Feb</span></td>
                     <td colspan="6"></td>
                 </tr>
             </thead>
         </table>
         <br>
-        <table border="1" style="width: 80%; border-collapse: collapse;">
+        <table border="1" style="width: 80%; border-collapse: collapse;" cellpadding="3px">
             <thead>
                 <tr>
                     <th>Room Type</th>
@@ -116,7 +113,7 @@
                     <th colspan="2">Ammount</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="invoiceDetailsBody">
                 <tr>
                     <td style="text-align: center">Triple</td>
                     <td style="text-align: center">1</td>
@@ -139,19 +136,20 @@
             <tfoot>
                 <tr>
                     <th>TOTAL</th>
-                    <th>2</th>
+                    <th><span id="sumqty"></span></th>
                     <th colspan="3">Sub Total</th>
                     <th style="text-align: left">SAR</th>
-                    <th style="text-align: right">5.900</th>
+                    <th style="text-align: right"><span id="sumamount"></span><input type="hidden" id="sumamount1">
+                    </th>
                 </tr>
                 <tr>
                     <th colspan="2" rowspan="4"></th>
                     <th colspan="3">Total dalam USD</th>
-                    <th colspan="2" style="text-align: right">$1.578</th>
+                    <th colspan="2" style="text-align: right">$<span id="totalusd">1.578</span></th>
                 </tr>
                 <tr>
                     <th colspan="3">Total dalam IDR</th>
-                    <th colspan="2" style="text-align: right">25.924.600</th>
+                    <th colspan="2" style="text-align: right"><span id="totalidr">25.924.600</span></th>
                 </tr>
                 <tr>
                     <th colspan="3">Deposit 2/2/2024</th>
@@ -179,7 +177,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <table border="1" style="border-collapse: collapse; text-align: left;">
+                        <table border="1" style="border-collapse: collapse; text-align: left;" cellpadding="5px">
                             <tbody>
                                 <tr>
                                     <th>
@@ -218,7 +216,7 @@
                                     <td style="width: 50%; text-align: center;">
                                         <span>Approve By</span> <br>
                                         <img src="{{ asset('assets/compiled/png/logo.png') }}" alt="logo"
-                                            width="150px" style="border-radius: 50%;"> <br>
+                                            width="120px" style="border-radius: 50%;"> <br>
                                         <span><b><u>Fatimah Az zahra</u></b></span> <br>
                                         <span>Finance</span>
 
@@ -230,9 +228,118 @@
                 </tr>
             </tbody>
         </table>
-
-
     </div>
+
+    <script>
+        $(document).ready(function() {
+            var jwtToken = localStorage.getItem('jwtToken');
+            fetchPaymentData(jwtToken);
+
+            function fetchPaymentData(jwtToken) {
+                var paymentIdBase64 = "{{ $data['idpage'] }}";
+                var paymentId = atob(paymentIdBase64);
+                if (jwtToken) {
+                    $.ajax({
+                        url: "{{ route('payment') }}/" + paymentId,
+                        type: 'GET',
+                        beforeSend: function(xhr) {
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
+                        },
+                        success: function(response) {
+                            $('#namaagen').html(response.booking.agent.nama_agent);
+                            $('#noinvoice').html(response.id_booking);
+                            $('#tglinvoice').html(formatDate(response.booking.tgl_booking));
+                            $('#namahotel').html(response.booking.hotel.nama_hotel);
+                            $('#checkin').html(formatDate(response.booking.check_in));
+                            $('#checkout').html(formatDate(response.booking.check_out));
+                            var ttlamount = response.booking.total_subtotal;
+                            var ttlusd = ttlamount * response.sar_usd;
+                            var ttlidr = ttlamount * response.sar_idr;
+                            console.log(ttlamount);
+                            console.log(response.sar_usd);
+                            console.log(ttlusd);
+                            console.log(response.sar_idr);
+                            console.log(ttlidr);
+                            $('#totalusd').html(formatCurrencyID(ttlusd));
+                            $('#totalidr').html(formatCurrencyID(ttlidr));
+
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                } else {
+                    console.error('JWT token not found in localStorage.');
+                }
+            }
+
+            function formatDate(dateTimeString) {
+                var dateTime = new Date(dateTimeString);
+                var day = ('0' + dateTime.getDate()).slice(-2);
+                var monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+                ];
+                var monthIndex = dateTime.getMonth();
+                var year = dateTime.getFullYear();
+                return day + ' ' + monthNames[monthIndex] + ' ' + year;
+            }
+            getDetail();
+
+            function getDetail() {
+                var id = '{{ $data['autoId'] }}';
+                var idWithHyphens = id.replace(/\//g, '-');
+                var totalQty = 0;
+                var totalSubtotal = 0;
+                $.ajax({
+                    url: "{{ route('booking_d_inv', ['id' => ':id']) }}".replace(':id', idWithHyphens),
+                    type: 'GET',
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
+                    },
+                    success: function(data) {
+                        // Clear existing rows
+                        $('#invoiceDetailsBody').empty();
+                        // Append new rows based on received data
+                        $.each(data, function(index, item) {
+                            totalQty += item.qty;
+                            totalSubtotal += parseFloat(item.subtotal);
+
+                            var row = '<tr>' +
+                                '<td style="text-align: center">' + item.room.keterangan +
+                                '</td>' +
+                                '<td style="text-align: center">' + item.qty +
+                                '</td>' +
+                                '<td style="text-align: center">' + item.malam + '</td>' +
+                                '<td style="text-align: left">SAR</td>' +
+                                '<td style="text-align: right">' + formatCurrencyID(item
+                                    .tarif) + '</td>' +
+                                '<td style="text-align: left">SAR</td>' +
+                                '<td style="text-align: right">' + formatCurrencyID(item
+                                    .subtotal) + '</td>' +
+                                '</tr>';
+                            $('#invoiceDetailsBody').append(row);
+                        });
+                        $('#sumqty').html(totalQty);
+                        $('#sumamount').html(formatCurrencyID(totalSubtotal));
+                        $('#sumamount1').val(totalSubtotal);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(status + ': ' + error);
+                    }
+                });
+            }
+
+            function formatCurrencyID(value) {
+                var numericValue = parseFloat(value);
+                if (isNaN(numericValue)) {
+                    return '';
+                }
+                return numericValue.toLocaleString('id-ID');
+            }
+
+        });
+    </script>
 </body>
 
 </html>

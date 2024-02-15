@@ -19,7 +19,7 @@ class BookingController extends Controller
 
     public function index()
     {
-        $bookings = Booking::with('agent', 'details')
+        $bookings = Booking::with('agent', 'hotel', 'details')
             ->orderBy('created_at', 'desc')
             ->get();
         return response()->json($bookings);
@@ -29,7 +29,7 @@ class BookingController extends Controller
     {
         $bookingIdsWithPayments = Payment::pluck('id_booking')->toArray();
 
-        $bookingsWithoutPayments = Booking::with('agent', 'details')
+        $bookingsWithoutPayments = Booking::with('agent', 'hotel', 'details')
             ->whereNotIn('id_booking', $bookingIdsWithPayments)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -41,7 +41,7 @@ class BookingController extends Controller
     public function show($id)
     {
         try {
-            $booking = Booking::with('agent', 'details')->find($id);
+            $booking = Booking::with('agent', 'hotel', 'details')->find($id);
             return response()->json($booking);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Booking not found'], 404);
@@ -94,29 +94,6 @@ class BookingController extends Controller
             return response()->json($booking, 200);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Booking not found'], 404);
-        }
-    }
-
-
-    public function updateStatusToLunas1($id)
-    {
-        $idWithSlashes = preg_replace('/-(?!HTL)/', '/', $id);
-        try {
-            // Find the booking by ID
-            $booking = Booking::where('id_booking', $idWithSlashes)->firstOrFail();
-
-            // Update the status to "Lunas"
-            DB::transaction(function () use ($booking) {
-                $booking->status = 'Lunas';
-                $booking->save();
-            });
-
-            return response()->json($booking, 200);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Booking not found'], 404);
-        } catch (\Exception $e) {
-            // Handle other potential exceptions here
-            return response()->json(['error' => 'Failed to update status'], 500);
         }
     }
 }

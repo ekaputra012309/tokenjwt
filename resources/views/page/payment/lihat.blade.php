@@ -27,7 +27,7 @@
                                 <div class=" d-flex justify-content-between align-items-center">
                                     <div>
                                         <button type="button" class="btn btn-danger" id="cetakPembayaran"><i
-                                                class="bi bi-filetype-pdf"></i>
+                                                class="bi bi-printer"></i>
                                             Cetak</button>
                                     </div>
                                     <div>
@@ -101,17 +101,29 @@
                         <div class="card-content">
                             <div class="card-body">
                                 <div class="col-md-12 col-12">
+                                    <h3>Rincian Pemesanan</h3>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <td><b>Nama Hotel</b></td>
+                                                    <td>: <span id="namahotel"></span></td>
+                                                    <td><b>Check In</b></td>
+                                                    <td>: <span id="checkin"></span></td>
+                                                    <td><b>Check Out</b></td>
+                                                    <td>: <span id="checkout"></span></td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-12">
                                     <div class="table-responsive">
                                         <table class="table" id="detailPesananTable">
                                             <thead>
                                                 <tr>
-                                                    <th>Hotel</th>
                                                     <th>Tipe Kamar</th>
                                                     <th>Qty</th>
-                                                    <th style="width: 110px">Check In</th>
-                                                    <th style="width: 110px">Check Out</th>
-                                                    <th>Malam</th>
-                                                    <th>Mata Uang</th>
                                                     <th>Tarif</th>
                                                     <th>Diskon</th>
                                                     <th>Sub Total</th>
@@ -122,14 +134,10 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Keterangan</th>
-                                                    <th colspan="6">
-                                                        <textarea class="form-control" id="keterangan" rows="1" placeholder="Keterangan" readonly></textarea>
-                                                    </th>
-                                                    <th style="text-align: right; vertical-align: top">Total</th>
-                                                    <th style="vertical-align: top"><input id="total_discount"
-                                                            type="text" placeholder="0.00" class="form-control"
-                                                            value="0" readonly>
+                                                    <th colspan="3" style="text-align: right">Total</th>
+                                                    <th style="vertical-align: top">
+                                                        <input id="total_discount" type="text" placeholder="0.00"
+                                                            class="form-control" value="0" readonly>
                                                     </th>
                                                     <th style="vertical-align: top"><input id="total_subtotal"
                                                             type="text" placeholder="0.00" class="form-control"
@@ -138,6 +146,10 @@
                                                 </tr>
                                             </tfoot>
                                         </table>
+                                        <div>
+                                            <label for=""><b>Keterangan</b></label>
+                                            <textarea class="form-control" id="keterangan" rows="2" placeholder="Keterangan" readonly></textarea>
+                                        </div>
                                     </div>
                                 </div>
 

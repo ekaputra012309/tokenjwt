@@ -111,13 +111,8 @@
                     detail.id_booking_detail +
                     '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>' +
                     '</td>' +
-                    '<td>' + detail.hotel.nama_hotel + '</td>' +
                     '<td>' + detail.room.keterangan + '</td>' +
                     '<td>' + detail.qty + '</td>' +
-                    '<td>' + formattedCheckInDate + '</td>' +
-                    '<td>' + formattedCheckOutDate + '</td>' +
-                    '<td>' + detail.malam + '</td>' +
-                    '<td>' + detail.mata_uang + '</td>' +
                     '<td>' + detail.tarif + '</td>' +
                     '<td>' + detail.discount + '</td>' +
                     '<td>' + detail.subtotal + '</td>' +

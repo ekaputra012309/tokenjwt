@@ -17,7 +17,9 @@ class CreatePaymentsTable extends Migration
             $table->increments('id_payment');
             $table->string('id_booking');
             $table->string('pilih_konversi');
-            $table->decimal('konversi', 10, 2);
+            $table->decimal('sar_idr', 10, 2);
+            $table->decimal('sar_usd', 10, 2);
+            $table->decimal('usd_idr', 10, 2);
             $table->decimal('hasil_konversi', 10, 2);
             $table->timestamps();
         });

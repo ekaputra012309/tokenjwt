@@ -16,14 +16,14 @@ class BookingDetailController extends Controller
 
     public function index()
     {
-        $booking_ds = BookingDetail::with('hotel', 'room')->get();
+        $booking_ds = BookingDetail::with('room')->get();
         return response()->json($booking_ds);
     }
 
     public function show($id)
     {
         try {
-            $booking_d = BookingDetail::with('hotel', 'room')->find($id);
+            $booking_d = BookingDetail::with('room')->find($id);
             return response()->json($booking_d);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Detail Booking not found'], 404);
@@ -34,7 +34,7 @@ class BookingDetailController extends Controller
     {
         $idWithSlashes = preg_replace('/-(?!HTL)/', '/', $id_inv);
         try {
-            $booking_d = BookingDetail::with('hotel', 'room') // Replace 'relationName' with the name of the relation
+            $booking_d = BookingDetail::with('room') // Replace 'relationName' with the name of the relation
                 ->where('booking_id', $idWithSlashes)
                 ->get();
             if ($booking_d->isNotEmpty()) {

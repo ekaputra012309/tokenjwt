@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Payment;
 
 class PagesController extends Controller
 {
@@ -210,7 +211,7 @@ class PagesController extends Controller
 
     public function lihatPayment($id)
     {
-        $autoId = Booking::where('id_booking', base64_decode($id))->value('booking_id');
+        $autoId = Payment::where('id_payment', base64_decode($id))->value('id_booking');
         $pageTitle = 'Detail Payment - PT RIZQUNA MEKAH MADINAH';
         $data = array(
             'pageTitle' => $pageTitle,
@@ -223,7 +224,7 @@ class PagesController extends Controller
 
     public function cetakPayment($id)
     {
-        $autoId = Booking::where('id_booking', base64_decode($id))->value('booking_id');
+        $autoId = Payment::where('id_payment', base64_decode($id))->value('id_booking');
         $pageTitle = 'Invoice ';
         $data = array(
             'pageTitle' => $pageTitle,

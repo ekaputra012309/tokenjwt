@@ -13,9 +13,11 @@ class Booking extends Model
     protected $fillable = [
         'booking_id',
         'tgl_booking',
+        'hotel_id',
         'agent_id',
         'check_in',
         'check_out',
+        'malam',
         'mata_uang',
         'keterangan',
         'total_discount',
@@ -31,5 +33,10 @@ class Booking extends Model
     public function agent()
     {
         return $this->belongsTo(Agent::class, 'agent_id');
+    }
+    // Define the relationship with Hotel
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class, 'hotel_id');
     }
 }

@@ -21,10 +21,6 @@
         // Event listener for currency conversion selection
         $('#pilih_konversi').change(function() {
             $('#hasil').html($(this).val());
-        });
-
-        // Event listener for conversion input
-        $('#konversi').on('keyup', function() {
             konversiHasil();
         });
 
@@ -103,12 +99,29 @@
 
         // Function to handle currency conversion
         function konversiHasil() {
+            var pilihkonversi = $('#pilih_konversi').val();
+            var mata_uang = $('#mata_uang').val();
+            var sar_idr = $('#sar_idr').val();
+            var sar_usd = $('#sar_usd').val();
+            var usd_idr = $('#usd_idr').val();
             var tarif = parseFloat($('#subtotal').val());
-            var konversi = parseFloat($('#konversi').val());
-            var hasilKonversi = tarif * konversi;
+            var hasilKonversi = 0;
+
+            if (pilihkonversi == 'SAR' && mata_uang == 'SAR') {
+                hasilKonversi = tarif;
+            } else if (pilihkonversi == 'USD' && mata_uang == 'SAR') {
+                hasilKonversi = tarif * sar_usd;
+            } else if (pilihkonversi == 'IDR' && mata_uang == 'SAR') {
+                hasilKonversi = tarif * sar_idr;
+            } else if (pilihkonversi == 'USD' && mata_uang == 'USD') {
+                hasilKonversi = tarif;
+            } else if (pilihkonversi == 'IDR' && mata_uang == 'USD') {
+                hasilKonversi = tarif * usd_idr;
+            }
 
             $('#hasil_konversi').val(hasilKonversi);
         }
+
 
         // Function to handle payment form submission
         function submitPaymentForm(token) {

@@ -12,13 +12,9 @@ class BookingDetail extends Model
     protected $primaryKey = 'id_booking_detail';
     protected $fillable = [
         'booking_id',
-        'hotel_id',
         'room_id',
         'qty',
-        'check_in',
-        'check_out',
         'malam',
-        'mata_uang',
         'tarif',
         'discount',
         'subtotal',
@@ -29,11 +25,7 @@ class BookingDetail extends Model
     {
         return $this->belongsTo(Booking::class, 'booking_id', 'booking_id');
     }
-    // Define the relationship with Hotel
-    public function hotel()
-    {
-        return $this->belongsTo(Hotel::class, 'hotel_id');
-    }
+
     // Define the relationship with Room
     public function room()
     {

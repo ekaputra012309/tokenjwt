@@ -16,14 +16,14 @@ class PaymentController extends Controller
 
     public function index()
     {
-        $payments = Payment::with('booking', 'booking.agent')->get();
+        $payments = Payment::with('detailpay','booking', 'booking.agent', 'booking.hotel')->get();
         return response()->json($payments);
     }
 
     public function show($id)
     {
         try {
-            $payment = Payment::with('booking', 'booking.agent')->find($id);
+            $payment = Payment::with('detailpay','booking', 'booking.agent', 'booking.hotel')->find($id);
             return response()->json($payment);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Payment not found'], 404);

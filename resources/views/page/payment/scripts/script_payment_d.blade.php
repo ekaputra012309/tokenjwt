@@ -11,6 +11,7 @@
         // Click event handler for adding detail pembayaran
         $('#addDetailPembayaran').on('click', function() {
             $('#detailPembayaranModal').modal('show');
+            $('#deposit').focus();
         });
 
         // Retrieve JWT token from localStorage
@@ -167,14 +168,20 @@
                         var namaAgen = response.booking.agent.nama_agent + ' - ' + response.booking
                             .agent
                             .contact_person;
+                        var namaHotel = response.booking.hotel.nama_hotel + ' - ' + response.booking
+                            .hotel
+                            .contact_person;
                         var simbol = (response.pilih_konversi === 'USD' ? '$' : '');
                         $('#tgl_booking').val(formatDate2(response.booking.tgl_booking));
                         $('#agent_id').val(response.booking.agent_id);
                         $('#agent_nama').val(namaAgen);
+                        $('#namahotel').html(namaHotel);
+                        $('#checkin').html(formatDate3(response.booking.check_in));
+                        $('#checkout').html(formatDate3(response.booking.check_out));
                         $('#keterangan').val(response.booking.keterangan);
                         $('#atas').html(response.pilih_konversi);
                         $('#kiri').html(simbol);
-                        // $('#bawah').html(formatCurrencyID(response.hasil_konversi));
+                        $('#bawah').html(formatCurrencyID(response.hasil_konversi));
                         $('#kanan').val(response.hasil_konversi);
                         refreshTable();
                     },
@@ -223,6 +230,7 @@
                     },
                     success: function(response) {
                         $('#detailPembayaranModal').modal('hide');
+                        $('#detailPembayaranForm')[0].reset();
                         location.reload();
                     },
                     error: function(xhr, status, error) {
@@ -248,13 +256,8 @@
                 var formattedCheckInDate = formatDate(detail.check_in);
                 var formattedCheckOutDate = formatDate(detail.check_out);
                 var row = '<tr>' +
-                    '<td>' + detail.hotel.nama_hotel + '</td>' +
                     '<td>' + detail.room.keterangan + '</td>' +
                     '<td>' + detail.qty + '</td>' +
-                    '<td>' + formattedCheckInDate + '</td>' +
-                    '<td>' + formattedCheckOutDate + '</td>' +
-                    '<td>' + detail.malam + '</td>' +
-                    '<td>' + detail.mata_uang + '</td>' +
                     '<td>' + detail.tarif + '</td>' +
                     '<td>' + formatCurrencyID(detail.discount) + '</td>' +
                     '<td>' + formatCurrencyID(detail.subtotal) + '</td>' +
@@ -289,6 +292,17 @@
             var month = ('0' + (dateTime.getMonth() + 1)).slice(-2);
             var year = dateTime.getFullYear();
             return year + '-' + month + '-' + day;
+        }
+
+        function formatDate3(dateTimeString) {
+            var dateTime = new Date(dateTimeString);
+            var day = ('0' + dateTime.getDate()).slice(-2);
+            var monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+            var monthIndex = dateTime.getMonth();
+            var year = dateTime.getFullYear();
+            return day + ' ' + monthNames[monthIndex] + ' ' + year;
         }
 
         $('#metode_bayar_toggle').change(function() {

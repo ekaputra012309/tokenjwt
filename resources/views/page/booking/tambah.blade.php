@@ -60,18 +60,22 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-12">
+                                        <div class="col-md-6 col-12">
                                             <div class="form-group mandatory">
-                                                <label for="check_in" class="form-label">Check In</label>
-                                                <input type="date" id="check_in" class="form-control"
-                                                    placeholder="Check In" name="check_in" data-parsley-required="true" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-12">
-                                            <div class="form-group mandatory">
-                                                <label for="check_out" class="form-label">Check Out</label>
-                                                <input type="date" id="check_out" class="form-control"
-                                                    placeholder="Check Out" name="check_out" data-parsley-required="true" />
+                                                <label for="hotel_nama" class="form-label">Hotel</label>
+                                                <div class="input-group">
+                                                    <input type="hidden" id="hotel_id" class="form-control"
+                                                        placeholder="Hotel" name="hotel_id" data-parsley-required="true"
+                                                        readonly />
+                                                    <input type="text" id="hotel_nama" class="form-control"
+                                                        placeholder="Hotel" readonly />
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary" type="button"
+                                                            id="searchButtonHotel">
+                                                            <i class="bi bi-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-12">
@@ -85,9 +89,37 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12">
+                                        <div class="row">
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="check_in" class="form-label">Check In</label>
+                                                    <input type="date" id="check_in" class="form-control"
+                                                        placeholder="Check In" name="check_in"
+                                                        data-parsley-required="true" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="check_out" class="form-label">Check Out</label>
+                                                    <input type="date" id="check_out" class="form-control"
+                                                        placeholder="Check Out" name="check_out"
+                                                        data-parsley-required="true" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="malam" class="form-label">Malam</label>
+                                                    <input type="number" id="malam" class="form-control"
+                                                        placeholder="0" name="malam" data-parsley-required="true"
+                                                        value="0" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="col-md-4 col-12">
                                             <div class="form-group">
-                                                <button type="button" id="addDetailButton" class="btn btn-primary">Add
+                                                <button type="button" id="addDetailButton" class="btn btn-primary">
+                                                    <i class="bi bi-plus-circle"></i>
                                                     Detail
                                                     Pemesanan</button>
                                             </div>
@@ -98,13 +130,8 @@
                                                     <thead>
                                                         <tr>
                                                             <th style="width: 50px">#</th>
-                                                            <th>Hotel</th>
                                                             <th>Tipe Kamar</th>
                                                             <th>Qty</th>
-                                                            <th style="width: 110px">Check In</th>
-                                                            <th style="width: 110px">Check Out</th>
-                                                            <th>Malam</th>
-                                                            <th>Mata Uang</th>
                                                             <th>Tarif</th>
                                                             <th>Diskon</th>
                                                             <th>Sub Total</th>
@@ -115,7 +142,7 @@
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <th colspan="9" style="text-align: right">Total</th>
+                                                            <th colspan="4" style="text-align: right">Total</th>
                                                             <th><input id="total_discount" name="total_discount"
                                                                     type="text" placeholder="0.00"
                                                                     class="form-control" value="0">

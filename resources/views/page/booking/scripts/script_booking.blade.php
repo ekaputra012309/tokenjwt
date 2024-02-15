@@ -16,7 +16,7 @@
                         xhr.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
                     },
                     success: function(response) {
-                        window.location.href = "{{ url('/pages/booking') }}";
+                        window.location.href = "{{ route('p.booking') }}";
                         console.log(response);
                     },
                     error: function(xhr, status, error) {
@@ -68,13 +68,8 @@
                     detail.id_booking_detail +
                     '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>' +
                     '</td>' +
-                    '<td>' + detail.hotel.nama_hotel + '</td>' +
                     '<td>' + detail.room.keterangan + '</td>' +
                     '<td>' + detail.qty + '</td>' +
-                    '<td>' + formattedCheckInDate + '</td>' +
-                    '<td>' + formattedCheckOutDate + '</td>' +
-                    '<td>' + detail.malam + '</td>' +
-                    '<td>' + detail.mata_uang + '</td>' +
                     '<td>' + detail.tarif + '</td>' +
                     '<td>' + detail.discount + '</td>' +
                     '<td>' + detail.subtotal + '</td>' +
@@ -94,7 +89,7 @@
         // Function to display "No data" message
         function showNoDataMessage() {
             $('#detailPesananTable tbody').html(
-                '<tr><td colspan="10" style="text-align:center">No data record</td></tr>'
+                '<tr><td colspan="6" style="text-align:center">No data record</td></tr>'
             );
         }
 
@@ -102,7 +97,7 @@
         function handleAjaxError() {
             // Handle errors here, e.g., display an error message
             $('#detailPesananTable tbody').html(
-                '<tr><td colspan="10" style="text-align:center">An error occurred while retrieving data</td></tr>'
+                '<tr><td colspan="6" style="text-align:center">An error occurred while retrieving data</td></tr>'
             );
         }
 

@@ -12,26 +12,10 @@
                 <div class="modal-body">
                     <!-- Your form for adding detail pemesanan goes here -->
                     <div class="row">
-                        <div class="col-md-6 col-12">
-                            <div class="form-group mandatory">
-                                <label for="hotel_nama" class="form-label">Hotel</label>
-                                <div class="input-group">
-                                    <input type="hidden" id="booking_id" class="form-control" name="booking_id"
-                                        value="{{ $data['autoId'] }}" readonly />
-                                    <input type="hidden" id="hotel_id" class="form-control" placeholder="Hotel"
-                                        name="hotel_id" data-parsley-required="true" readonly />
-                                    <input type="text" id="hotel_nama" class="form-control" placeholder="Hotel"
-                                        readonly />
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button" id="searchButtonHotel">
-                                            <i class="bi bi-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-md-4 col-12">
                             <div class="form-group mandatory">
+                                <input type="hidden" id="booking_id" class="form-control" name="booking_id"
+                                    value="{{ $data['autoId'] }}" readonly />
                                 <label for="room_id" class="form-label">Tipe Kamar</label>
                                 <select id="room_id" name="room_id" class="form-select" data-parsley-required="true"
                                     disabled>
@@ -39,50 +23,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-2 col-12">
+                        <div class="col-md-3 col-12">
                             <div class="form-group mandatory">
                                 <label for="qty" class="form-label">Quantity</label>
+                                <input type="hidden" id="malam1" name="malam">
                                 <input type="number" id="qty" class="form-control" placeholder="0" name="qty"
                                     data-parsley-required="true" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-5 col-12">
-                            <div class="form-group mandatory">
-                                <label for="check_in" class="form-label">Check In</label>
-                                <input type="date" id="check_in_m" class="form-control" placeholder="Check In"
-                                    name="check_in" data-parsley-required="true" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-5 col-12">
-                            <div class="form-group mandatory">
-                                <label for="check_out" class="form-label">Check Out</label>
-                                <input type="date" id="check_out_m" class="form-control" placeholder="Check Out"
-                                    name="check_out" data-parsley-required="true" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-12">
-                            <div class="form-group mandatory">
-                                <label for="malam" class="form-label">Malam</label>
-                                <input type="number" id="malam" class="form-control" placeholder="0" name="malam"
-                                    data-parsley-required="true" value="0" readonly />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2 col-12">
-                            <div class="form-group mandatory">
-                                <label for="mata_uang" class="form-label">Mata Uang</label>
-                                <select id="mata_uang_m" name="mata_uang" class="form-select"
-                                    data-parsley-required="true">
-                                    <option value="">Pilih</option>
-                                    <option value="SAR">SAR</option>
-                                    <option value="USD">USD</option>
-                                    <option value="IDR">IDR</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="col-md-4 col-12">
                             <div class="form-group mandatory">
                                 <label for="tarif" class="form-label">Tarif</label>
@@ -90,19 +40,19 @@
                                     name="tarif" data-parsley-required="true" step="0.01" />
                             </div>
                         </div>
-                        <div class="col-md-2 col-12">
+                        <div class="col-md-3 col-12">
                             <div class="form-group mandatory">
                                 <label for="discount" class="form-label">Diskon</label>
                                 <input type="number" id="discount" class="form-control" placeholder="0"
                                     name="discount" data-parsley-required="true" value="0" />
                             </div>
                         </div>
-                        <div class="col-md-4 col-12">
+                        <div class="col-md-5 col-12">
                             <div class="form-group mandatory">
                                 <label for="subtotal" class="form-label">Sub Total</label>
                                 <input type="number" id="subtotal" step="0.01" class="form-control"
-                                    placeholder="Sub Total" name="subtotal" data-parsley-required="true"
-                                    value="0" readonly />
+                                    placeholder="Sub Total" name="subtotal" data-parsley-required="true" value="0"
+                                    readonly />
                             </div>
                         </div>
                     </div>

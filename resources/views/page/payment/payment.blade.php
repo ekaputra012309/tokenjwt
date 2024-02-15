@@ -5,13 +5,13 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Data Pemesanan Hotel</h3>
+                    <h3>Data Payment Hotel</h3>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('p.dash') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Data Pemesanan Hotel</li>
+                            <li class="breadcrumb-item active" aria-current="page">Data Payment Hotel</li>
                         </ol>
                     </nav>
                 </div>
@@ -21,6 +21,31 @@
             <div class="card">
                 <div class="card-body">
                     <form id="paymentForm" class="form" method="POST" action="#" data-parsley-validate>
+                        <div class="row">
+                            <h5>Conversion</h5>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group mandatory">
+                                    <label for="sar_idr" class="form-label">1 SAR = IDR</label>
+                                    <input type="number" id="sar_idr" name="sar_idr" class="form-control" step="0.01"
+                                        data-parsley-required="true">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group mandatory">
+                                    <label for="sar_usd" class="form-label">1 SAR = USD</label>
+                                    <input type="number" id="sar_usd" name="sar_usd" class="form-control" step="0.01"
+                                        data-parsley-required="true">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group mandatory">
+                                    <label for="usd_idr" class="form-label">1 USD = IDR</label>
+                                    <input type="number" id="usd_idr" name="usd_idr" class="form-control" step="0.01"
+                                        data-parsley-required="true">
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
                         <div class="row">
                             <div class="col-md-4 col-12">
                                 <div class="form-group mandatory">
@@ -45,7 +70,7 @@
                                         <option value="">Pilih</option>
                                         <option value="SAR">SAR</option>
                                         <option value="USD">USD</option>
-                                        <option value="IDR">IDR</option>
+                                        {{-- <option value="IDR">IDR</option> --}}
                                     </select>
                                 </div>
                             </div>
@@ -59,13 +84,6 @@
                                         <option value="USD">USD</option>
                                         <option value="IDR">IDR</option>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-12">
-                                <div class="form-group mandatory">
-                                    <label for="konversi" class="form-label">Conversion</label>
-                                    <input type="number" id="konversi" name="konversi" class="form-control" step="0.01"
-                                        data-parsley-required="true">
                                 </div>
                             </div>
                         </div>

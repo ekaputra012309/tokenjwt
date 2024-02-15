@@ -13,12 +13,19 @@ class Payment extends Model
     protected $fillable = [
         'id_booking',
         'pilih_konversi',
-        'konversi',
+        'sar_idr',
+        'sar_usd',
+        'usd_idr',
         'hasil_konversi',
     ];
     // Define the relationship with booking
     public function booking()
     {
         return $this->belongsTo(Booking::class, 'id_booking', 'booking_id');
+    }
+
+    public function detailpay()
+    {
+        return $this->hasMany(PaymentDetail::class, 'id_payment', 'id_payment');
     }
 }

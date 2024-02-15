@@ -76,6 +76,7 @@
             var timeDifference = checkOutDate.getTime() - checkInDate.getTime();
             var nights = Math.ceil(timeDifference / (1000 * 3600 * 24));
             $('#malam').val(nights);
+            $('#malam1').val(nights);
         }
 
         // Event listener for 'check_in' and 'check_out' input fields
@@ -123,13 +124,8 @@
                             detail.id_booking_detail +
                             '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>' +
                             '</td>' +
-                            '<td>' + detail.hotel.nama_hotel + '</td>' +
                             '<td>' + detail.room.keterangan + '</td>' +
                             '<td>' + detail.qty + '</td>' +
-                            '<td>' + formattedCheckInDate + '</td>' +
-                            '<td>' + formattedCheckOutDate + '</td>' +
-                            '<td>' + detail.malam + '</td>' +
-                            '<td>' + detail.mata_uang + '</td>' +
                             '<td>' + detail.tarif + '</td>' +
                             '<td>' + detail.discount + '</td>' +
                             '<td>' + detail.subtotal + '</td>' +
@@ -170,8 +166,8 @@
             var totalDiscount = 0;
             var totalSubtotal = 0;
             $('#detailPesananTable tbody tr').each(function() {
-                totalDiscount += parseFloat($(this).find('td:eq(9)').text());
-                totalSubtotal += parseFloat($(this).find('td:eq(10)').text());
+                totalDiscount += parseFloat($(this).find('td:eq(4)').text());
+                totalSubtotal += parseFloat($(this).find('td:eq(5)').text());
             });
             $('#total_discount').val(totalDiscount.toFixed(2));
             $('#total_subtotal').val(totalSubtotal.toFixed(2));
