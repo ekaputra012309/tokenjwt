@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\BookingDetail;
 use App\Models\Payment;
+use App\Models\PaymentDetail;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 
@@ -30,7 +31,7 @@ class BookingController extends Controller
         $bookingIdsWithPayments = Payment::pluck('id_booking')->toArray();
 
         $bookingsWithoutPayments = Booking::with('agent', 'hotel', 'details')
-            ->whereNotIn('id_booking', $bookingIdsWithPayments)
+            ->whereNotIn('booking_id', $bookingIdsWithPayments)
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -73,6 +74,10 @@ class BookingController extends Controller
             $bookingId = Booking::where('id_booking', $id)->value('booking_id');
             // Delete booking details associated with the retrieved booking_id
             BookingDetail::where('booking_id', $bookingId)->delete();
+            // Delete the payment
+            $paymentId = Payment::where('id_booking', $bookingId)->value('id_payment');
+            PaymentDetail::where('id_payment', $paymentId)->delete();
+            Payment::where('id_payment', $id)->delete();
             // Delete the booking
             Booking::where('id_booking', $id)->delete();
             return response()->json(null, 204);

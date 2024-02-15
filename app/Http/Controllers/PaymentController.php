@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Payment;
+use App\Models\PaymentDetail;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PaymentController extends Controller
@@ -51,8 +52,12 @@ class PaymentController extends Controller
     public function destroy($id)
     {
         try {
-            $payment = Payment::findOrFail($id);
-            $payment->delete();
+            // Retrieve the payment_id before deleting
+            $paymentId = Payment::where('id_payment', $id)->value('id_payment');
+            // Delete payment details associated with the retrieved payment_id
+            PaymentDetail::where('id_payment', $paymentId)->delete();
+            // Delete the payment
+            Payment::where('id_payment', $id)->delete();
             return response()->json(null, 204);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Payment Not Found'], 404);

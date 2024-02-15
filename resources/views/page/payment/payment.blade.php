@@ -91,15 +91,17 @@
                             <div class="col-md-4 col-12">
                                 <div class="form-group">
                                     <label for="subtotal" class="form-label">Sub Total <span id="dari"></span></label>
-                                    <input type="text" id="subtotal" class="form-control" readonly>
+                                    <input type="hidden" id="subtotal" class="form-control">
+                                    <input type="text" id="subtotal1" class="form-control" readonly>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="form-group">
                                     <label for="hasil_konversi" class="form-label">Sub Total <span
                                             id="hasil"></span></label>
-                                    <input type="text" id="hasil_konversi" name="hasil_konversi" class="form-control"
-                                        readonly>
+                                    <input type="hidden" id="hasil_konversi" name="hasil_konversi"
+                                        class="form-control">
+                                    <input type="text" id="hasil_konversi1" class="form-control" readonly>
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">

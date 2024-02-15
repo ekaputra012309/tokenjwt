@@ -25,7 +25,7 @@
 
         .horizontal-rule {
             background-color: transparent;
-            margin: 10px 0;
+            margin: 5px 0;
         }
 
         .horizontal-rule.black {
@@ -40,22 +40,22 @@
 
 <body>
     <div>
-        <table>
+        <table border="0">
             <thead>
                 <tr>
                     <th>
-                        <img src="{{ asset('assets/compiled/png/logo.png') }}" alt="logo" width="150px"
+                        <img src="{{ asset('assets/compiled/png/logo.png') }}" alt="logo" width="120px"
                             style="border-radius: 50%;">
                     </th>
                     <th>
-                        <p>
-                            <span class="header">PT RIZQUNA MEKKAH MADINAH</span> <br>
-                            <span class="subheader">IZIN : 02350009222460004</span> <br>
-                            <span>Ruko Graha Aziz, Unit B. Jl.KH. Abdullah Syafei No. 12, RT/TW 012/009, <br>Kel.Bukit
-                                Duri,
-                                Kec.Tebet Jakarta Selatan</span> <br>
-                            <span>Email : rizqunamekkahmadinahjkt@gmail.com , Telp : 081999940934</span>
-                        </p>
+                        <span class="header">PT RIZQUNA MEKKAH MADINAH</span> <br>
+                        <span class="subheader">IZIN : 02350009222460004</span> <br>
+                        <span style="font-size: 11pt">Ruko Graha Aziz, Unit B. Jl.KH. Abdullah Syafei No. 12, RT/TW
+                            012/009, <br>Kel.Bukit
+                            Duri,
+                            Kec.Tebet Jakarta Selatan</span> <br>
+                        <span style="font-size: 10pt">Email : rizqunamekkahmadinahjkt@gmail.com , Telp :
+                            081999940934</span>
                     </th>
                 </tr>
             </thead>
@@ -71,7 +71,7 @@
                 <tr>
                     <td>Name</td>
                     <td>: <b><span id="namaagen">Em Abror</span></b></td>
-                    <td colspan="3" width="30%"></td>
+                    <td colspan="3" width="20%"></td>
                     <td colspan="2">Number</td>
                     <td>: <span id="noinvoice">003/INV</span></td>
                 </tr>
@@ -133,7 +133,7 @@
                     <td style="text-align: right">2.800</td>
                 </tr>
             </tbody>
-            <tfoot>
+            <tfoot id="myTfoot">
                 <tr>
                     <th>TOTAL</th>
                     <th><span id="sumqty"></span></th>
@@ -152,12 +152,12 @@
                     <th colspan="2" style="text-align: right"><span id="totalidr">25.924.600</span></th>
                 </tr>
                 <tr>
-                    <th colspan="3">Deposit 2/2/2024</th>
-                    <th colspan="2" style="text-align: right">25.924.600</th>
+                    <th colspan="3"><span id="deposito"></span></th>
+                    <th colspan="2" style="text-align: right"><span id="hasildeposito"></span></th>
                 </tr>
                 <tr>
-                    <th colspan="3">Lunas</th>
-                    <th colspan="2" style="text-align: right">-</th>
+                    <th colspan="3"><span id="sstatus">TEST</span></th>
+                    <th colspan="2" style="text-align: right"><span id="sisadeposit"></span></th>
                 </tr>
             </tfoot>
         </table>
@@ -171,8 +171,6 @@
                 agent wajib membayar pinalty (denda) tersebut
             </b>
         </p>
-        <br>
-        <br>
         <table>
             <tbody>
                 <tr>
@@ -255,15 +253,45 @@
                             var ttlamount = response.booking.total_subtotal;
                             var ttlusd = ttlamount * response.sar_usd;
                             var ttlidr = ttlamount * response.sar_idr;
-                            console.log(ttlamount);
-                            console.log(response.sar_usd);
-                            console.log(ttlusd);
-                            console.log(response.sar_idr);
-                            console.log(ttlidr);
                             $('#totalusd').html(formatCurrencyID(ttlusd));
                             $('#totalidr').html(formatCurrencyID(ttlidr));
+                            $('#sstatus').html(response.booking.status);
 
+                            var detailpay = response.detailpay;
+                            var sumDeposit = 0;
+                            var formattedSumDeposit = 0;
+                            var sisaDeposit = 0;
 
+                            // Loop through each deposit in detailpay array
+                            detailpay.forEach(function(detail, index) {
+                                sumDeposit += parseFloat(detail
+                                    .deposit
+                                ); // Convert deposit to a number and accumulate the total
+
+                                // Update the content of the deposito span
+                                var depositSpan = $('#deposito');
+                                depositSpan.append('<span id="deposit' + (index + 1) +
+                                    '">Deposit ' + (index + 1) + ' ' + formatDate2(detail
+                                        .tgl_payment) + '</span><br>');
+
+                                // Update the content of the hasildeposito span with formatted deposit value
+                                var hasildepositSpan = $('#hasildeposito');
+                                hasildepositSpan.append('<span id="hasildeposito' + (index +
+                                        1) + '">' + formatCurrencyID(detail.deposit) +
+                                    '</span><br>');
+                            });
+
+                            // Calculate sisaDeposit
+                            sisaDeposit = parseFloat(response.hasil_konversi) - sumDeposit;
+
+                            // Format sumDeposit and sisaDeposit for display
+                            formattedSumDeposit = formatCurrencyID(sumDeposit);
+                            sisaDeposit = formatCurrencyID(sisaDeposit);
+
+                            // Update the HTML content of sisadeposit and sumdeposit elements
+                            $('#sisadeposit').html(sisaDeposit);
+                            $('#sumdeposit').html(formattedSumDeposit);
+                            window.print();
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
@@ -283,6 +311,14 @@
                 var monthIndex = dateTime.getMonth();
                 var year = dateTime.getFullYear();
                 return day + ' ' + monthNames[monthIndex] + ' ' + year;
+            }
+
+            function formatDate2(dateTimeString) {
+                var dateTime = new Date(dateTimeString);
+                var day = ('0' + dateTime.getDate()).slice(-2);
+                var month = ('0' + (dateTime.getMonth() + 1)).slice(-2);
+                var year = dateTime.getFullYear();
+                return day + '/' + month + '/' + year;
             }
             getDetail();
 
@@ -337,7 +373,6 @@
                 }
                 return numericValue.toLocaleString('id-ID');
             }
-
         });
     </script>
 </body>

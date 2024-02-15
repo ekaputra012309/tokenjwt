@@ -63,7 +63,7 @@
                     .mata_uang + '" data-subtotal="' + invoice
                     .total_subtotal +
                     '">Pilih</button></td><td>' + invoice.booking_id +
-                    '</td><td>' + invoice.tgl_booking + '</td><td>' +
+                    '</td><td>' + formatDate(invoice.tgl_booking) + '</td><td>' +
                     invoice.agent.nama_agent + '</td><td>' +
                     invoice.total_subtotal + '</td></tr>'
                 );
@@ -82,6 +82,7 @@
             $('#mata_uang').val(mataUang);
             $('#dari').html(mataUang);
             $('#subtotal').val(subTotal);
+            $('#subtotal1').val(formatCurrencyID(subTotal));
 
             $('#invoiceModal').modal('hide');
         }
@@ -120,6 +121,7 @@
             }
 
             $('#hasil_konversi').val(hasilKonversi);
+            $('#hasil_konversi1').val(formatCurrencyID(hasilKonversi));
         }
 
 
@@ -144,6 +146,22 @@
             } else {
                 console.error('JWT token not found in localStorage.');
             }
+        }
+
+        function formatCurrencyID(value) {
+            var numericValue = parseFloat(value);
+            if (isNaN(numericValue)) {
+                return '';
+            }
+            return numericValue.toLocaleString('id-ID');
+        }
+
+        function formatDate(dateTimeString) {
+            var dateTime = new Date(dateTimeString);
+            var day = ('0' + dateTime.getDate()).slice(-2);
+            var month = ('0' + (dateTime.getMonth() + 1)).slice(-2);
+            var year = dateTime.getFullYear();
+            return day + '/' + month + '/' + year;
         }
     });
 </script>

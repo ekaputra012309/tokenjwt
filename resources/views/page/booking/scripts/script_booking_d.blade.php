@@ -27,10 +27,15 @@
 
                     var namaAgen = response.agent.nama_agent + ' - ' + response.agent
                         .contact_person;
+                    var namaHotel = response.hotel.nama_hotel + ' - ' + response.hotel
+                        .contact_person;
                     // Populate form fields with retrieved agent data
                     $('#tgl_booking').val(formatDate(response.tgl_booking));
                     $('#agent_id').val(response.agent_id);
                     $('#agent_nama').val(namaAgen);
+                    $('#hotel_id').val(response.hotel_id);
+                    $('#hotel_nama').val(namaHotel);
+                    $('#malam').val(response.malam);
                     $('#check_in').val(formatDate(response.check_in));
                     $('#check_out').val(formatDate(response.check_out));
                     $('#mata_uang').val(response.mata_uang);
