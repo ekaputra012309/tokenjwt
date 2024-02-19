@@ -118,6 +118,7 @@
                     '</td>' +
                     '<td>' + detail.room.keterangan + '</td>' +
                     '<td>' + detail.qty + '</td>' +
+                    '<td>' + detail.malam + '</td>' +
                     '<td>' + detail.tarif + '</td>' +
                     '<td>' + detail.discount + '</td>' +
                     '<td>' + detail.subtotal + '</td>' +

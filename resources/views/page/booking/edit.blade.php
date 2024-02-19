@@ -133,6 +133,7 @@
                                                             <th style="width: 50px">#</th>
                                                             <th>Tipe Kamar</th>
                                                             <th>Qty</th>
+                                                            <th>Durasi</th>
                                                             <th>Tarif</th>
                                                             <th>Diskon</th>
                                                             <th>Sub Total</th>
@@ -143,7 +144,7 @@
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <th colspan="4" style="text-align: right">Total</th>
+                                                            <th colspan="5" style="text-align: right">Total</th>
                                                             <th><input id="total_discount" name="total_discount"
                                                                     type="text" placeholder="0.00"
                                                                     class="form-control" value="0">

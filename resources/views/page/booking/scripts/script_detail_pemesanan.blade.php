@@ -5,11 +5,15 @@
 
         // Show the detail pemesanan modal and reset the form
         $('#addDetailButton').on('click', function() {
-            $('#check_in_m').val($('#check_in').val());
-            $('#check_out_m').val($('#check_out').val());
-            $('#mata_uang_m').val($('#mata_uang').val());
-            calculateNights();
-            $('#detailPemesananModal').modal('show');
+            if (!$('#malam').val()) {
+                alert("Mohon input data check in dan check out terlebih dahulu");
+            } else {
+                $('#check_in_m').val($('#check_in').val());
+                $('#check_out_m').val($('#check_out').val());
+                $('#mata_uang_m').val($('#mata_uang').val());
+                calculateNights();
+                $('#detailPemesananModal').modal('show');
+            }
         });
 
         // Form submission for detail pemesanan
@@ -126,6 +130,7 @@
                             '</td>' +
                             '<td>' + detail.room.keterangan + '</td>' +
                             '<td>' + detail.qty + '</td>' +
+                            '<td>' + detail.malam + '</td>' +
                             '<td>' + detail.tarif + '</td>' +
                             '<td>' + detail.discount + '</td>' +
                             '<td>' + detail.subtotal + '</td>' +

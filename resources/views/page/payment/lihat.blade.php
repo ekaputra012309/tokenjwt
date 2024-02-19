@@ -124,6 +124,7 @@
                                                 <tr>
                                                     <th>Tipe Kamar</th>
                                                     <th>Qty</th>
+                                                    <th>Durasi</th>
                                                     <th>Tarif</th>
                                                     <th>Diskon</th>
                                                     <th>Sub Total</th>

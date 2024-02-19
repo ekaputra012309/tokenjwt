@@ -258,6 +258,7 @@
                 var row = '<tr>' +
                     '<td>' + detail.room.keterangan + '</td>' +
                     '<td>' + detail.qty + '</td>' +
+                    '<td>' + detail.malam + '</td>' +
                     '<td>' + detail.tarif + '</td>' +
                     '<td>' + formatCurrencyID(detail.discount) + '</td>' +
                     '<td>' + formatCurrencyID(detail.subtotal) + '</td>' +
