@@ -40,3 +40,9 @@ Route::prefix('pages')->name('p.')->group(function () {
     Route::get('payment/lihat/{id}', [PagesController::class, 'lihatPayment'])->name('payment.lihat');
     Route::get('payment/cetak/{id}', [PagesController::class, 'cetakPayment'])->name('payment.cetak');
 });
+
+Route::get('/check-session', function () {
+    return response()->json([
+        'sessionExpired' => auth()->guest(), // Check if the user is a guest (not logged in)
+    ]);
+});

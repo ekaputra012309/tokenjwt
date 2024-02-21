@@ -22,6 +22,28 @@
     <script src={{ asset('assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}></script>
     <script src={{ asset('assets/static/js/pages/datatables.js') }}></script>
 
+    <script>
+        $(document).ready(function() {
+            // Check session status every 60 seconds (adjust as needed)
+            setInterval(function() {
+                // Make an AJAX request to a route that checks session status
+                $.ajax({
+                    url: '/check-session',
+                    method: 'GET',
+                    success: function(response) {
+                        // If session is expired, redirect to login page
+                        if (response.sessionExpired) {
+                            window.location.href = '/';
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error checking session status:', error);
+                    }
+                });
+            }, 3600000); // 3600 seconds or 1 hours
+        });
+    </script>
+
     <style>
         .header-profile {
             display: flex;
