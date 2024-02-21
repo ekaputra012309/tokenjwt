@@ -77,7 +77,7 @@ class BookingController extends Controller
             // Delete the payment
             $paymentId = Payment::where('id_booking', $bookingId)->value('id_payment');
             PaymentDetail::where('id_payment', $paymentId)->delete();
-            Payment::where('id_payment', $id)->delete();
+            Payment::where('id_payment', $paymentId)->delete();
             // Delete the booking
             Booking::where('id_booking', $id)->delete();
             return response()->json(null, 204);
@@ -90,15 +90,20 @@ class BookingController extends Controller
     {
         $idWithSlashes = preg_replace('/-(?!HTL)/', '/', $id);
         try {
-            $booking = Booking::where('id_booking', $idWithSlashes)->firstOrFail();
+            // $booking = Booking::where('id_booking', $idWithSlashes)->firstOrFail();
 
             // Update only the status field
+            // $booking->status = $request->status;
+            // $booking->save();
+            
+            $bookingId = Booking::where('booking_id', $idWithSlashes)->value('id_booking');
+            $booking = Booking::findOrFail($bookingId);
             $booking->status = $request->status;
             $booking->save();
 
             return response()->json($booking, 200);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Booking not found'], 404);
+            return response()->json(['error' => 'Booking not found', 'id booking' => $idWithSlashes, 'status' => $request->status], 404);
         }
     }
 }

@@ -37,6 +37,16 @@
             }
             return numericValue.toLocaleString('id-ID');
         }
+        
+        function formatCurrencyID1(value) {
+            var numericValue = parseFloat(value);
+            if (isNaN(numericValue)) {
+                return '';
+            }
+            var roundedValue = Math.round(numericValue); // Round the numeric value
+            return roundedValue.toLocaleString('id-ID');
+        }
+
 
         function printPayment() {
             var id = '{{ $data['idpage'] }}';
@@ -88,8 +98,8 @@
                         // Calculate remaining balance
                         var tagihan = parseFloat($('#kanan').val());
                         var sisa_tagihan = tagihan - totalDeposit;
-                        // console.log('Sisa Tagihan: ' + sisa_tagihan);
-                        $('#bawah').html(formatCurrencyID(sisa_tagihan));
+                        console.log('Sisa Tagihan: ' + sisa_tagihan);
+                        $('#bawah').html(formatCurrencyID1(sisa_tagihan));
                         var bookingId = $('#booking_id').val();
                         var idWithHyphens = bookingId.replace(/\//g, '-');
                         // console.log(idWithHyphens);
@@ -101,6 +111,21 @@
                                 url: "{{ route('booking_up', ['id' => ':id', 'status' => 'Lunas']) }}"
                                     .replace(
                                         ':id', idWithHyphens),
+                                type: 'POST',
+                                headers: {
+                                    'Authorization': 'Bearer ' + jwtToken
+                                },
+                                success: function(response) {
+                                    // console.log(response);
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error updating status:', error);
+                                }
+                            });
+                        } else {
+                            $.ajax({
+                                url: "{{ route('booking_up', ['id' => ':id', 'status' => 'Piutang']) }}"
+                                    .replace(':id', idWithHyphens),
                                 type: 'POST',
                                 headers: {
                                     'Authorization': 'Bearer ' + jwtToken
@@ -181,7 +206,7 @@
                         $('#keterangan').val(response.booking.keterangan);
                         $('#atas').html(response.pilih_konversi);
                         $('#kiri').html(simbol);
-                        $('#bawah').html(formatCurrencyID(response.hasil_konversi));
+                        $('#bawah').html(formatCurrencyID1(response.hasil_konversi));
                         $('#kanan').val(response.hasil_konversi);
                         refreshTable();
                     },

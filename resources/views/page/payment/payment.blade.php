@@ -25,21 +25,21 @@
                             <h5>Conversion</h5>
                             <div class="col-md-3 col-12">
                                 <div class="form-group mandatory">
-                                    <label for="sar_idr" class="form-label">1 SAR = IDR</label>
+                                    <label for="sar_idr" class="form-label">1 SAR IDR</label>
                                     <input type="number" id="sar_idr" name="sar_idr" class="form-control" step="0.01"
                                         data-parsley-required="true">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group mandatory">
-                                    <label for="sar_usd" class="form-label">1 SAR = USD</label>
+                                    <label for="sar_usd" class="form-label">1 SAR USD</label>
                                     <input type="number" id="sar_usd" name="sar_usd" class="form-control" step="0.01"
-                                        data-parsley-required="true">
+                                        data-parsley-required="true" value="3.74">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group mandatory">
-                                    <label for="usd_idr" class="form-label">1 USD = IDR</label>
+                                    <label for="usd_idr" class="form-label">1 USD IDR</label>
                                     <input type="number" id="usd_idr" name="usd_idr" class="form-control" step="0.01"
                                         data-parsley-required="true">
                                 </div>

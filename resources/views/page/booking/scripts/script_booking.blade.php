@@ -90,7 +90,7 @@
         // Function to display "No data" message
         function showNoDataMessage() {
             $('#detailPesananTable tbody').html(
-                '<tr><td colspan="6" style="text-align:center">No data record</td></tr>'
+                '<tr><td colspan="7" style="text-align:center">No data record</td></tr>'
             );
         }
 
@@ -98,7 +98,7 @@
         function handleAjaxError() {
             // Handle errors here, e.g., display an error message
             $('#detailPesananTable tbody').html(
-                '<tr><td colspan="6" style="text-align:center">An error occurred while retrieving data</td></tr>'
+                '<tr><td colspan="7" style="text-align:center">An error occurred while retrieving data</td></tr>'
             );
         }
 

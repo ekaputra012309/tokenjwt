@@ -110,8 +110,7 @@
                                                 <div class="form-group mandatory">
                                                     <label for="malam" class="form-label">Malam</label>
                                                     <input type="number" id="malam" class="form-control"
-                                                        placeholder="0" name="malam" data-parsley-required="true"
-                                                        readonly />
+                                                        placeholder="0" name="malam" data-parsley-required="true" readonly />
                                                 </div>
                                             </div>
                                         </div>

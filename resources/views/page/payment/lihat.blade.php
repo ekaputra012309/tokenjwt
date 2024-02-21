@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="row match-height">
-                <div class="col-8">
+                <div class="col-md-8">
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body">
@@ -78,7 +78,7 @@
                     </div>
                 </div>
 
-                <div class="col-4">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body">
@@ -135,7 +135,7 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th colspan="3" style="text-align: right">Total</th>
+                                                    <th colspan="4" style="text-align: right">Total</th>
                                                     <th style="vertical-align: top">
                                                         <input id="total_discount" type="text" placeholder="0.00"
                                                             class="form-control" value="0" readonly>

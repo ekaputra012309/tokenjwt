@@ -171,8 +171,8 @@
             var totalDiscount = 0;
             var totalSubtotal = 0;
             $('#detailPesananTable tbody tr').each(function() {
-                totalDiscount += parseFloat($(this).find('td:eq(4)').text());
-                totalSubtotal += parseFloat($(this).find('td:eq(5)').text());
+                totalDiscount += parseFloat($(this).find('td:eq(5)').text());
+                totalSubtotal += parseFloat($(this).find('td:eq(6)').text());
             });
             $('#total_discount').val(totalDiscount.toFixed(2));
             $('#total_subtotal').val(totalSubtotal.toFixed(2));

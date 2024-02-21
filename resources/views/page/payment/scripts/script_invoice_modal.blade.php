@@ -111,16 +111,16 @@
             if (pilihkonversi == 'SAR' && mata_uang == 'SAR') {
                 hasilKonversi = tarif;
             } else if (pilihkonversi == 'USD' && mata_uang == 'SAR') {
-                hasilKonversi = tarif * sar_usd;
+                hasilKonversi = tarif / sar_usd;
             } else if (pilihkonversi == 'IDR' && mata_uang == 'SAR') {
-                hasilKonversi = tarif * sar_idr;
+                hasilKonversi = (tarif / sar_usd) * usd_idr;
             } else if (pilihkonversi == 'USD' && mata_uang == 'USD') {
                 hasilKonversi = tarif;
             } else if (pilihkonversi == 'IDR' && mata_uang == 'USD') {
                 hasilKonversi = tarif * usd_idr;
             }
 
-            $('#hasil_konversi').val(hasilKonversi);
+            $('#hasil_konversi').val(hasilKonversi.toFixed(0));
             $('#hasil_konversi1').val(formatCurrencyID(hasilKonversi));
         }
 
@@ -137,6 +137,7 @@
                         xhr.setRequestHeader('Authorization', 'Bearer ' + token);
                     },
                     success: function(response) {
+                        $('#paymentForm')[0].reset();
                         location.reload();
                     },
                     error: function(xhr, status, error) {

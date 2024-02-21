@@ -39,7 +39,7 @@
 </head>
 
 <body>
-    <div>
+    <div style="font-size: 11pt">
         <table border="0">
             <thead>
                 <tr>
@@ -54,8 +54,7 @@
                             012/009, <br>Kel.Bukit
                             Duri,
                             Kec.Tebet Jakarta Selatan</span> <br>
-                        <span style="font-size: 10pt">Email : rizqunamekkahmadinahjkt@gmail.com , Telp :
-                            081999940934</span>
+                        <span style="font-size: 10pt"><img src="{{ asset('assets/compiled/png/email.png') }}" alt="email" width="15px"> rizqunamekkahmadinahjkt@gmail.com , <img src="{{ asset('assets/compiled/png/wa.png') }}" alt="email" width="15px"> 081999940934</span>
                     </th>
                 </tr>
             </thead>
@@ -251,8 +250,8 @@
                             $('#checkin').html(formatDate(response.booking.check_in));
                             $('#checkout').html(formatDate(response.booking.check_out));
                             var ttlamount = response.booking.total_subtotal;
-                            var ttlusd = ttlamount * response.sar_usd;
-                            var ttlidr = ttlamount * response.sar_idr;
+                            var ttlusd = ttlamount / response.sar_usd;
+                            var ttlidr = ttlusd * response.usd_idr;
                             $('#totalusd').html(formatCurrencyID(ttlusd));
                             $('#totalidr').html(formatCurrencyID(ttlidr));
                             $('#sstatus').html(response.booking.status);
@@ -366,13 +365,23 @@
                 });
             }
 
-            function formatCurrencyID(value) {
+            function formatCurrencyID1(value) {
                 var numericValue = parseFloat(value);
                 if (isNaN(numericValue)) {
                     return '';
                 }
                 return numericValue.toLocaleString('id-ID');
             }
+            
+            function formatCurrencyID(value) {
+                var numericValue = parseFloat(value);
+                if (isNaN(numericValue)) {
+                    return '';
+                }
+                var roundedValue = Math.round(numericValue); // Round the numeric value
+                return roundedValue.toLocaleString('id-ID');
+            }
+
         });
     </script>
 </body>
