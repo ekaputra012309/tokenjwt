@@ -17,7 +17,7 @@ class CreatePaymentDetailsTable extends Migration
             $table->increments('id_payment_detail');
             $table->integer('id_payment');
             $table->dateTime('tgl_payment');
-            $table->decimal('deposit', 10, 2);
+            $table->decimal('deposit', 15, 2);
             $table->string('metode_bayar');
             $table->timestamps();
         });

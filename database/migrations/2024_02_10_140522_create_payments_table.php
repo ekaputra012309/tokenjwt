@@ -20,7 +20,7 @@ class CreatePaymentsTable extends Migration
             $table->decimal('sar_idr', 10, 2);
             $table->decimal('sar_usd', 10, 2);
             $table->decimal('usd_idr', 10, 2);
-            $table->decimal('hasil_konversi', 10, 2);
+            $table->decimal('hasil_konversi', 15, 2);
             $table->timestamps();
         });
     }
