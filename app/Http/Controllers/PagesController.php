@@ -235,4 +235,12 @@ class PagesController extends Controller
         return view('page.payment.cetak', compact('data'));
     }
 
+    public function reportAgent()
+    {
+        $pageTitle = 'Report Agent - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.agent.reportagent', compact('data'));
+    }
 }

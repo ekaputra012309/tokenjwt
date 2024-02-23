@@ -22,6 +22,17 @@
     <script src={{ asset('assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}></script>
     <script src={{ asset('assets/static/js/pages/datatables.js') }}></script>
 
+    {{-- datatable button export --}}
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    {{-- end datatable button export --}}
+
     <script>
         $(document).ready(function() {
             // Check session status every 60 seconds (adjust as needed)
@@ -153,6 +164,15 @@
                             <a href="{{ route('p.payment') }}" class="sidebar-link">
                                 <i class="bi bi-credit-card-fill"></i>
                                 <span>Payment Hotels</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Report</li>
+
+                        <li class="sidebar-item">
+                            <a href="{{ route('p.report.agent') }}" class="sidebar-link">
+                                <i class="bi bi-people-fill"></i>
+                                <span>Report Agent</span>
                             </a>
                         </li>
 

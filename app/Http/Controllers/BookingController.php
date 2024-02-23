@@ -18,13 +18,34 @@ class BookingController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $bookings = Booking::with('agent', 'hotel', 'details')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // Query builder
+        $query = Booking::with('agent', 'hotel', 'details');
+
+        // Apply conditions based on request parameters
+        if ($request->filled('tgl_from')) {
+            $query->whereDate('tgl_booking', '>', $request->tgl_from);
+        }
+        if ($request->filled('tgl_to')) {
+            $query->whereDate('tgl_booking', '<', $request->tgl_to);
+        }
+        if ($request->filled('agent_id')) {
+            $query->where('agent_id', $request->agent_id);
+        }
+
+        // If no parameters passed, order by created_at
+        if (!$request->has('tgl_from') && !$request->has('tgl_to') && !$request->has('agent_id')) {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        // Execute the query
+        $bookings = $query->get();
+
+        // Return response
         return response()->json($bookings);
     }
+
 
     public function notInPayment()
     {
@@ -95,7 +116,7 @@ class BookingController extends Controller
             // Update only the status field
             // $booking->status = $request->status;
             // $booking->save();
-            
+
             $bookingId = Booking::where('booking_id', $idWithSlashes)->value('id_booking');
             $booking = Booking::findOrFail($bookingId);
             $booking->status = $request->status;
