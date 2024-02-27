@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Payment;
+use App\Models\Visa;
 
 class PagesController extends Controller
 {
@@ -244,5 +245,51 @@ class PagesController extends Controller
             'pageTitle' => $pageTitle,
         );
         return view('page.agent.reportagent', compact('data'));
+    }
+
+    public function visa()
+    {
+        $pageTitle = 'Visa - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.visa.visa', compact('data'));
+    }
+
+    public function tambahVisa()
+    {
+        $currentYear = date('Y');
+
+        // Find the maximum ID from existing visas
+        $maxId = Visa::max('visa_id');
+
+        // Extract the numeric part and increment by 1
+        $numericPart = (int)explode('/', $maxId)[0]; // Extract "002" from "002/INV-HTL/II/2024"
+        $newNumericPart = $numericPart + 1;
+
+        // Format the new ID to a 3-digit string
+        $newId = str_pad($newNumericPart, 3, '0', STR_PAD_LEFT);
+
+        $autoId = $newId . '/INV-VISA/II/' . $currentYear;
+        $pageTitle = 'Add Visa - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'autoId' => $autoId,
+        );
+
+        return view('page.visa.tambah', compact('data'));
+    }
+
+    public function editVisa($id)
+    {
+        $autoId = Visa::where('id_visa', base64_decode($id))->value('visa_id');
+        $pageTitle = 'Edit Visa - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+            'autoId' => $autoId,
+        );
+
+        return view('page.visa.edit', compact('data'));
     }
 }

@@ -167,6 +167,13 @@
                             </a>
                         </li>
 
+                        <li class="sidebar-item">
+                            <a href="{{ route('p.visa') }}" class="sidebar-link">
+                                <i class="bi bi-credit-card-2-front-fill"></i>
+                                <span>Payment Visa</span>
+                            </a>
+                        </li>
+
                         <li class="sidebar-title">Report</li>
 
                         <li class="sidebar-item">

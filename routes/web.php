@@ -40,6 +40,9 @@ Route::prefix('pages')->name('p.')->group(function () {
     Route::get('payment/lihat/{id}', [PagesController::class, 'lihatPayment'])->name('payment.lihat');
     Route::get('payment/cetak/{id}', [PagesController::class, 'cetakPayment'])->name('payment.cetak');
     Route::get('reportagent', [PagesController::class, 'reportAgent'])->name('report.agent');
+    Route::get('visa', [PagesController::class, 'visa'])->name('visa');
+    Route::get('visa/tambah', [PagesController::class, 'tambahVisa'])->name('visa.tambah');
+    Route::get('visa/edit/{id}', [PagesController::class, 'editVisa'])->name('visa.edit');
 });
 
 Route::get('/check-session', function () {

@@ -11,6 +11,8 @@ use App\Http\Controllers\BookingDetailController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentDetailController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\VisaController;
+use App\Http\Controllers\VisaDetailController;
 
 
 /*
@@ -102,4 +104,21 @@ Route::controller(PaymentDetailController::class)->group(function () {
     Route::get('payment_d_inv/{id}', 'showInv')->name('payment_d_inv');
     Route::post('payment_d/{id}', 'update');
     Route::delete('payment_d/{id}', 'destroy');
+});
+// visa
+Route::controller(VisaController::class)->group(function () {
+    Route::get('visa', 'index')->name('visa');
+    Route::post('visa', 'store');
+    Route::get('visa/{id}', 'show');
+    Route::post('visa/{id}', 'update');
+    Route::delete('visa/{id}', 'destroy');
+});
+// visa detail
+Route::controller(VisaDetailController::class)->group(function () {
+    Route::get('visa_d', 'index')->name('visa_d');
+    Route::post('visa_d', 'store');
+    Route::get('visa_d/{id}', 'show');
+    Route::get('visa_d_inv/{id}', 'showInv')->name('visa_d_inv');
+    Route::post('visa_d/{id}', 'update');
+    Route::delete('visa_d/{id}', 'destroy');
 });
