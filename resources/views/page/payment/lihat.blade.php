@@ -24,16 +24,22 @@
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body">
-                                <div class=" d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <button type="button" class="btn btn-danger" id="cetakPembayaran"><i
-                                                class="bi bi-printer"></i>
-                                            Cetak</button>
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center">
+                                            <select class="form-select me-2" id="bankSelect" style="width: 150px;">
+                                                <option value="BSI">BSI</option>
+                                                <option value="MANDIRI">MANDIRI</option>
+                                            </select>
+                                            <button type="button" class="btn btn-danger" id="cetakPembayaran"
+                                                style="min-width: 100px;"><i class="bi bi-printer"></i> Cetak</button>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <button type="button" class="btn btn-primary" id="addDetailPembayaran"><i
-                                                class="bi bi-wallet2"></i> Add
-                                            Pembayaran</button>
+                                    <div class="col-md-6">
+                                        <div class="d-flex justify-content-end mt-md-0 mt-3">
+                                            <button type="button" class="btn btn-primary" id="addDetailPembayaran"><i
+                                                    class="bi bi-wallet2"></i> Add Pembayaran</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

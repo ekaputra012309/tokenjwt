@@ -13,6 +13,7 @@ class Rekening extends Model
     // Define fillable columns
     protected $fillable = [
         'rekening_id',
+        'no_rek',
         'keterangan',
         // Add other columns as needed
     ];

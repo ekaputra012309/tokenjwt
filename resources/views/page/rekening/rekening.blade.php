@@ -61,34 +61,40 @@
                 headers: {
                     'Authorization': 'Bearer ' + token
                 },
+                dataType: "json",
                 success: function(data) {
-                    $.each(data, function(index, rekening) {
-                        var editHref = "{{ route('p.rekening.edit', ['id' => ':id']) }}";
-                        var rekeningIdBase64 = btoa(rekening.id_rekening);
-                        editHref = editHref.replace(':id', rekeningIdBase64);
-
-                        var row = '<tr>' +
-                            '<td><a href="' + editHref +
-                            '" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi bi-pencil-square"></i></a> ' +
-                            '<button class="btn btn-danger btn-sm delete-btn" data-id="' +
-                            rekening
-                            .id_rekening +
-                            '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>' +
-                            '<td>' + rekening.rekening_id + '</td>' +
-                            '<td>' + rekening.keterangan + '</td>' +
-                            '</tr>';
-                        $('#table1 tbody').append(row);
-                    });
-
-                    // Initialize DataTable after populating the table
                     $('#table1').DataTable({
-                        "searching": true,
-                        "ordering": true,
-                        "paging": true
+                        "data": data,
+                        "columns": [{
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    var editHref =
+                                        "{{ route('p.rekening.edit', ['id' => ':id']) }}";
+                                    var rekeningIdBase64 = btoa(row.id_rekening);
+                                    editHref = editHref.replace(':id',
+                                    rekeningIdBase64);
+                                    return '<a href="' + editHref +
+                                        '" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi bi-pencil-square"></i></a> ' +
+                                        '<button class="btn btn-danger btn-sm delete-btn" data-id="' +
+                                        row
+                                        .id_rekening +
+                                        '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>';
+                                }
+                            },
+                            {
+                                "data": "rekening_id"
+                            },
+                            {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    return row.no_rek + ' ' + row.keterangan;
+                                }
+                            }
+                        ]
                     });
 
                     // Add click event listener to delete buttons
-                    $('.delete-btn').click(function() {
+                    $('#table1').on('click', '.delete-btn', function() {
                         var rekeningId = $(this).data('id');
                         if (confirm('Are you sure you want to delete this rekening?')) {
                             // Perform deletion using AJAX
@@ -99,20 +105,21 @@
                                     'Authorization': 'Bearer ' + token
                                 },
                                 success: function(response) {
-                                    // Reload the page or update the table as needed
+                                    // Reload the DataTable
+                                    $('#table1').DataTable().ajax.reload();
                                     alert('rekening deleted successfully!');
-                                    location
-                                        .reload(); // Reload the page after deletion
                                 },
                                 error: function(xhr, status, error) {
                                     alert(
-                                        'An error occurred while deleting the rekening.'
-                                    );
+                                        'An error occurred while deleting the rekening.');
                                     console.error(xhr.responseText);
                                 }
                             });
                         }
                     });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching rekening data:', error);
                 }
             });
         });

@@ -224,12 +224,14 @@ class PagesController extends Controller
 
     public function cetakPayment($id)
     {
+        $selectedBank = request()->input('bank');
         $autoId = Payment::where('id_payment', base64_decode($id))->value('id_booking');
         $pageTitle = 'Invoice ';
         $data = array(
             'pageTitle' => $pageTitle,
             'idpage' => $id,
             'autoId' => $autoId,
+            'bank' => $selectedBank,
         );
 
         return view('page.payment.cetak', compact('data'));

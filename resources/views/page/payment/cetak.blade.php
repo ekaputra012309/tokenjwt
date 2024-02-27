@@ -35,6 +35,11 @@
         .horizontal-rule.red {
             border-top: 4px solid #fdd911;
         }
+
+        .no-border {
+            border-left: 1px solid white;
+            border-bottom: 1px solid white;
+        }
     </style>
 </head>
 
@@ -54,7 +59,10 @@
                             012/009, <br>Kel.Bukit
                             Duri,
                             Kec.Tebet Jakarta Selatan</span> <br>
-                        <span style="font-size: 10pt"><img src="{{ asset('assets/compiled/png/email.png') }}" alt="email" width="15px"> rizqunamekkahmadinahjkt@gmail.com , <img src="{{ asset('assets/compiled/png/wa.png') }}" alt="email" width="15px"> 081999940934</span>
+                        <span style="font-size: 10pt"><img src="{{ asset('assets/compiled/png/email.png') }}"
+                                alt="email" width="15px"> rizqunamekkahmadinahjkt@gmail.com , <img
+                                src="{{ asset('assets/compiled/png/wa.png') }}" alt="email" width="15px">
+                            081999940934</span>
                     </th>
                 </tr>
             </thead>
@@ -142,7 +150,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="2" rowspan="4"></th>
+                    <th colspan="2" rowspan="4" class="no-border"></th>
                     <th colspan="3">Total dalam USD</th>
                     <th colspan="2" style="text-align: right">$<span id="totalusd">1.578</span></th>
                 </tr>
@@ -185,9 +193,9 @@
                                     </th>
                                     <th>
                                         <br>
-                                        : 174-00-0604805-2<br>
+                                        : <span id="norek1">isi no rekening</span><br>
                                         : PT. RIZQUNA MEKKAH MADINAH<br>
-                                        : MANDIRI (USD)
+                                        : <span id="norekid1">isi nama bank</span>
                                     </th>
                                 </tr>
                                 <tr>
@@ -197,9 +205,9 @@
                                         Bank
                                     </th>
                                     <th>
-                                        : 174-00-0604805-2<br>
+                                        : <span id="norek2">isi no rekening</span><br>
                                         : PT. RIZQUNA MEKKAH MADINAH<br>
-                                        : MANDIRI (USD)
+                                        : <span id="norekid2">isi nama bank</span>
                                     </th>
                                 </tr>
                             </tbody>
@@ -231,6 +239,8 @@
         $(document).ready(function() {
             var jwtToken = localStorage.getItem('jwtToken');
             fetchPaymentData(jwtToken);
+            var bank = '{{ $data['bank'] }}';
+            fetchRekenings(bank);
 
             function fetchPaymentData(jwtToken) {
                 var paymentIdBase64 = "{{ $data['idpage'] }}";
@@ -365,6 +375,28 @@
                 });
             }
 
+            function fetchRekenings(rekening_id) {
+                $.ajax({
+                    url: "{{ route('rekening') }}",
+                    type: 'GET',
+                    data: {
+                        rekening_id: rekening_id
+                    },
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
+                    },
+                    success: function(data) {
+                        $('#norek1').html(data[0].no_rek);
+                        $('#norekid1').html(data[0].rekening_id);
+                        $('#norek2').html(data[1].no_rek);
+                        $('#norekid2').html(data[1].rekening_id);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+
             function formatCurrencyID1(value) {
                 var numericValue = parseFloat(value);
                 if (isNaN(numericValue)) {
@@ -372,7 +404,7 @@
                 }
                 return numericValue.toLocaleString('id-ID');
             }
-            
+
             function formatCurrencyID(value) {
                 var numericValue = parseFloat(value);
                 if (isNaN(numericValue)) {

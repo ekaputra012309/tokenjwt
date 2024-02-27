@@ -5,7 +5,9 @@
 
         // Click event handler for printing payment
         $('#cetakPembayaran').on('click', function() {
-            printPayment();
+            var selectedBank = $('#bankSelect').val();
+            console.log(selectedBank);
+            printPayment(selectedBank);
         });
 
         // Click event handler for adding detail pembayaran
@@ -37,7 +39,7 @@
             }
             return numericValue.toLocaleString('id-ID');
         }
-        
+
         function formatCurrencyID1(value) {
             var numericValue = parseFloat(value);
             if (isNaN(numericValue)) {
@@ -48,9 +50,10 @@
         }
 
 
-        function printPayment() {
+        function printPayment(selectedBank) {
             var id = '{{ $data['idpage'] }}';
-            var url = "{{ route('p.payment.cetak', ['id' => ':id']) }}".replace(':id', id);
+            var url = "{{ route('p.payment.cetak', ['id' => ':id', 'bank' => '']) }}";
+            url = url.replace(':id', id) + '&bank=' + selectedBank;
 
             // Open the URL in a new tab
             window.open(url, '_blank');

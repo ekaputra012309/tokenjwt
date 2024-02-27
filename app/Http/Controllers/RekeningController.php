@@ -14,9 +14,14 @@ class RekeningController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $rekenings = Rekening::all();
+        $rekening_id = $request->input('rekening_id');
+
+        $rekenings = Rekening::when($rekening_id, function ($query) use ($rekening_id) {
+            return $query->where('rekening_id', 'like', '%' . $rekening_id . '%');
+        })->get();
+
         return response()->json($rekenings);
     }
 

@@ -16,6 +16,7 @@ class CreateRekeningsTable extends Migration
         Schema::create('rekenings', function (Blueprint $table) {
             $table->increments('id_rekening');
             $table->string('rekening_id');
+            $table->string('no_rek');
             $table->string('keterangan');
             $table->timestamps();
         });

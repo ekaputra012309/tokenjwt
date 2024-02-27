@@ -36,6 +36,13 @@
                                         </div>
                                         <div class="col-md-12 col-12">
                                             <div class="form-group mandatory">
+                                                <label for="no_rek-column" class="form-label">No Rekening</label>
+                                                <input type="text" id="no_rek" class="form-control"
+                                                    placeholder="No Rekening" name="no_rek" data-parsley-required="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-12">
+                                            <div class="form-group mandatory">
                                                 <label for="keterangan-column" class="form-label">Keterangan</label>
                                                 <input type="text" id="keterangan" class="form-control"
                                                     placeholder="Keterangan" name="keterangan"
@@ -86,6 +93,7 @@
                     success: function(response) {
                         // Populate form fields with retrieved rekening data
                         $('#rekening_id').val(response.rekening_id);
+                        $('#no_rek ').val(response.no_rek);
                         $('#keterangan').val(response.keterangan);
                     },
                     error: function(xhr, status, error) {
