@@ -43,6 +43,7 @@ Route::prefix('pages')->name('p.')->group(function () {
     Route::get('visa', [PagesController::class, 'visa'])->name('visa');
     Route::get('visa/tambah', [PagesController::class, 'tambahVisa'])->name('visa.tambah');
     Route::get('visa/edit/{id}', [PagesController::class, 'editVisa'])->name('visa.edit');
+    Route::get('visa/lihat/{id}', [PagesController::class, 'lihatVisa'])->name('visa.lihat');
 });
 
 Route::get('/check-session', function () {

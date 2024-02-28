@@ -77,7 +77,7 @@ Route::controller(BookingController::class)->group(function () {
     Route::get('booking/{id}', 'show');
     Route::post('booking/{id}', 'update');
     Route::delete('booking/{id}', 'destroy');
-    Route::post('booking_up/{id}', 'updateStatusToLunas')->name('booking_up');;
+    Route::post('booking_up/{id}', 'updateStatusToLunas')->name('booking_up');
 });
 // booking detail
 Route::controller(BookingDetailController::class)->group(function () {
@@ -112,6 +112,7 @@ Route::controller(VisaController::class)->group(function () {
     Route::get('visa/{id}', 'show');
     Route::post('visa/{id}', 'update');
     Route::delete('visa/{id}', 'destroy');
+    Route::post('visa_up/{id}', 'updateStatusToLunas')->name('visa_up');
 });
 // visa detail
 Route::controller(VisaDetailController::class)->group(function () {

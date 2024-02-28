@@ -292,4 +292,17 @@ class PagesController extends Controller
 
         return view('page.visa.edit', compact('data'));
     }
+
+    public function lihatVisa($id)
+    {
+        $autoId = Visa::where('id_visa', base64_decode($id))->value('visa_id');
+        $pageTitle = 'Detail Visa - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+            'autoId' => $autoId,
+        );
+
+        return view('page.visa.lihat', compact('data'));
+    }
 }

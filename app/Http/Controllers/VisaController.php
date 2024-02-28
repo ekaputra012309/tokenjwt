@@ -53,7 +53,7 @@ class VisaController extends Controller
     {
         try {
             // Retrieve the visa_id before deleting
-            $visaId = Visa::where('id_visa', $id)->value('visa_id');
+            $visaId = Visa::where('id_visa', $id)->value('id_visa');
             // Delete visa details associated with the retrieved visa_id
             VisaDetail::where('id_visa', $visaId)->delete();
             // Delete the visa
@@ -61,6 +61,20 @@ class VisaController extends Controller
             return response()->json(null, 204);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Visa Not Found'], 404);
+        }
+    }
+
+    public function updateStatusToLunas(Request $request, $id)
+    {
+        try {
+            $visaId = Visa::where('id_visa', $id)->value('id_visa');
+            $visa = Visa::findOrFail($visaId);
+            $visa->status = $request->status;
+            $visa->save();
+
+            return response()->json($visa, 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Visa not found', 'id visa' => $id, 'status' => $request->status], 404);
         }
     }
 }

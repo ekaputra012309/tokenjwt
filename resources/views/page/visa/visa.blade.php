@@ -67,9 +67,14 @@
                                 "render": function(data, type, row) {
                                     var editHref =
                                         "{{ route('p.visa.edit', ['id' => ':id']) }}";
+                                    var lihatHref =
+                                        "{{ route('p.visa.lihat', ['id' => ':id']) }}";
                                     var visaIdBase64 = btoa(row.id_visa);
                                     editHref = editHref.replace(':id', visaIdBase64);
-                                    return '<a href="' + editHref +
+                                    lihatHref = lihatHref.replace(':id', visaIdBase64);
+                                    return '<a href="' + lihatHref +
+                                        '" class="btn btn-light btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"><i class="bi bi-search"></i></a> ' +
+                                        '<a href="' + editHref +
                                         '" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi bi-pencil-square"></i></a> ' +
                                         '<button class="btn btn-danger btn-sm delete-btn" data-id="' +
                                         row.id_visa +
@@ -118,9 +123,7 @@
                                     'Authorization': 'Bearer ' + token
                                 },
                                 success: function(response) {
-                                    // Reload the DataTable
-                                    $('#table1').DataTable().ajax.reload();
-                                    alert('Visa deleted successfully!');
+                                    location.reload();
                                 },
                                 error: function(xhr, status, error) {
                                     alert(

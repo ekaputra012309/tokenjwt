@@ -24,12 +24,14 @@
                     }
                     var namaAgen = response.agent.nama_agent + ' - ' + response.agent
                         .contact_person;
+                    var ttl = response.jumlah_pax * response.harga_pax;
                     $('#tgl_visa').val(formatDate(response.tgl_visa));
                     $('#agent_id').val(response.agent_id);
                     $('#agent_nama').val(namaAgen);
                     $('#tgl_keberangkatan').val(formatDate(response.tgl_keberangkatan));
                     $('#jumlah_pax').val(response.jumlah_pax);
                     $('#harga_pax').val(response.harga_pax);
+                    $('#total').val(ttl);
                 },
 
                 error: function(xhr, status, error) {
