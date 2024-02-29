@@ -51,7 +51,7 @@
                         console.error('Error checking session status:', error);
                     }
                 });
-            }, 3600000); // 3600 seconds or 1 hours
+            }, 1800000); // 1800 seconds or 1 hours
         });
     </script>
 

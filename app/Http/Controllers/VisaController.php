@@ -17,14 +17,14 @@ class VisaController extends Controller
 
     public function index()
     {
-        $visas = Visa::with('agent')->get();
+        $visas = Visa::with('agent', 'details')->get();
         return response()->json($visas);
     }
 
     public function show($id)
     {
         try {
-            $visa = Visa::with('agent')->find($id);
+            $visa = Visa::with('agent', 'details')->find($id);
             return response()->json($visa);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Visa not found'], 404);

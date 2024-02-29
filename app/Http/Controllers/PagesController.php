@@ -305,4 +305,19 @@ class PagesController extends Controller
 
         return view('page.visa.lihat', compact('data'));
     }
+
+    public function cetakVisa($id)
+    {
+        $selectedBank = request()->input('bank');
+        $autoId = Visa::where('id_visa', base64_decode($id))->value('visa_id');
+        $pageTitle = 'Invoice Visa';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+            'autoId' => $autoId,
+            'bank' => $selectedBank,
+        );
+
+        return view('page.visa.cetak', compact('data'));
+    }
 }

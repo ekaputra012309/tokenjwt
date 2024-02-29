@@ -21,6 +21,11 @@ class Visa extends Model
         'status',
     ];
 
+    // Define the relationship with VisaDetail
+    public function details()
+    {
+        return $this->hasMany(VisaDetail::class, 'id_visa', 'id_visa');
+    }
     public function agent()
     {
         return $this->belongsTo(Agent::class, 'agent_id', 'id_agent');

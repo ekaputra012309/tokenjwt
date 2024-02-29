@@ -29,7 +29,7 @@
 
         function printPayment(selectedBank) {
             var id = '{{ $data['idpage'] }}';
-            var url = "{{ route('p.payment.cetak', ['id' => ':id', 'bank' => '']) }}";
+            var url = "{{ route('p.visa.cetak', ['id' => ':id', 'bank' => '']) }}";
             url = url.replace(':id', id) + '&bank=' + selectedBank;
 
             // Open the URL in a new tab
@@ -123,6 +123,7 @@
 
                         $.each(response, function(index, pembayaran) {
                             var tagihan = $('#kanan').val();
+                            $('#1kanan').val(tagihan * pembayaran.kurs_bsi)
                             // console.log('tagihan: ' + tagihan);
                             var formattedPaymentDate = formatDate(pembayaran
                                 .tgl_payment_visa);
@@ -147,7 +148,7 @@
                         var tagihan = parseFloat($('#1kanan').val());
                         var sisa_tagihan = tagihan - totalDeposit;
                         console.log('Sisa Tagihan: ' + sisa_tagihan);
-                        $('#bawah').html(formatCurrencyID1(sisa_tagihan));
+                        $('#bawah').html(sisa_tagihan);
                         var id = "{{ $data['idpage'] }}";
                         var visaId = atob(id);
                         if (sisa_tagihan === 0) {

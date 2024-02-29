@@ -95,7 +95,10 @@
                                 "data": "agent.nama_agent"
                             },
                             {
-                                "data": "total"
+                                "data": "total",
+                                "render": function(data, type, row) {
+                                    return '$ ' + formatCurrencyID1(data);
+                                }
                             },
                             {
                                 "data": "status",
@@ -151,6 +154,15 @@
                 var formattedDate = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' +
                     year;
                 return formattedDate;
+            }
+
+            function formatCurrencyID1(value) {
+                var numericValue = parseFloat(value);
+                if (isNaN(numericValue)) {
+                    return '';
+                }
+                var roundedValue = Math.round(numericValue); // Round the numeric value
+                return roundedValue.toLocaleString('id-ID');
             }
         });
     </script>
