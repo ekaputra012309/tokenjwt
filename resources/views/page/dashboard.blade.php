@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="page-heading">
+    {{-- <div class="page-heading">
         <h3>Profile Statistics</h3>
-    </div>
+    </div> --}}
     <div class="page-content">
         <section class="row">
             <div class="col-12 col-lg-12">
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-6 col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
@@ -78,6 +78,9 @@
                             </div>
                         </div>
                     </div>
+                </div> --}}
+                <div class="row">
+                    <div id="calendar"></div>
                 </div>
                 {{-- <div class="row">
                     <div class="col-12">
@@ -93,6 +96,26 @@
                 </div> --}}
             </div>
         </section>
+        <script>
+            $(document).ready(function() {
+                var calendarEl = $('#calendar')[0]; // Get calendar element using jQuery
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    events: [
+                        // Define your events here, dynamically generated from your Laravel data
+                        @foreach ($data['booking'] as $booking)
+                            {
+                                title: '{{ $booking->agent->nama_agent }}', // Display agent's name as event title
+                                start: '{{ \Carbon\Carbon::parse($booking->check_in)->toDateString() }}', // Use check_in date as event start date, formatted as 'Y-m-d'
+                                backgroundColor: '{{ $booking->status === 'Lunas' ? 'green' : 'red' }}', // Set event color based on booking status
+                                borderColor: '{{ $booking->status === 'Lunas' ? 'green' : 'red' }}', // Set event border color based on booking status
+                            },
+                        @endforeach
+                    ]
+                });
 
+                calendar.render();
+            });
+        </script>
     </div>
 @endsection

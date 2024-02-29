@@ -230,7 +230,9 @@
                             sisaDeposit = (response.total * response.details[0].kurs_bsi) - response
                                 .details[0].deposit;
                             $('#sisadeposit').html(sisaDeposit);
-                            window.print();
+                            setTimeout(function() {
+                                window.print();
+                            }, 1000);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);

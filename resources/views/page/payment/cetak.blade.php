@@ -300,7 +300,9 @@
                             // Update the HTML content of sisadeposit and sumdeposit elements
                             $('#sisadeposit').html(sisaDeposit);
                             $('#sumdeposit').html(formattedSumDeposit);
-                            window.print();
+                            setTimeout(function() {
+                                window.print();
+                            }, 1000);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);

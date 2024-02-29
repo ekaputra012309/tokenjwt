@@ -214,13 +214,13 @@
             <footer>
                 <div class="footer clearfix mb-0 text-muted">
                     <div class="float-start">
-                        <p>2024 &copy; KitaCodinginAja - Mazer</p>
+                        <p>2024 &copy; KitaCodinginAja</p>
                     </div>
                     <div class="float-end">
                         <p>
                             Crafted with
                             <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                            by <a href="https://saugi.me">Saugi</a>
+                            by <a href="https://saugi.me">Saugi - Mazer</a>
                         </p>
                     </div>
                 </div>
@@ -240,6 +240,9 @@
 
     <script src={{ asset('assets/extensions/parsleyjs/parsley.min.js') }}></script>
     <script src={{ asset('assets/static/js/pages/parsley.js') }}></script>
+
+    <!-- Include FullCalendar -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
 
     <script>
         $(document).ready(function() {
@@ -296,6 +299,7 @@
             });
         });
     </script>
+
 </body>
 
 </html>

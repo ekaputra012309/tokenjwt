@@ -19,10 +19,11 @@ class PagesController extends Controller
 
     public function dash()
     {
-
+        $bookings = Booking::with('agent', 'hotel', 'details')->get();
         $pageTitle = 'Dashboard - PT RIZQUNA MEKAH MADINAH';
         $data = array(
             'pageTitle' => $pageTitle,
+            'booking' => $bookings,
         );
         return view('page.dashboard', compact('data'));
     }
