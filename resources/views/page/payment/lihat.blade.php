@@ -28,8 +28,8 @@
                                     <div class="col-md-6">
                                         <div class="d-flex align-items-center">
                                             <select class="form-select me-2" id="bankSelect" style="width: 150px;">
-                                                <option value="BSI">BSI</option>
                                                 <option value="MANDIRI">MANDIRI</option>
+                                                <option value="BSI">BSI</option>
                                             </select>
                                             <button type="button" class="btn btn-danger" id="cetakPembayaran"
                                                 style="min-width: 100px;"><i class="bi bi-printer"></i> Cetak</button>

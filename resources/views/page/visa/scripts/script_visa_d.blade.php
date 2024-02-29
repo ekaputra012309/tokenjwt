@@ -18,6 +18,7 @@
         // Retrieve JWT token from localStorage
         var jwtToken = localStorage.getItem('jwtToken');
 
+
         // Fetch payment data
         fetchvisaData(jwtToken);
 
@@ -70,6 +71,7 @@
                         `);
                         tbody.append(newRow);
                         $('#total_subtotal').val(formatCurrencyID(data.total));
+                        refreshTable();
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
@@ -104,8 +106,6 @@
                 console.error('JWT token not found in localStorage.');
             }
         }
-
-        refreshTable();
 
         function refreshTable() {
             var id = "{{ $data['idpage'] }}";
@@ -163,22 +163,7 @@
                                     'Authorization': 'Bearer ' + jwtToken
                                 },
                                 success: function(response) {
-                                    // console.log(response);
-                                },
-                                error: function(xhr, status, error) {
-                                    console.error('Error updating status:', error);
-                                }
-                            });
-                        } else {
-                            $.ajax({
-                                url: "{{ route('visa_up', ['id' => ':id', 'status' => 'Piutang']) }}"
-                                    .replace(':id', visaId),
-                                type: 'POST',
-                                headers: {
-                                    'Authorization': 'Bearer ' + jwtToken
-                                },
-                                success: function(response) {
-                                    // console.log(response);
+                                    console.log(response);
                                 },
                                 error: function(xhr, status, error) {
                                     console.error('Error updating status:', error);
@@ -196,7 +181,11 @@
                                         'Authorization': 'Bearer ' + jwtToken
                                     },
                                     success: function(response) {
-                                        location.reload();
+                                        // location.reload();
+                                        $('#addDetailPembayaran').prop(
+                                            'disabled',
+                                            false);
+                                        upStatusPiutang();
                                     },
                                     error: function(xhr, status, error) {
                                         alert(
@@ -214,6 +203,25 @@
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
+                }
+            });
+        }
+
+        function upStatusPiutang() {
+            var id = "{{ $data['idpage'] }}";
+            var visaId = atob(id);
+            $.ajax({
+                url: "{{ route('visa_up', ['id' => ':id', 'status' => 'Piutang']) }}"
+                    .replace(':id', visaId),
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + jwtToken
+                },
+                success: function(response) {
+                    fetchvisaData(jwtToken);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error updating status:', error);
                 }
             });
         }
