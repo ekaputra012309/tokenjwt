@@ -97,12 +97,15 @@
             </div>
         </section>
         <script>
+            // Pass all booking data to JavaScript
+            var bookings = @json($data['booking']);
+
             $(document).ready(function() {
                 var calendarEl = $('#calendar')[0]; // Get calendar element using jQuery
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
                     events: [
-                        // Define your events here, dynamically generated from your Laravel data
+                        // Define your events here, dynamically generated from the bookings array
                         @foreach ($data['booking'] as $booking)
                             {
                                 title: '{{ $booking->agent->nama_agent }}', // Display agent's name as event title
@@ -115,7 +118,43 @@
                 });
 
                 calendar.render();
+
+                function displayBrowserNotification(message) {
+                    if (Notification.permission !== 'granted') {
+                        Notification.requestPermission().then(function(permission) {
+                            if (permission === 'granted') {
+                                new Notification('Notification', {
+                                    body: message
+                                });
+                            }
+                        });
+                    } else {
+                        new Notification('Notification', {
+                            body: message
+                        });
+                    }
+                }
+
+                var today = new Date();
+                today.setHours(0, 0, 0,
+                0); // Set hours, minutes, seconds, and milliseconds to 0 for accurate comparison
+                var fiveDaysFromNow = new Date(today);
+                fiveDaysFromNow.setDate(fiveDaysFromNow.getDate() + 5);
+
+                // Iterate over bookings array
+                bookings.forEach(function(booking) {
+                    var checkInDate = new Date(booking.check_in);
+                    if (checkInDate <= fiveDaysFromNow && checkInDate >= today) {
+                        // Construct your message using booking data
+                        var browserMessage = "Invoice No: " + booking.booking_id + "\nAgent Name: " + booking
+                            .agent.nama_agent + "\nStatus: " + (booking.status === 'Lunas' ? 'Lunas' :
+                                'Piutang');
+                        displayBrowserNotification(browserMessage);
+                    }
+                });
             });
         </script>
+
+
     </div>
 @endsection
