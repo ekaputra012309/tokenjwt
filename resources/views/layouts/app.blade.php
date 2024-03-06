@@ -226,6 +226,27 @@
                 </div>
             </footer>
         </div>
+        {{-- modal notif --}}
+        <div id="myModalNotif" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Notification</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <p>This is the modal body content.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- end modal notif --}}
     </div>
     <script src={{ asset('assets/static/js/components/dark.js') }}></script>
     <script src={{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}></script>
@@ -246,6 +267,7 @@
 
     <script>
         $(document).ready(function() {
+
             checkTokenExpiration();
             getUser();
 

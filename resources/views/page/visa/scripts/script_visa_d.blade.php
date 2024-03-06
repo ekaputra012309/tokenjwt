@@ -54,10 +54,10 @@
                         $('#tgl_visa').val(formatDate2(response.tgl_visa));
                         $('#agent_id').val(response.agent_id);
                         $('#agent_nama').val(namaAgen);
-                        $('#kiri').html('$');
-                        $('#atas').html('USD');
-                        $('#bawah').html(formatCurrencyID1(response.total));
-                        $('#kanan').val(response.total);
+                        $('#kiri').html('');
+                        $('#atas').html('IDR');
+                        $('#bawah').html(formatCurrencyID1(response.kurs[0].hasil_konversi));
+                        $('#kanan').val(response.kurs[0].hasil_konversi);
 
                         const data = response;
                         const formattedDate = formatDate3(data.tgl_keberangkatan);
@@ -123,7 +123,7 @@
 
                         $.each(response, function(index, pembayaran) {
                             var tagihan = $('#kanan').val();
-                            $('#1kanan').val(tagihan * pembayaran.kurs_bsi)
+                            // $('#1kanan').val(tagihan)
                             // console.log('tagihan: ' + tagihan);
                             var formattedPaymentDate = formatDate(pembayaran
                                 .tgl_payment_visa);
@@ -145,10 +145,10 @@
                         });
 
                         // Calculate remaining balance
-                        var tagihan = parseFloat($('#1kanan').val());
+                        var tagihan = parseFloat($('#kanan').val());
                         var sisa_tagihan = tagihan - totalDeposit;
                         console.log('Sisa Tagihan: ' + sisa_tagihan);
-                        $('#bawah').html(sisa_tagihan);
+                        $('#bawah').html(formatCurrencyID1(sisa_tagihan));
                         var id = "{{ $data['idpage'] }}";
                         var visaId = atob(id);
                         if (sisa_tagihan === 0) {
@@ -163,7 +163,22 @@
                                     'Authorization': 'Bearer ' + jwtToken
                                 },
                                 success: function(response) {
-                                    console.log(response);
+                                    // console.log(response);
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error updating status:', error);
+                                }
+                            });
+                        } else {
+                            $.ajax({
+                                url: "{{ route('visa_up', ['id' => ':id', 'status' => 'Piutang']) }}"
+                                    .replace(':id', visaId),
+                                type: 'POST',
+                                headers: {
+                                    'Authorization': 'Bearer ' + jwtToken
+                                },
+                                success: function(response) {
+                                    // console.log(response);
                                 },
                                 error: function(xhr, status, error) {
                                     console.error('Error updating status:', error);
@@ -181,11 +196,11 @@
                                         'Authorization': 'Bearer ' + jwtToken
                                     },
                                     success: function(response) {
-                                        // location.reload();
+                                        location.reload();
                                         $('#addDetailPembayaran').prop(
                                             'disabled',
                                             false);
-                                        upStatusPiutang();
+                                        // upStatusPiutang();
                                     },
                                     error: function(xhr, status, error) {
                                         alert(
@@ -203,25 +218,6 @@
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
-                }
-            });
-        }
-
-        function upStatusPiutang() {
-            var id = "{{ $data['idpage'] }}";
-            var visaId = atob(id);
-            $.ajax({
-                url: "{{ route('visa_up', ['id' => ':id', 'status' => 'Piutang']) }}"
-                    .replace(':id', visaId),
-                type: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + jwtToken
-                },
-                success: function(response) {
-                    fetchvisaData(jwtToken);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error updating status:', error);
                 }
             });
         }

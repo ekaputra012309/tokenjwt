@@ -117,11 +117,14 @@
                 </tr>
                 <tr>
                     <th colspan="2"><span id="deposito"></span></th>
-                    <th colspan="2" style="text-align: right"><span id="hasildeposito"></span></th>
+                    <th style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)"><span id="rupiah"></span>
+                    </th>
+                    <th style="text-align: right"><span id="hasildeposito"></span></th>
                 </tr>
                 <tr>
                     <th colspan="2"><span id="sstatus">TEST</span></th>
-                    <th colspan="2" style="text-align: right"><span id="sisadeposit">-</span></th>
+                    <th style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)">IDR</th>
+                    <th style="text-align: right"><span id="sisadeposit">-</span></th>
                 </tr>
             </tfoot>
         </table>
@@ -207,32 +210,49 @@
                             xhr.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
                         },
                         success: function(response) {
-                            var sisaDeposit = 0;
-
                             $('#namaagen').html(response.agent.nama_agent);
                             $('#noinvoice').html(response.visa_id);
                             $('#tglinvoice').html(formatDate(response.tgl_visa));
                             $('#sstatus').html(response.status);
-                            var depositSpan = $('#deposito');
-                            depositSpan.append('<span id="deposit' +
-                                '">Deposit ' + '<br>' + formatDate2(response.details[0]
-                                    .tgl_payment_visa) + '</span><br>');
 
-                            // Update the content of the hasildeposito span with formatted deposit value
-                            var hasildepositSpan = $('#hasildeposito');
-                            hasildepositSpan.append('<span id="hasildeposito' +
-                                '">' + formatCurrencyID(response.details[0].deposit) +
-                                '</span><br>');
-                            $('#tglkurs').html(formatDate(response.details[0].tgl_payment_visa));
-                            $('#tglkurs1').html(formatDate(response.details[0].tgl_payment_visa));
-                            $('#bsi_kurs').html(formatCurrencyID1(response.details[0].kurs_bsi));
-                            $('#sar_kurs').html(formatCurrencyID1(response.details[0].kurs_riyal));
-                            sisaDeposit = (response.total * response.details[0].kurs_bsi) - response
-                                .details[0].deposit;
+                            var detailpay = response.details;
+                            var sumDeposit = 0;
+                            var formattedSumDeposit = 0;
+                            var sisaDeposit = 0;
+
+                            detailpay.forEach(function(detail, index) {
+                                sumDeposit += parseFloat(detail
+                                    .deposit
+                                ); // Convert deposit to a number and accumulate the total
+
+                                // Update the content of the deposito span
+                                var depositSpan = $('#deposito');
+                                depositSpan.append('<span id="deposit' + (index + 1) +
+                                    '">Deposit ' + (index + 1) + ' ' + formatDate2(detail
+                                        .tgl_payment_visa) + '</span><br>');
+                                var rupiahSpan = $('#rupiah');
+                                rupiahSpan.append('<span id="rupiah' + (index + 1) +
+                                    '">IDR</span><br>');
+
+                                // Update the content of the hasildeposito span with formatted deposit value
+                                var hasildepositSpan = $('#hasildeposito');
+                                hasildepositSpan.append('<span id="hasildeposito' + (index +
+                                        1) + '">' + formatCurrencyID(detail.deposit) +
+                                    '</span><br>');
+                            });
+                            // Calculate sisaDeposit
+                            sisaDeposit = parseFloat(response.kurs[0].hasil_konversi) - sumDeposit;
+
+                            // Format sumDeposit and sisaDeposit for display
+                            formattedSumDeposit = formatCurrencyID(sumDeposit);
+                            sisaDeposit = formatCurrencyID(sisaDeposit);
+
+                            // Update the HTML content of sisadeposit and sumdeposit elements
                             $('#sisadeposit').html(sisaDeposit);
-                            setTimeout(function() {
-                                window.print();
-                            }, 1000);
+                            $('#sumdeposit').html(formattedSumDeposit);
+                            // setTimeout(function() {
+                            //     window.print();
+                            // }, 1000);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
@@ -249,7 +269,7 @@
                 var paymentIdBase64 = "{{ $data['idpage'] }}";
                 var paymentId = atob(paymentIdBase64);
                 $.ajax({
-                    url: "{{ route('visa_d_inv', ['id' => ':id']) }}".replace(':id', paymentId),
+                    url: "{{ route('visa') }}/" + paymentId,
                     type: 'GET',
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
@@ -259,26 +279,24 @@
                         $('#invoiceDetailsBody').empty();
                         // Append new rows based on received data
                         $.each(data, function(index, item) {
-
+                            console.log(data);
                             var row = '<tr>' +
                                 '<td style="text-align: center"> <br> <b>VISA</b> <br><br>' +
                                 formatDate(
-                                    item
-                                    .visa
-                                    .tgl_keberangkatan) +
+                                    item.tgl_keberangkatan) +
                                 '<br></td>' +
-                                '<td style="text-align: center">' + formatCurrencyID(item.visa
+                                '<td style="text-align: center">' + formatCurrencyID(item
                                     .jumlah_pax) +
                                 '</td>' +
                                 '<td style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)">$' +
-                                '<td style="text-align: right">' + formatCurrencyID(item.visa
+                                '<td style="text-align: right">' + formatCurrencyID(item
                                     .harga_pax) +
                                 '</td>' +
                                 '<td style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)">$' +
-                                '<td style="text-align: right">' + formatCurrencyID(item.visa
+                                '<td style="text-align: right">' + formatCurrencyID(item
                                     .total) +
                                 '</td>';
-                            $('#totalusd').html(formatCurrencyID(item.visa.total));
+                            $('#totalusd').html(formatCurrencyID(item.total));
                             $('#invoiceDetailsBody').append(row);
                         });
                     },

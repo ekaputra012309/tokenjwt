@@ -13,6 +13,7 @@ use App\Http\Controllers\PaymentDetailController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\VisaController;
 use App\Http\Controllers\VisaDetailController;
+use App\Http\Controllers\KursVisaController;
 
 
 /*
@@ -122,4 +123,10 @@ Route::controller(VisaDetailController::class)->group(function () {
     Route::get('visa_d_inv/{id}', 'showInv')->name('visa_d_inv');
     Route::post('visa_d/{id}', 'update');
     Route::delete('visa_d/{id}', 'destroy');
+});
+// kurs visa
+Route::controller(KursVisaController::class)->group(function () {
+    Route::get('kurs', 'index')->name('kurs');
+    Route::post('kurs', 'store');
+    Route::get('kurs/{id}', 'show');
 });

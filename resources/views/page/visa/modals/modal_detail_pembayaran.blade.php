@@ -11,7 +11,7 @@
             <form id="detailPembayaranForm" class="form" method="POST" action="#" data-parsley-validate>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-4 col-12">
+                        <div class="col-md-6 col-12">
                             <div class="form-group mandatory">
                                 <label for="tgl_payment_visa" class="form-label">Tgl Pembayaran</label>
                                 <div class="input-group">
@@ -22,28 +22,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-12">
-                            <div class="form-group mandatory">
-                                <label for="kurs_bsi" class="form-label">KURS BSI</label>
-                                <input type="number" id="kurs_bsi" name="kurs_bsi" class="form-control"
-                                    placeholder="0.00" step="0.01" data-parsley-required="true" />
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                            <div class="form-group mandatory">
-                                <label for="kurs_riyal" class="form-label">KURS RIYAL</label>
-                                <input type="number" id="kurs_riyal" name="kurs_riyal" class="form-control"
-                                    placeholder="0.00" step="0.01" data-parsley-required="true" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <label for="tagihan" class="form-label">Tagihan IDR</label>
-                                <input type="text" id="tagihan" class="form-control" placeholder="0" readonly />
-                            </div>
-                        </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group mandatory">
                                 <label for="deposit" class="form-label">Deposit</label>
@@ -51,7 +29,30 @@
                                     placeholder="0.00" step="0.01" data-parsley-required="true" />
                             </div>
                         </div>
+                        {{-- <div class="col-md-4 col-12">
+                            <div class="form-group mandatory">
+                                <label for="kurs_bsi" class="form-label">KURS BSI</label>
+                                <input type="number" id="kurs_bsi1" name="kurs_bsi" class="form-control"
+                                    placeholder="0.00" step="0.01" data-parsley-required="true" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group mandatory">
+                                <label for="kurs_riyal" class="form-label">KURS RIYAL</label>
+                                <input type="number" id="kurs_riyal1" name="kurs_riyal" class="form-control"
+                                    placeholder="0.00" step="0.01" data-parsley-required="true" />
+                            </div>
+                        </div> --}}
                     </div>
+                    {{-- <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="tagihan" class="form-label">Tagihan IDR</label>
+                                <input type="text" id="tagihan" class="form-control" placeholder="0" readonly />
+                            </div>
+                        </div>
+
+                    </div> --}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" id="closeModalBtnPayment">Close</button>

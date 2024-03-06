@@ -21,11 +21,51 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="m-0"> </h5>
-                    <div>
-                        <a href="{{ route('p.visa.tambah') }}" class="btn btn-primary btn-sm"><i
-                                class="bi bi-plus-square"></i> Add Transaction</a>
+                <div class="d-md-flex justify-content-between align-items-center">
+                    <div class="w-100">
+                        <form id="kursVisa" class="form" method="POST" action="#" data-parsley-validate>
+                            <div class="row">
+                                <div class="col-md-4 col-12">
+                                    <div class="form-group mandatory">
+                                        <label for="no-inv-column" class="form-label">No Invoice</label>
+                                        <input type="text" id="no_inv" class="form-control" placeholder="No Invoice"
+                                            data-parsley-required="true" readonly />
+                                        <input type="hidden" id="id_visa" name="id_visa" placeholder="id visa">
+                                        <input type="hidden" id="hasil_konversi" name="hasil_konversi"
+                                            placeholder="konversi">
+                                        <input type="hidden" id="total" placeholder="total">
+                                        <input type="hidden" value="1" name="status">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group mandatory">
+                                        <label for="kurs-bsi-column" class="form-label">KURS BSI</label>
+                                        <input type="text" id="kurs_bsi" class="form-control" placeholder="0.00"
+                                            step="0.01" name="kurs_bsi" data-parsley-required="true" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group mandatory">
+                                        <label for="kurs-riyal-column" class="form-label">KURS RIYAL</label>
+                                        <input type="text" id="kurs_riyal" class="form-control" placeholder="0.00"
+                                            step="0.01" name="kurs_riyal" data-parsley-required="true" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group mandatory">
+                                        <br>
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">
+                                            <i class="bi bi-save"></i> Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="ml-md-3 mt-2 mt-md-0">
+                        <a href="{{ route('p.visa.tambah') }}" class="btn btn-primary" style="width: 250px"><i
+                                class="bi bi-plus-square"></i> Add
+                            Transaction</a>
                     </div>
                 </div>
             </div>
@@ -37,6 +77,7 @@
                                 <th>#</th>
                                 <th>Invoice</th>
                                 <th>Tanggal Invoice</th>
+                                <th>Tgl Keberangkatan</th>
                                 <th>Agen</th>
                                 <th>Total</th>
                                 <th>Status</th>
@@ -51,6 +92,31 @@
     <script>
         $(document).ready(function() {
             var token = localStorage.getItem('jwtToken');
+
+            $('#kursVisa').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                var formData = $(this).serialize(); // Serialize the form data
+
+                $.ajax({
+                    url: "{{ route('kurs') }}",
+                    type: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    data: formData,
+                    success: function(response) {
+
+                        var idVisa = $('#id_visa').val();
+                        $('#kursVisa')[0].reset();
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.error('Error submitting form:', error);
+                    }
+                });
+            });
 
             $.ajax({
                 url: "{{ route('visa') }}",
@@ -72,9 +138,29 @@
                                     var visaIdBase64 = btoa(row.id_visa);
                                     editHref = editHref.replace(':id', visaIdBase64);
                                     lihatHref = lihatHref.replace(':id', visaIdBase64);
-                                    return '<a href="' + lihatHref +
-                                        '" class="btn btn-light btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"><i class="bi bi-search"></i></a> ' +
-                                        '<a href="' + editHref +
+
+                                    // Conditional rendering for btn-cari based on kurs[0].status
+                                    var cariButton = row.kurs && row.kurs[0] && row
+                                        .kurs[0].status == '1' ? '<a href="' +
+                                        lihatHref +
+                                        '" class="btn btn-light btn-sm btn-cari" data-idvisa="' +
+                                        row.id_visa +
+                                        '" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"><i class="bi bi-search"></i></a>' :
+                                        '';
+
+                                    // Conditional rendering for btn-tambah based on kurs[0].status
+                                    var tambahButton = row.kurs && row.kurs[0] && row
+                                        .kurs[0].status == '1' ? '' :
+                                        '<button class="btn btn-light btn-sm btn-tambah" data-id="' +
+                                        row.visa_id +
+                                        '" data-idvisa="' +
+                                        row.id_visa +
+                                        '" data-total="' +
+                                        row.total +
+                                        '" data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah"><i class="bi bi-plus-circle"></i></button>';
+
+                                    return cariButton + tambahButton +
+                                        ' <a href="' + editHref +
                                         '" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi bi-pencil-square"></i></a> ' +
                                         '<button class="btn btn-danger btn-sm delete-btn" data-id="' +
                                         row.id_visa +
@@ -86,6 +172,13 @@
                             },
                             {
                                 "data": "tgl_visa",
+                                "render": function(data, type, row) {
+                                    return formatDate(
+                                        data); // Use formatDate function to format date
+                                }
+                            },
+                            {
+                                "data": "tgl_keberangkatan",
                                 "render": function(data, type, row) {
                                     return formatDate(
                                         data); // Use formatDate function to format date
@@ -110,7 +203,7 @@
                                     return '<button class="btn btn-' + buttonColor +
                                         ' btn-sm">' + statusLabel + '</button>';
                                 }
-                            }
+                            },
                         ]
                     });
 
@@ -136,6 +229,15 @@
                                 }
                             });
                         }
+                    });
+
+                    $('#table1').on('click', '.btn-tambah', function() {
+                        var NoInv = $(this).data('id');
+                        var visaId = $(this).data('idvisa');
+                        var stotal = $(this).data('total');
+                        $('#no_inv').val(NoInv);
+                        $('#id_visa').val(visaId);
+                        $('#total').val(stotal);
                     });
                 },
                 error: function(xhr, status, error) {
@@ -164,6 +266,13 @@
                 var roundedValue = Math.round(numericValue); // Round the numeric value
                 return roundedValue.toLocaleString('id-ID');
             }
+
+            $('#kurs_bsi').on('keyup', function() {
+                var kurs_bsi = parseFloat($(this).val());
+                var tagihan_awal = parseFloat($('#total').val());
+                var tagihan = tagihan_awal * kurs_bsi;
+                $('#hasil_konversi').val(tagihan);
+            });
         });
     </script>
 @endsection

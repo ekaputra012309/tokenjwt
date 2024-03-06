@@ -5,17 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VisaDetail extends Model
+class KursVisa extends Model
 {
     use HasFactory;
-    protected $table = 'visa_details';
-    protected $primaryKey = 'id_visa_detail';
+    protected $table = 'kurs_visas';
+    protected $primaryKey = 'id_kurs';
     protected $fillable = [
         'id_visa',
-        'tgl_payment_visa',
-        'deposit',
+        'kurs_bsi',
+        'kurs_riyal',
+        'hasil_konversi',
+        'status',
     ];
-    // Define the relationship with visa
+
     public function visa()
     {
         return $this->belongsTo(Visa::class, 'id_visa');

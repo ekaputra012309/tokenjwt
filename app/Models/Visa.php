@@ -30,4 +30,8 @@ class Visa extends Model
     {
         return $this->belongsTo(Agent::class, 'agent_id', 'id_agent');
     }
+    public function kurs()
+    {
+        return $this->hasMany(KursVisa::class, 'id_visa', 'id_visa');
+    }
 }
