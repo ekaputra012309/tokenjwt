@@ -40,6 +40,21 @@
             border-left: 1px solid white;
             border-bottom: 1px solid white;
         }
+
+        @media print {
+            @page {
+                size: auto;
+                /* auto is the default value, which adjusts page size based on content */
+                margin: 0.15in 0.5in;
+
+                /* Remove default margin */
+                /* To exclude headers and footers, set display: none */
+                header,
+                footer {
+                    display: none;
+                }
+            }
+        }
     </style>
 </head>
 

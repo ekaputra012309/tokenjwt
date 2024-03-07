@@ -40,6 +40,21 @@
             border-left: 1px solid rgb(255, 255, 255);
             border-bottom: 1px solid white;
         }
+
+        @media print {
+            @page {
+                size: auto;
+                /* auto is the default value, which adjusts page size based on content */
+                margin: 0.15in 0.5in;
+
+                /* Remove default margin */
+                /* To exclude headers and footers, set display: none */
+                header,
+                footer {
+                    display: none;
+                }
+            }
+        }
     </style>
 </head>
 
@@ -250,9 +265,9 @@
                             // Update the HTML content of sisadeposit and sumdeposit elements
                             $('#sisadeposit').html(sisaDeposit);
                             $('#sumdeposit').html(formattedSumDeposit);
-                            // setTimeout(function() {
-                            //     window.print();
-                            // }, 1000);
+                            setTimeout(function() {
+                                window.print();
+                            }, 1000);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
@@ -277,28 +292,27 @@
                     success: function(data) {
                         // Clear existing rows
                         $('#invoiceDetailsBody').empty();
-                        // Append new rows based on received data
-                        $.each(data, function(index, item) {
-                            console.log(data);
-                            var row = '<tr>' +
-                                '<td style="text-align: center"> <br> <b>VISA</b> <br><br>' +
-                                formatDate(
-                                    item.tgl_keberangkatan) +
-                                '<br></td>' +
-                                '<td style="text-align: center">' + formatCurrencyID(item
-                                    .jumlah_pax) +
-                                '</td>' +
-                                '<td style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)">$' +
-                                '<td style="text-align: right">' + formatCurrencyID(item
-                                    .harga_pax) +
-                                '</td>' +
-                                '<td style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)">$' +
-                                '<td style="text-align: right">' + formatCurrencyID(item
-                                    .total) +
-                                '</td>';
-                            $('#totalusd').html(formatCurrencyID(item.total));
-                            $('#invoiceDetailsBody').append(row);
-                        });
+
+                        var tglKeberangkatan = formatDate(data.tgl_keberangkatan);
+                        var jumlahPax = data.jumlah_pax;
+                        var hargaPax = formatCurrencyID(data.harga_pax);
+                        var total = formatCurrencyID(data.total);
+
+                        // Creating table row
+                        var row = '<tr>' +
+                            '<td style="text-align: center">VISA <br>' + tglKeberangkatan + '</td>' +
+                            '<td style="text-align: center">' + jumlahPax + '</td>' +
+                            '<td style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)">$</td>' +
+                            '<td style="text-align: right">' + hargaPax + '</td>' +
+                            '<td style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)">$</td>' +
+                            '<td style="text-align: right">' + total + '</td>' +
+                            '</tr>';
+
+                        // Appending row to table body
+                        $('#invoiceDetailsBody').append(row);
+
+                        // Update total USD
+                        $('#totalusd').html(total);
                     },
                     error: function(xhr, status, error) {
                         console.error(status + ': ' + error);

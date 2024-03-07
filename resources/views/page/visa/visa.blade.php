@@ -133,6 +133,11 @@
                                 "render": function(data, type, row) {
                                     var editHref =
                                         "{{ route('p.visa.edit', ['id' => ':id']) }}";
+                                    var deleteButtonDisabled = row.status === 'Lunas' ?
+                                        'disabled' : '';
+                                    var editButtonDisabled = row.status === 'Lunas' ?
+                                        'disabled' : '';
+
                                     var lihatHref =
                                         "{{ route('p.visa.lihat', ['id' => ':id']) }}";
                                     var visaIdBase64 = btoa(row.id_visa);
@@ -159,12 +164,23 @@
                                         row.total +
                                         '" data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah"><i class="bi bi-plus-circle"></i></button>';
 
+                                    var editButtonHtml = '<a href="' + editHref +
+                                        '" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" ' +
+                                        editButtonDisabled;
+                                    if (editButtonDisabled) {
+                                        editButtonHtml +=
+                                        ' onclick="return false;"'; // Disable link click
+                                    }
+                                    editButtonHtml +=
+                                        '><i class="bi bi-pencil-square"></i></a>';
+
                                     return cariButton + tambahButton +
-                                        ' <a href="' + editHref +
-                                        '" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi bi-pencil-square"></i></a> ' +
-                                        '<button class="btn btn-danger btn-sm delete-btn" data-id="' +
+                                        ' ' + editButtonHtml +
+                                        ' <button class="btn btn-danger btn-sm delete-btn" data-id="' +
                                         row.id_visa +
-                                        '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>';
+                                        '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus" ' +
+                                        deleteButtonDisabled +
+                                        '><i class="bi bi-trash"></i></button>';
                                 }
                             },
                             {

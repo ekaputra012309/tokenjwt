@@ -95,8 +95,8 @@
                                 <p style="font-size: 30pt; text-align:right">
                                     <span id="kiri">#</span><span id="bawah">1000</span>
                                 </p>
-                                <input type="text" id="kanan">
-                                <input type="text" id="1kanan">
+                                <input type="hidden" id="kanan">
+                                <input type="hidden" id="1kanan">
                             </div>
                         </div>
                     </div>
