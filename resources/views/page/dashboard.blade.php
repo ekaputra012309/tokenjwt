@@ -182,6 +182,7 @@
         <script>
             // Pass all booking data to JavaScript
             var bookings = @json($data['booking']);
+            // console.log(bookings);
 
             $(document).ready(function() {
                 var index = 0; // Initialize an index to keep track of the current booking to display
@@ -223,41 +224,44 @@
                 }
 
                 // Function to show modal
-                function showModal() {
-                    var booking = bookings[index];
-                    var modalContent = "<p>Invoice No: " + booking.booking_id + "</p>";
-                    modalContent += "<p>Agent Name: " + booking.agent.nama_agent + "</p>";
-                    modalContent += "<p>Status: " + (booking.status === 'Lunas' ? 'Lunas' : 'Piutang') + "</p>";
-                    modalContent += "<p>Check In: " + formatDateIndonesian(new Date(booking.check_in)) + "</p>";
-                    modalContent += "<p>Check Out: " + formatDateIndonesian(new Date(booking.check_out)) + "</p>";
+                function showModal(matchingBookings) {
+                    var modalContent = ''; // Initialize modal content
+
+                    matchingBookings.forEach(function(booking, index) {
+                        var status = booking.status === 'Lunas' ? 'Lunas' : 'Piutang';
+                        modalContent += "<p>Invoice No: " + booking.booking_id + "<br>";
+                        modalContent += "Agent Name: " + booking.agent.nama_agent + "<br>";
+                        modalContent += "Status: " + status + "<br>";
+                        modalContent += "Check In: " + formatDateIndonesian(new Date(booking.check_in)) +
+                            "<br>";
+                        modalContent += "Check Out: " + formatDateIndonesian(new Date(booking.check_out)) +
+                            "<br>";
+
+                        // Check if this is not the last booking
+                        if (index !== matchingBookings.length - 1) {
+                            modalContent +=
+                                "<hr>"; // Add a horizontal line between each booking except the last one
+                        }
+                    });
+
                     $('#myModalNotif .modal-body').html(modalContent);
                     $('#myModalNotif').modal('show');
                 }
-
-                // Event listener for when the modal is closed
-                $('#myModalNotif').on('hidden.bs.modal', function() {
-                    index++; // Move to the next booking
-                    // Find the next booking that meets the condition
-                    while (index < bookings.length) {
-                        var checkInDate = new Date(bookings[index].check_in);
-                        if ((checkInDate.getTime() === fiveDaysFromNow.getTime() || checkInDate.getTime() ===
-                                oneDayFromNow.getTime()) && bookings[index].status === 'Piutang') {
-                            showModal(); // Show the modal for the next booking meeting the condition
-                            return; // Exit the loop
-                        }
-                        index++; // Move to the next booking
-                    }
-                });
-
                 // Check if there are bookings within one day or five days from today
-                bookings.forEach(function(booking) {
+                var matchingBookings = bookings.filter(function(booking) {
                     var checkInDate = new Date(booking.check_in);
-                    if ((checkInDate.getTime() === fiveDaysFromNow.getTime() || checkInDate.getTime() ===
-                            oneDayFromNow.getTime()) && booking.status === 'Piutang') {
-                        showModal(); // Show the modal for the first booking meeting the condition
-                        return; // Exit the loop
-                    }
+                    return (
+                        (checkInDate.getTime() === fiveDaysFromNow.getTime() || checkInDate.getTime() ===
+                            oneDayFromNow.getTime()) &&
+                        booking.status === 'Piutang'
+                    );
                 });
+
+                if (matchingBookings.length > 0) {
+                    // console.log(matchingBookings);
+                    showModal(matchingBookings);
+                }
+
             });
         </script>
     </div>
