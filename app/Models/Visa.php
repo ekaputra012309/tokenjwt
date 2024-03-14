@@ -32,6 +32,6 @@ class Visa extends Model
     }
     public function kurs()
     {
-        return $this->hasMany(KursVisa::class, 'id_visa', 'id_visa');
+        return $this->belongsTo(KursVisa::class, 'id_visa', 'id_visa');
     }
 }

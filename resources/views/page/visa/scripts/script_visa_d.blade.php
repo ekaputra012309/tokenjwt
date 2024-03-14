@@ -56,8 +56,8 @@
                         $('#agent_nama').val(namaAgen);
                         $('#kiri').html('');
                         $('#atas').html('IDR');
-                        $('#bawah').html(formatCurrencyID1(response.kurs[0].hasil_konversi));
-                        $('#kanan').val(response.kurs[0].hasil_konversi);
+                        $('#bawah').html(formatCurrencyID1(response.kurs.hasil_konversi));
+                        $('#kanan').val(response.kurs.hasil_konversi);
 
                         const data = response;
                         const formattedDate = formatDate3(data.tgl_keberangkatan);

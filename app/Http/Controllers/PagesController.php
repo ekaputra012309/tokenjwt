@@ -8,6 +8,21 @@ use App\Models\Visa;
 
 class PagesController extends Controller
 {
+    // Function to convert month number to Roman numeral
+    private function toRoman($number)
+    {
+        $map = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
+        $result = '';
+
+        foreach ($map as $roman => $value) {
+            $matches = intval($number / $value);
+            $result .= str_repeat($roman, $matches);
+            $number = $number % $value;
+        }
+
+        return $result;
+    }
+
     public function signin()
     {
         $pageTitle = 'Login - PT RIZQUNA MEKAH MADINAH';
@@ -167,25 +182,39 @@ class PagesController extends Controller
 
     public function tambahBooking()
     {
+        // Get the current year and month
         $currentYear = date('Y');
+        $currentMonth = date('m');
 
-        // Find the maximum ID from existing bookings
-        $maxId = Booking::max('booking_id');
+        // Find the maximum ID from existing bookings created in the current month and year
+        $maxId = Booking::whereYear('created_at', $currentYear)
+            ->whereMonth('created_at', $currentMonth)
+            ->max('booking_id');
 
-        // Extract the numeric part and increment by 1
-        $numericPart = (int)explode('/', $maxId)[0]; // Extract "002" from "002/INV-HTL/II/2024"
-        $newNumericPart = $numericPart + 1;
+        // Extract the month from the last stored auto ID, if it exists
+        $lastStoredMonth = $maxId ? explode('/', $maxId)[2] : null;
+        // Convert the month number to Roman numeral
+        $romanMonth = $this->toRoman($currentMonth);
+        $numericPart = (int)explode('/', $maxId)[0];
+        // If there are no existing bookings for the current month and year, start from 1
+        if ($maxId === null || $lastStoredMonth !== $romanMonth) {
+            $newNumericPart = 1;
+        } else {
+            // Extract the numeric part and increment by 1
+            $newNumericPart = $numericPart + 1;
+        }
 
         // Format the new ID to a 3-digit string
         $newId = str_pad($newNumericPart, 3, '0', STR_PAD_LEFT);
 
-        $autoId = $newId . '/INV-HTL/II/' . $currentYear;
+        // Construct the auto ID with the Roman numeral month, year, and the new numeric part
+        $autoId = $newId . '/INV-HTL/' . $romanMonth . '/' . $currentYear;
         $pageTitle = 'Add Booking - PT RIZQUNA MEKAH MADINAH';
         $data = array(
             'pageTitle' => $pageTitle,
             'autoId' => $autoId,
         );
-
+        // dd($autoId);
         return view('page.booking.tambah', compact('data'));
     }
 
@@ -257,7 +286,7 @@ class PagesController extends Controller
         return view('page.visa.visa', compact('data'));
     }
 
-    public function tambahVisa()
+    public function tambahVisa1()
     {
         $currentYear = date('Y');
 
@@ -278,6 +307,44 @@ class PagesController extends Controller
             'autoId' => $autoId,
         );
 
+        return view('page.visa.tambah', compact('data'));
+    }
+
+    public function tambahVisa()
+    {
+        // Get the current year and month
+        $currentYear = date('Y');
+        $currentMonth = date('m');
+
+        // Find the maximum ID from existing bookings created in the current month and year
+        $maxId = Visa::whereYear('created_at', $currentYear)
+            ->whereMonth('created_at', $currentMonth)
+            ->max('visa_id');
+
+        // Extract the month from the last stored auto ID, if it exists
+        $lastStoredMonth = $maxId ? explode('/', $maxId)[2] : null;
+        // Convert the month number to Roman numeral
+        $romanMonth = $this->toRoman($currentMonth);
+        $numericPart = (int)explode('/', $maxId)[0];
+        // If there are no existing bookings for the current month and year, start from 1
+        if ($maxId === null || $lastStoredMonth !== $romanMonth) {
+            $newNumericPart = 1;
+        } else {
+            // Extract the numeric part and increment by 1
+            $newNumericPart = $numericPart + 1;
+        }
+
+        // Format the new ID to a 3-digit string
+        $newId = str_pad($newNumericPart, 3, '0', STR_PAD_LEFT);
+
+        // Construct the auto ID with the Roman numeral month, year, and the new numeric part
+        $autoId = $newId . '/INV-VISA/' . $romanMonth . '/' . $currentYear;
+        $pageTitle = 'Add Visa - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'autoId' => $autoId,
+        );
+        // dd($autoId);
         return view('page.visa.tambah', compact('data'));
     }
 

@@ -144,18 +144,18 @@
                                     editHref = editHref.replace(':id', visaIdBase64);
                                     lihatHref = lihatHref.replace(':id', visaIdBase64);
 
-                                    // Conditional rendering for btn-cari based on kurs[0].status
-                                    var cariButton = row.kurs && row.kurs[0] && row
-                                        .kurs[0].status == '1' ? '<a href="' +
+                                    // Conditional rendering for btn-cari based on kurs.status
+                                    var cariButton = row.kurs && row.kurs && row
+                                        .kurs.status == '1' ? '<a href="' +
                                         lihatHref +
                                         '" class="btn btn-light btn-sm btn-cari" data-idvisa="' +
                                         row.id_visa +
                                         '" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"><i class="bi bi-search"></i></a>' :
                                         '';
 
-                                    // Conditional rendering for btn-tambah based on kurs[0].status
-                                    var tambahButton = row.kurs && row.kurs[0] && row
-                                        .kurs[0].status == '1' ? '' :
+                                    // Conditional rendering for btn-tambah based on kurs.status
+                                    var tambahButton = row.kurs && row.kurs && row
+                                        .kurs.status == '1' ? '' :
                                         '<button class="btn btn-light btn-sm btn-tambah" data-id="' +
                                         row.visa_id +
                                         '" data-idvisa="' +
@@ -169,7 +169,7 @@
                                         editButtonDisabled;
                                     if (editButtonDisabled) {
                                         editButtonHtml +=
-                                        ' onclick="return false;"'; // Disable link click
+                                            ' onclick="return false;"'; // Disable link click
                                     }
                                     editButtonHtml +=
                                         '><i class="bi bi-pencil-square"></i></a>';

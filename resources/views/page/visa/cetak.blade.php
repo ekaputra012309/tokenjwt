@@ -256,7 +256,7 @@
                                     '</span><br>');
                             });
                             // Calculate sisaDeposit
-                            sisaDeposit = parseFloat(response.kurs[0].hasil_konversi) - sumDeposit;
+                            sisaDeposit = parseFloat(response.kurs.hasil_konversi) - sumDeposit;
 
                             // Format sumDeposit and sisaDeposit for display
                             formattedSumDeposit = formatCurrencyID(sumDeposit);
@@ -294,9 +294,12 @@
                         $('#invoiceDetailsBody').empty();
 
                         var tglKeberangkatan = formatDate(data.tgl_keberangkatan);
-                        var jumlahPax = data.jumlah_pax;
+                        var jumlahPax = formatCurrencyID(data.jumlah_pax);
                         var hargaPax = formatCurrencyID(data.harga_pax);
                         var total = formatCurrencyID(data.total);
+                        var kurs_bsi = formatCurrencyID(data.kurs.kurs_bsi);
+                        var kurs_riyal = formatCurrencyID(data.kurs.kurs_riyal);
+                        var tgl_kurs = formatDate(data.kurs.created_at);
 
                         // Creating table row
                         var row = '<tr>' +
@@ -313,6 +316,10 @@
 
                         // Update total USD
                         $('#totalusd').html(total);
+                        $('#bsi_kurs').html(kurs_bsi);
+                        $('#sar_kurs').html(kurs_riyal);
+                        $('#tglkurs').html(tgl_kurs);
+                        $('#tglkurs1').html(tgl_kurs);
                     },
                     error: function(xhr, status, error) {
                         console.error(status + ': ' + error);
