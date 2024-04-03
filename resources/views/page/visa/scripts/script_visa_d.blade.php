@@ -55,8 +55,16 @@
                         $('#agent_id').val(response.agent_id);
                         $('#agent_nama').val(namaAgen);
                         $('#kiri').html('');
-                        $('#atas').html('IDR');
-                        $('#bawah').html(formatCurrencyID1(response.kurs.hasil_konversi));
+                        // $('#atas').html('IDR');
+                        if (response.kurs.pilih_konversi == 'USD') {
+                            $('#atas').html('USD');
+                            $('#bawah').html('$ ' + formatCurrencyID1(response.kurs
+                            .hasil_konversi));
+                        } else {
+                            $('#atas').html('IDR');
+                            $('#bawah').html(formatCurrencyID1(response.kurs.hasil_konversi));
+                        }
+                        // $('#bawah').html(formatCurrencyID1(response.kurs.hasil_konversi));
                         $('#kanan').val(response.kurs.hasil_konversi);
 
                         const data = response;
