@@ -30,11 +30,11 @@
                                         <label for="no-inv-column" class="form-label">No Invoice</label>
                                         <input type="text" id="no_inv" class="form-control" placeholder="No Invoice"
                                             data-parsley-required="true" readonly />
-                                        <input type="hidden" id="id_visa" name="id_visa" placeholder="id visa">
-                                        <input type="hidden" id="hasil_konversi" name="hasil_konversi"
+                                        <input type="text" id="id_visa" name="id_visa" placeholder="id visa">
+                                        <input type="text" id="hasil_konversi" name="hasil_konversi"
                                             placeholder="konversi">
-                                        <input type="hidden" id="total" placeholder="total">
-                                        <input type="hidden" value="1" name="status">
+                                        <input type="text" id="total" placeholder="total">
+                                        <input type="text" value="1" name="status">
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-12">
@@ -49,6 +49,17 @@
                                         <label for="kurs-riyal-column" class="form-label">KURS RIYAL</label>
                                         <input type="text" id="kurs_riyal" class="form-control" placeholder="0.00"
                                             step="0.01" name="kurs_riyal" data-parsley-required="true" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group mandatory">
+                                        <label for="pilih_konversi" class="form-label">Pilih</label>
+                                        <select id="pilih_konversi" name="pilih_konversi" class="form-select"
+                                            data-parsley-required="true">
+                                            <option value="">Pilih</option>
+                                            <option value="USD">USD</option>
+                                            <option value="IDR">IDR</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-12">
@@ -283,12 +294,27 @@
                 return roundedValue.toLocaleString('id-ID');
             }
 
-            $('#kurs_bsi').on('keyup', function() {
-                var kurs_bsi = parseFloat($(this).val());
+            // $('#kurs_bsi').on('change', function() {
+            //     var kurs_bsi = parseFloat($(this).val());
+            //     var tagihan_awal = parseFloat($('#total').val());
+            //     var tagihan = tagihan_awal * kurs_bsi;
+            //     $('#hasil_konversi').val(tagihan);
+            // });
+            $('#pilih_konversi').on('change', function() {
+                var selectedCurrency = $(this).val();
                 var tagihan_awal = parseFloat($('#total').val());
-                var tagihan = tagihan_awal * kurs_bsi;
-                $('#hasil_konversi').val(tagihan);
+
+                if (selectedCurrency === "USD") {
+                    // If USD is selected, set the result equal to the original amount
+                    $('#hasil_konversi').val(tagihan_awal);
+                } else {
+                    // For other currencies, multiply the original amount by the exchange rate
+                    var kurs_bsi = parseFloat($('#kurs_bsi').val());
+                    var tagihan = tagihan_awal * kurs_bsi;
+                    $('#hasil_konversi').val(tagihan);
+                }
             });
+
         });
     </script>
 @endsection
