@@ -14,6 +14,7 @@ class KursVisa extends Model
         'id_visa',
         'kurs_bsi',
         'kurs_riyal',
+        'pilih_konversi',
         'hasil_konversi',
         'status',
     ];
